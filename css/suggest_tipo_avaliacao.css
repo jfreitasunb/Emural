@@ -1,0 +1,46 @@
+.suggestionsBox {
+	position: absolute;
+	margin: 0px;
+	width: 135px;
+	padding:0px;
+	background-color: #043057;
+	color: #fff;
+	display: none;
+}
+
+.suggestionsBox .arrow{
+	position: relative;
+	top: -12px;
+	left: 0px;
+}
+
+.suggestionList {
+	position: relative;
+	top: -12px;
+	margin: 0px;
+	padding: 0px;
+}
+
+.suggestionsList ul {
+	padding: 0px;
+	margin: 0px;
+}
+
+.suggestionList ul li {
+	list-style: none;
+	margin: 0px 4px;
+	padding: 6px 2px;
+	border-bottom: 1px solid #505863;
+	cursor: pointer;
+}
+
+.selected {
+	background-color: #FC3;
+	color:#000;
+}
+
+.load {
+	background-image:url(/images/autosuggest/loader.gif);
+	background-position:right;
+	background-repeat:no-repeat;
+}

@@ -1,0 +1,76 @@
+@CHARSET "UTF-8";
+
+.titulo_left {
+	width: 100%;
+	text-align: center;
+}
+
+.aviso_cadastrado {
+	width: 100%;
+	margin: 9px 0 25px 0;
+	padding: 0px;
+	border-width: 0 0 2px 0;
+	border-style: solid;
+	border-color: #999999;
+
+	-moz-border-bottom-colors: #5a5a5a #d4d5d7;
+	-webkit-border-bottom-colors: #5a5a5a #d4d5d7;
+	border-bottom-colors: #5a5a5a #d4d5d7;
+
+	font-size: 10px;
+}
+
+.aviso_cadastrado .titulo a {
+	color: #00427E;
+	font-weight: bold;
+	font-size: 11px;
+	text-decoration: none;
+}
+
+.aviso_cadastrado p {
+	text-align: justify;
+	margin-top: 8px;
+}
+
+.aviso_cadastrado .data_divulgacao {
+	text-align: left;
+	margin: 9px 0 8px 0;
+}
+
+#ajuda_simplificada {
+	margin: 15px 0 16px 0;
+}
+
+#formulario {
+	background: #62ba6e;
+	width: 524px;
+	padding: 8px 13px;
+	color: #FFFFFF;
+}
+
+#formulario label {
+	margin-right: 7px;
+}
+
+#formulario #titulo {
+	width: 481px;
+}
+
+#formulario textarea {
+	margin: 12px 0;
+	width: 519px;
+	height: 120px;
+}
+
+#formulario #div_data {
+	float: right;
+}
+
+#formulario #data_divulgacao {
+	width: 100px;
+}
+
+#div_action {
+	width: 551px;
+	margin-top: 9px;
+}

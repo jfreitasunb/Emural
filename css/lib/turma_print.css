@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+
+#conteudo_topo {
+	display: none;
+}
+
+#corpo_pagina {
+	margin: auto;
+	border: 0px;
+}
+
+#conteudo_rodape {
+	display: none;
+}
+
+#left {
+	display: none;
+}
+
+#center {
+	width: 100%;
+	margin: auto;
+	border: 0px;
+}
+
+#acao_monitor {
+	display: none;
+}
+
+#tabela {
+	border: 0px;
+}
+
+#titulo_tabela {
+	display: none;
+}
+
+#relatorios {
+	display: none;
+}
+
+#grafico_rendimento {
+	display: none;
+}
+
+tr {
+	border-bottom: 1px #000000 solid;
+}

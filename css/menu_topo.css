@@ -1,0 +1,161 @@
+#menuh-container {
+	margin-top: 7px;
+	height: 22px;
+	padding: 4px 15px 4px 60px;
+	background: #00427E;
+	background: -moz-linear-gradient(top, #00427E 0%, #00427E 66%, #052B4F 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00427E), color-stop(66%, #00427E), color-stop(100%, #052B4F));
+	background: -webkit-linear-gradient(top, #00427E 0%, #00427E 66%, #052B4F 100%);
+	background: -o-linear-gradient(top, #00427E 0%, #00427E 66%, #052B4F 100%);
+	background: -ms-linear-gradient(top, #00427E 0%, #00427E 66%, #052B4F 100%);
+	background: linear-gradient(top, #00427E 0%, #00427E 66%, #052B4F 100%);
+}
+
+#menuh {
+	width: 100%;
+	float: left;
+	font-weight: bold;
+	height: 100%;
+}
+
+#menuh .ul_top_parent_inicio {
+	border-right: 1px #032747 solid;
+	border-left: 1px #1a3956 solid;
+}
+
+#menuh .top_parent_inicio {
+	border-right: 1px #1a3956 solid;
+	border-left: 1px #032747 solid;
+}
+
+#menuh .ul_top_parent {
+	border-right: 1px #032747 solid;
+}
+
+#menuh .top_parent_avaliacao {
+	border-right: 1px #1a3956 solid;
+}
+
+#menuh .ul_top_parent_fim {
+	float: right;
+}
+
+#menuh .ul_top_parent_saudacao {
+	color: #FFFFFF;
+	padding: 3px 0;
+	margin-right: 35px;
+	width: !important;
+	text-align: right;
+}
+
+#menuh .ul_top_parent_sair{
+	width: 46px !important;
+}
+
+#menuh .ul_top_parent_sair a{
+	padding: 3px 0 3px 2px;
+}
+
+#menuh a {
+	height: 16px;
+	text-align: left;
+	display: block;
+	color: white;
+	white-space: nowrap;
+	margin: 0;
+	padding: 3px 0 3px 15px;
+}
+
+#menuh ul ul a {
+	background-color: #003466; /* royal blue */
+}
+
+#menuh ul li ul li a {
+	padding-left: 5px;
+}
+
+/* menu at rest */
+#menuh a:link,
+#menuh a:visited {
+	text-decoration: none;
+}
+
+/* menu on mouse-over  */
+#menuh a:hover,
+#menuh a:focus,
+#menuh a:active {
+	text-decoration: underline;
+}
+
+/* menu on mouse-over  */
+#menuh ul ul a:hover {
+	color: white;
+	background-color: #26517c; /* cornflowerblue */
+	text-decoration: none;
+}
+
+/* attaches down-arrow to all top-parents */
+#menuh a.top_parent,
+#menuh a.top_parent:hover {
+	background-image: url(navdown_white.gif);
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+/* attaches side-arrow to all parents */
+#menuh a.parent,
+#menuh a.parent:hover {
+	background-image: url(nav_white.gif);
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+#menuh ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	float: left;
+	width: 146px;
+	/* height: 22px; width of all menu boxes */
+	/* NOTE: For adjustable menu boxes you can comment out the above width rule.
+	However, you will have to add padding in the "#menh a" rule so that the menu boxes
+	will have space on either side of the text -- try it */
+}
+
+#menuh li {
+	position: relative;
+	min-height: 1px; /* Sophie Dennis contribution for IE7 */
+	vertical-align: bottom; /* Sophie Dennis contribution for IE7 */
+}
+
+#menuh ul ul {
+	position: absolute;
+	z-index: 500;
+	top: auto;
+	display: none;
+	margin: 0 0 0 0;
+	border: 1px solid #26517c;
+}
+
+#menuh ul ul ul {
+	top: -1px;
+	left: 100%;
+}
+
+div#menuh li:hover {
+	z-index: 100;
+}
+
+div#menuh li:hover ul ul,
+div#menuh li li:hover ul ul,
+div#menuh li li li:hover ul ul,
+div#menuh li li li li:hover ul ul {
+	display: none;
+}
+
+div#menuh li:hover ul,
+div#menuh li li:hover ul,
+div#menuh li li li:hover ul,
+div#menuh li li li li:hover ul {
+	display: block;
+}

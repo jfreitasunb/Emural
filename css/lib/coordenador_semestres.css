@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+#div_grupos
+{
+	margin-top: 10px;
+	display: none;
+}
+
+#div_grupos h2
+{
+	margin-bottom: 5px;
+}
+
+#div_grupos .left
+{
+	float: left;
+	margin-right: 10px;
+}
+
+#div_grupos .select button
+{
+	margin-top: 5px;
+}
+
+#div_grupos #div_select_action
+{
+	width: 73px;
+	margin-top: 18px;
+	margin-right: 0px; !important
+}
+
+#div_grupos #div_select_action button
+{
+	width: 100%;
+}
+
+#div_grupos .select
+{
+	width: 252px;
+	display: inline-block;
+}
+
+#div_grupos .select select
+{
+	width: 100%;
+	margin-top: 2px;
+}
+
+#div_grupos h4 {
+	margin-top: 20px;
+	width: 90px;
+	text-align: center;
+}
+
+.field label {
+	width: 100px;
+}
+
+#div_grupos #agrupamento {
+	float: left;
+	margin-top: 5px;
+}
+
+#div_grupos #agrupamento .grupo {
+	margin-top: 5px;
+}
+
+#div_grupos #agrupamento .grupo button {
+	margin-left: 10px;
+}

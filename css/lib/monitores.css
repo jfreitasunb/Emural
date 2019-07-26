@@ -1,0 +1,52 @@
+@CHARSET "UTF-8";
+
+#tabela_monitores_cadastrados {
+	width: 100%;
+	text-align: left;
+}
+
+#tabela_monitores_cadastrados th {
+	padding-bottom: 17px;
+}
+
+#tabela_monitores_cadastrados td {
+	font-weight: bold;
+}
+
+#tabela_monitores_cadastrados a {
+	text-decoration: none;
+	color: #00427E;
+}
+
+#tabela_monitores_cadastrados .coluna_2 {
+	width: 80px;
+}
+
+#ajuda_simplificada {
+	margin: 15px 0 24px 0;
+}
+
+#tabela_cadastrar_monitores th {
+	padding-right: 6px;
+	text-align: left;
+}
+
+#tabela_cadastrar_monitores td {
+	padding-right: 6px;
+}
+
+#tabela_cadastrar_monitores .input_checkbox {
+	text-align: center;
+}
+
+#tabela_cadastrar_monitores #avaliacao {
+	width: 140px;
+}
+
+#tabela_cadastrar_monitores #monitor {
+	width: 240px;
+}
+
+#div_action {
+	margin: 22px 76px 0 0;
+}

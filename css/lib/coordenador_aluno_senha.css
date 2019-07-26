@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+.invisivel {
+	visibility: collapse;
+}
+
+.field label {
+	width: 135px;
+}
+
+#nome_aluno {
+	line-height: 22px;
+	vertical-align: middle;
+}
