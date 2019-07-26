@@ -16,7 +16,7 @@ class AutenticacaoBO
 
 	function __construct()
 	{
-		$this->linkBO = & new LinkBO();
+		$this->linkBO = new LinkBO();
 	}
 
 
@@ -49,12 +49,12 @@ class AutenticacaoBO
 
 		session_start();
 
-		$SIBO = & new SIBO();
-		$pessoasBO = & new PessoasBO();
-		$professoresBO = & new ProfessoresBO();
-		$monitoresBO = & new MonitoresBO();
-		$alunosBO = & new AlunosBO();
-		$turmasBO = & new TurmasBO();
+		$SIBO = new SIBO();
+		$pessoasBO = new PessoasBO();
+		$professoresBO = new ProfessoresBO();
+		$monitoresBO = new MonitoresBO();
+		$alunosBO = new AlunosBO();
+		$turmasBO = new TurmasBO();
 
 		$pessoa = & $pessoasBO->retornaPorUsuario($login->usuario);
 
@@ -231,8 +231,8 @@ class AutenticacaoBO
 
 		$senha = $senha_digitada;
 
-		$SIBO = & new SIBO();
-		$pessoasBO = & new PessoasBO();
+		$SIBO = new SIBO();
+		$pessoasBO = new PessoasBO();
 
 		$retorno = new stdClass();
 		$retorno->success = false;
@@ -246,11 +246,11 @@ class AutenticacaoBO
 			if($usuarioSI !== null) {
 				switch ($usuarioSI->tipo) {
 					case "professor":
-						$professoresBO = & new ProfessoresBO();
+						$professoresBO = new ProfessoresBO();
 						$professoresBO->inserir($usuarioSI);
 						return $this->pode_logar($usuario, $senha_digitada);
 					case "student":
-						$monitoresBO = & new MonitoresBO();
+						$monitoresBO = new MonitoresBO();
 						$monitoresBO->inserir($usuarioSI);
 						return $this->pode_logar($usuario, $senha_digitada);
 				}

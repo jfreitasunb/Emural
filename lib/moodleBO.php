@@ -52,7 +52,7 @@ class MoodleBO
 
 			$resposta = $this->executarRequisicao($servico, $parametro);
 			if (is_array($resposta)) {
-				$pessoasBO = & new PessoasBO();
+				$pessoasBO = new PessoasBO();
 
 				$pessoa_moodle = $resposta[0];
 
@@ -101,7 +101,7 @@ class MoodleBO
 		$curso = new stdClass();
 
 		if (!isset($turma->disciplina_descricao)) {
-			$disciplinasBO = & new DisciplinasBO();
+			$disciplinasBO = new DisciplinasBO();
 
 			$disciplina = $disciplinasBO->retornaPorCodigo($turma->disciplina);
 
@@ -132,7 +132,7 @@ class MoodleBO
 		$resposta = $this->executarRequisicao($servico, $parametro);
 
 		if (is_array($resposta)) {
-			$turmasBO = & new TurmasBO();
+			$turmasBO = new TurmasBO();
 
 			$turma_moodle = $resposta[0];
 
@@ -177,7 +177,7 @@ class MoodleBO
 		$resposta = $this->executarRequisicao($servico, $parametro);
 
 		if (is_array($resposta)) {
-			$gruposBO = & new GruposBO();
+			$gruposBO = new GruposBO();
 
 			$grupo_moodle = $resposta[0];
 

@@ -5,9 +5,9 @@ require_once $ROOT_PATH."lib/autenticacaoBO.php";
 
 require_once 'HTTP.php';
 
-$autenticacaoBO = & new AutenticacaoBO();
+$autenticacaoBO = new AutenticacaoBO();
 $autenticacaoBO->logout();
 
-$linkBO = & new LinkBO();
+$linkBO = new LinkBO();
 HTTP::redirect($linkBO->getIndex());
 ?>

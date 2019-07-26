@@ -7,11 +7,11 @@ require_once $ROOT_PATH.'lib/autenticacaoBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$templateBO = & new TemplateBO();
-$autenticacaoBO = & new AutenticacaoBO();
+$templateBO = new TemplateBO();
+$autenticacaoBO = new AutenticacaoBO();
 
 /*require_once $ROOT_PATH.'lib/alunosBO.php';
-$alunosBO = & new AlunosBO();
+$alunosBO = new AlunosBO();
 $aluno = $alunosBO->retornaPorCodigo(8);
 session_start();
 $_SESSION["aluno"] = serialize($aluno);/**/
@@ -23,7 +23,7 @@ if($_POST) {
 
 $tpl_main = $templateBO->carregarPaginaAluno($aluno);
 
-$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl->loadTemplateFile('aluno.tpl');
 
 $templateBO->iniciarAluno($tpl);

@@ -9,11 +9,11 @@
 	require_once $ROOT_PATH.'lib/gruposBO.php';
 	require_once $ROOT_PATH.'lib/moodleBO.php';
 
-	$alunosBO = & new AlunosBO();
-	$turmasBO = & new TurmasBO();
-	$semestresBO = & new SemestresBO();
-	$composicao_turmasBO = & new ComposicaoTurmasBO();
-	$moodleBO = & new MoodleBO();
+	$alunosBO = new AlunosBO();
+	$turmasBO = new TurmasBO();
+	$semestresBO = new SemestresBO();
+	$composicao_turmasBO = new ComposicaoTurmasBO();
+	$moodleBO = new MoodleBO();
 
 	try{
 		//$arquivo = fopen($argv[1], "r");
@@ -43,7 +43,7 @@
 				if(strcmp($dados[0],"INFO") == 0) {
 					$data = explode("/", $dados[1]);
 
-					$turma = & new stdClass();
+					$turma = new stdClass();
 					$turma->ano = preg_replace('/[\r\n\t\f\s\n]*$/', '', $data[0]);
 					$turma->semestre = preg_replace('/[\r\n\t\f\s\n]*$/', '', $data[1]);
 					$turma->codigo_cpd = preg_replace('/[\r\n\t\f\s\n]*$/', '', $dados[4]);
@@ -53,7 +53,7 @@
 
 					unset($turma);
 				} else {
-					$aluno = & new stdClass();
+					$aluno = new stdClass();
 					$aluno->matricula = preg_replace('/[\r\n\t\f\s\n]*$/', '', $dados[0]);
 					$aluno->opcao_curso = preg_replace('/[\r\n\t\f\s\n]*$/', '', $dados[1]);
 					$aluno->nome = preg_replace('/[\r\n\t\f\s\n]*$/', '', $dados[2]);
@@ -83,7 +83,7 @@ echo"<pre>";print_r($aluno_arquivo);echo"</pre><br><br>";
 echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 						$grupo = null;
 						if (strlen($turma->grupo_codigo_moodle)) {
-							$grupoBO = & new GruposBO();
+							$grupoBO = new GruposBO();
 							$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 						}
 
@@ -100,7 +100,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 
 						$grupo = null;
 						if (strlen($turma->grupo_codigo_moodle)) {
-							$grupoBO = & new GruposBO();
+							$grupoBO = new GruposBO();
 							$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 						}
 
@@ -113,7 +113,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 					{
 						$grupo = null;
 						if (strlen($turma->grupo_codigo_moodle)) {
-							$grupoBO = & new GruposBO();
+							$grupoBO = new GruposBO();
 							$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 						}
 
@@ -144,7 +144,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 					echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 					$grupo = null;
 					if (strlen($turma->grupo_codigo_moodle)) {
-						$grupoBO = & new GruposBO();
+						$grupoBO = new GruposBO();
 						$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 					}
 
@@ -161,7 +161,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 
 					$grupo = null;
 					if (strlen($turma->grupo_codigo_moodle)) {
-						$grupoBO = & new GruposBO();
+						$grupoBO = new GruposBO();
 						$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 					}
 
@@ -174,7 +174,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 				{
 					$grupo = null;
 					if (strlen($turma->grupo_codigo_moodle)) {
-						$grupoBO = & new GruposBO();
+						$grupoBO = new GruposBO();
 						$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 					}
 

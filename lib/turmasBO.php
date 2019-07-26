@@ -18,13 +18,13 @@ class TurmasBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new TurmasDAO();
+		$this->DAO = new TurmasDAO();
 	}
 
 	public function preencherMenuProfessor($tpl,$professor,$ano,$semestre)
 	{
-		$avaliacoesBO = & new AvaliacoesBO();
-		$linkBO = & new LinkBO();
+		$avaliacoesBO = new AvaliacoesBO();
+		$linkBO = new LinkBO();
 
 		$filtro["professor"] = $professor->codigo;
 		$filtro["ano"] = $ano;
@@ -39,7 +39,7 @@ class TurmasBO extends BO
 		foreach($lista_turmas as $turma)
 		{
 			unset($turma_preenche);
-			$turma_preenche = & new stdClass();
+			$turma_preenche = new stdClass();
 			$turma_preenche->disciplina_descricao = $turma->disciplina_descricao;
 			if(strlen($turma_preenche->disciplina_descricao) > 12) {
 				$turma_preenche->disciplina_descricao = substr($turma_preenche->disciplina_descricao,0,12);
@@ -86,7 +86,7 @@ class TurmasBO extends BO
 
 	public function preencherNotasAluno($tpl,$aluno,$semestre)
 	{
-		$notasBO = & new NotasBO();
+		$notasBO = new NotasBO();
 
 		$filtro['ctu_calu'] = $aluno->codigo;
 		$filtro['semestre'] = $semestre->semestre;
@@ -245,7 +245,7 @@ class TurmasBO extends BO
 			if(count($lista)) {
 				foreach($lista as $turma)
 				{
-					$preencher = & new stdClass();
+					$preencher = new stdClass();
 					$preencher->codigo = $turma->codigo;
 					$preencher->descricao = $turma->disciplina_descricao." - ".$turma->descricao;
 
@@ -305,7 +305,7 @@ class TurmasBO extends BO
 			if(count($lista)) {
 				foreach($lista as $turma)
 				{
-					$preencher = & new stdClass();
+					$preencher = new stdClass();
 					$preencher->codigo = $turma->codigo;
 					$preencher->descricao = $turma->disciplina_descricao." - ".$turma->descricao;
 
@@ -326,9 +326,9 @@ class TurmasBO extends BO
 	{
 		global $DEPARTAMENTO;
 
-		$semestresBO = & new SemestresBO();
-		$disciplinasBO = & new DisciplinasBO();
-		$siBO = & new SIBO();
+		$semestresBO = new SemestresBO();
+		$disciplinasBO = new DisciplinasBO();
+		$siBO = new SIBO();
 
 		$semestre = $semestresBO->retornaUltimoSemestre();
 
@@ -355,7 +355,7 @@ class TurmasBO extends BO
 
 						unset($disciplina);
 					}
-					$turma = & new stdClass();
+					$turma = new stdClass();
 					$turma->descricao = $turma_si->descricao;
 					$turma->periodo = $turma_si->periodo;
 				//	$turma->sala = $turma_si->sala;
@@ -369,7 +369,7 @@ class TurmasBO extends BO
 			}
 		}
 		if(count($lista_turmas)) {
-			$professorBO = & new ProfessoresBO();
+			$professorBO = new ProfessoresBO();
 			foreach($lista_turmas as $key => $turma)
 			{
 				$turma_si = $siBO->retornaTurma($turma);
@@ -383,10 +383,10 @@ class TurmasBO extends BO
 
 	public function atualizacaoTurmasInicioSemestre($semestre, $disciplinas_unidas_formulario = null)
 	{
-		$semestresBO = & new SemestresBO();
-		$disciplinasBO = & new DisciplinasBO();
-		$siBO = & new SIBO();
-		$professorBO = & new ProfessoresBO();
+		$semestresBO = new SemestresBO();
+		$disciplinasBO = new DisciplinasBO();
+		$siBO = new SIBO();
+		$professorBO = new ProfessoresBO();
 
 		$lista_turmas = $this->retornaArrayPorSemestre($semestre);
 		$lista_turmas_si = $siBO->retornaArrayTurmasPorSemestre($semestre);
@@ -403,7 +403,7 @@ class TurmasBO extends BO
 					unset($lista_turmas_si[$key]);
 				} else {
 					if(!isset($lista_disciplinas[$turma_si->codigo_cpd])) {
-						$disciplina = & new stdClass();
+						$disciplina = new stdClass();
 						$disciplina->codigo_cpd = $turma_si->codigo_cpd;
 						$disciplina->descricao = $turma_si->disciplina_descricao;
 						$disciplina->creditos = $turma_si->creditos;
@@ -416,7 +416,7 @@ class TurmasBO extends BO
 					}
 					$professor = $professorBO->retornaPorCodigoSI($turma_si->professor);
 
-					$turma = & new stdClass();
+					$turma = new stdClass();
 					$turma->descricao = $turma_si->descricao;
 					$turma->periodo = $turma_si->periodo;
 				//	$turma->sala = $turma_si->sala;
@@ -448,7 +448,7 @@ class TurmasBO extends BO
 			$turma->descricao = preg_replace('/[\r\n\t\f\s\n ]*$/', '', $turma->descricao);
 			$return =  $this->DAO->inserir($turma);
 
-			$moodleBO = & new MoodleBO();
+			$moodleBO = new MoodleBO();
 
 			$grupo = null;
 
@@ -461,7 +461,7 @@ class TurmasBO extends BO
 					$turma_moodle_codigo = $turma->codigo_moodle;
 				}
 
-				$gruposBO = & new GruposBO();
+				$gruposBO = new GruposBO();
 
 				$grupo = $gruposBO->cadastrar($turma);
 			} else {
@@ -478,8 +478,8 @@ class TurmasBO extends BO
 
 	private function listaDisciplinasJuntas($semestre, $disciplinas_unidas_formulario = null, &$disciplinas_unidas = null)
 	{
-		$siBO = & new SIBO();
-		$gruposBO = & new GruposBO();
+		$siBO = new SIBO();
+		$gruposBO = new GruposBO();
 
 		$lista_disciplinas_magistrais = $siBO->retornaArrayDisciplinasMagistrais($semestre);
 		$lista_turmas_juntas = $gruposBO->retornaDisciplinasQuePossuemGrupoNoSemestre($semestre);
@@ -537,8 +537,8 @@ class TurmasBO extends BO
 	{
 		$this->atualizarCalculoMedia("", $turma);
 
-		$composicao_turmasBO = & new ComposicaoTurmasBO();
-		$avaliacoesBO = & new AvaliacoesBO();
+		$composicao_turmasBO = new ComposicaoTurmasBO();
+		$avaliacoesBO = new AvaliacoesBO();
 
 		$composicao_turmasBO->zeraMediasMencoesFaltas($turma);
 
@@ -561,7 +561,7 @@ class TurmasBO extends BO
 		$lista = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista)) {
-			$composicao_turmasBO = & new ComposicaoTurmasBO();
+			$composicao_turmasBO = new ComposicaoTurmasBO();
 
 			$item->titulo = "Matrícula";
 			$header[] = $item;
@@ -641,7 +641,7 @@ class TurmasBO extends BO
 		$reprovados = array();
 
 		if(count($lista_turmas)) {
-			$composicao_turmasBO = & new ComposicaoTurmasBO();
+			$composicao_turmasBO = new ComposicaoTurmasBO();
 
 			$item->titulo = "Opção de Curso";
 			$header[] = $item;
@@ -663,9 +663,9 @@ class TurmasBO extends BO
 			$header[] = $item;
 			unset($item);
 
-			$avaliacoesBO = & new AvaliacoesBO();
-			$calcular = & new calcularMediaBO();
-			$notasBO = & new NotasBO();
+			$avaliacoesBO = new AvaliacoesBO();
+			$calcular = new calcularMediaBO();
+			$notasBO = new NotasBO();
 
 			$notas = null;
 			$lista_opcoes_curso = null;
@@ -842,7 +842,7 @@ class TurmasBO extends BO
 
 	public function retornaArrayListaAlunos($dados)
 	{
-		$semestreBO = & new SemestresBO();
+		$semestreBO = new SemestresBO();
 
 		$semestre = & $semestreBO->retornaPorCodigo($dados->ano_semestre);
 
@@ -859,7 +859,7 @@ class TurmasBO extends BO
 		$lista = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista)) {
-			$composicao_turmasBO = & new ComposicaoTurmasBO();
+			$composicao_turmasBO = new ComposicaoTurmasBO();
 
 			$item->titulo = "Matrícula";
 			$header[] = $item;

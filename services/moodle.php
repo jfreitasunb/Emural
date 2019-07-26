@@ -5,7 +5,7 @@ require_once $ROOT_PATH.'lib/moodleBO.php';
 if (isset($_GET['f'])) {
 	$funcao = $_GET['f'];
 
-	$moodleBO = & new MoodleBO();
+	$moodleBO = new MoodleBO();
 
 	echo "<pre>";
 
@@ -15,7 +15,7 @@ if (isset($_GET['f'])) {
 
 			$pessoa_codigo = $_GET['usuario'];
 
-			$pessoasBO = & new PessoasBO();
+			$pessoasBO = new PessoasBO();
 
 			$pessoa = $pessoasBO->retornaPorCodigo($pessoa_codigo);
 
@@ -28,7 +28,7 @@ if (isset($_GET['f'])) {
 
 			$turma_codigo = $_GET['turma'];
 
-			$turmasBO = & new TurmasBO();
+			$turmasBO = new TurmasBO();
 
 			$turma = $turmasBO->retornaPorCodigo($turma_codigo);
 
@@ -43,8 +43,8 @@ if (isset($_GET['f'])) {
 			$turma_codigo = $_GET['turma'];
 			$pessoa_codigo = $_GET['usuario'];
 
-			$turmasBO = & new TurmasBO();
-			$pessoasBO = & new PessoasBO();
+			$turmasBO = new TurmasBO();
+			$pessoasBO = new PessoasBO();
 
 			$turma = $turmasBO->retornaPorCodigo($turma_codigo);
 			$pessoa = $pessoasBO->retornaPorCodigo($pessoa_codigo);

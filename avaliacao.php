@@ -11,13 +11,13 @@ require_once $ROOT_PATH.'lib/semestresBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$urlBO = & new URLBO();
-$templateBO = & new TemplateBO();
-$avaliacoesBO = & new AvaliacoesBO();
-$turmasBO = & new TurmasBO();
-$notasBO = & new NotasBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
+$urlBO = new URLBO();
+$templateBO = new TemplateBO();
+$avaliacoesBO = new AvaliacoesBO();
+$turmasBO = new TurmasBO();
+$notasBO = new NotasBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
 
 $url = & $urlBO->codigoSegundoNivel();
 $avaliacao = & $avaliacoesBO->retornaPorCodigo($url->codigo);
@@ -80,14 +80,14 @@ if($_POST) {
 
 $tpl_main = $templateBO->carregarPaginaAvaliacao($professor,$semestre,$turma,$avaliacao);
 
-$tpl_pagina = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl_pagina = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl_pagina->loadTemplateFile('avaliacao.tpl');
 
 
 $avaliacoesBO->preenchePaginaAvaliacao($tpl_pagina,$turma,$avaliacao);
 $turmasBO->preencherObjeto($tpl_pagina,$turma,"turma_");
 
-$tpl_tabela = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl_tabela->loadTemplateFile('tabela.tpl');
 
 $avaliacoesBO->preencheTabelaAvaliacoes($tpl_tabela,$turma,$avaliacao,"avaliacao");

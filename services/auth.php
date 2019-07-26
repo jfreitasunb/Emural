@@ -9,7 +9,7 @@ if ($_POST && isset($_POST['user']) && isset($_POST['password'])) {
 	// headers to tell that result is JSON
 	header('Content-type: application/json');
 
-	$autenticacaoBO = & new AutenticacaoBO();
+	$autenticacaoBO = new AutenticacaoBO();
 	
 //$retorno = $autenticacaoBO->pode_logar('jfreitas','tugYbykaDO');
 	$retorno = $autenticacaoBO->pode_logar($_POST['user'], $_POST['password']);

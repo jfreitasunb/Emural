@@ -8,11 +8,11 @@ require_once $ROOT_PATH.'lib/semestresBO.php';
 require_once $ROOT_PATH.'lib/relatoriosBO.php';
 require_once $ROOT_PATH.'lib/avaliacoesBO.php';
 
-$urlBO = & new URLBO();
-$turmasBO = & new TurmasBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
-$avaliacoesBO = & new AvaliacoesBO();
+$urlBO = new URLBO();
+$turmasBO = new TurmasBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
+$avaliacoesBO = new AvaliacoesBO();
 
 $url = & $urlBO->codigoTerceiroNivel();
 

@@ -10,18 +10,18 @@ require_once $ROOT_PATH.'lib/linkBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$templateBO = & new TemplateBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
-$disciplinasBO = & new DisciplinasBO();
-$turmasBO = & new TurmasBO();
-$linkBO = & new LinkBO();
+$templateBO = new TemplateBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
+$disciplinasBO = new DisciplinasBO();
+$turmasBO = new TurmasBO();
+$linkBO = new LinkBO();
 
 $coordenador = $autenticacaoBO->verificarCoordenador();
 
 $tpl_main = $templateBO->carregarPaginaRelatorioCoordenadorPorcentagemMencoes();
 
-$tpl_pagina = & new HTML_Template_Sigma($ROOT_PATH.'template/relatorios');
+$tpl_pagina = new HTML_Template_Sigma($ROOT_PATH.'template/relatorios');
 $tpl_pagina->loadTemplateFile('coordenador_reprovados_disciplina.tpl');
 
 if($_POST) {
@@ -30,7 +30,7 @@ if($_POST) {
 	$disciplina = & $disciplinasBO->retornaPorCodigo($dados->disciplina);
 	$semestre = & $semestresBO->retornaUltimoSemestre();
 
-	$tpl_tabela = & new HTML_Template_Sigma($ROOT_PATH.'template');
+	$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl_tabela->loadTemplateFile('tabela_com_titulo.tpl');
 
 	$preencheu = $turmasBO->preencheTabelaRelatorioReprovadosDisciplina($tpl_tabela,$dados,$semestre);

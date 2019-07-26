@@ -8,7 +8,7 @@ class AlunosBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new AlunosDAO();
+		$this->DAO = new AlunosDAO();
 	}
 
 
@@ -75,9 +75,9 @@ class AlunosBO extends BO
 
 	public function inserir($dados)
 	{
-		$pessoasBO = & new PessoasBO();
+		$pessoasBO = new PessoasBO();
 
-		$pessoa = & new stdClass();
+		$pessoa = new stdClass();
 		$pessoa->tipo = 'aluno';
 		$pessoa->nome = $dados->nome;
 		$pessoa->usuario = $dados->matricula;

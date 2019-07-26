@@ -7,7 +7,7 @@ class DisciplinasBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new DisciplinasDAO();
+		$this->DAO = new DisciplinasDAO();
 	}
 
 
@@ -17,7 +17,7 @@ class DisciplinasBO extends BO
 
 		$lista_obj = & $this->DAO->recuperaDeFiltro(null,$ordem);
 
-		$preencher = & new stdClass();
+		$preencher = new stdClass();
 		foreach($lista_obj as $obj)
 		{
 			$preencher->codigo = $obj->codigo;
@@ -70,7 +70,7 @@ class DisciplinasBO extends BO
 
 		$lista_obj = & $this->DAO->recuperaDeFiltro(null,$ordem);
 
-		$preencher = & new stdClass();
+		$preencher = new stdClass();
 		foreach($lista_obj as $obj)
 		{
 			$preencher->codigo_cpd = $obj->codigo_cpd;

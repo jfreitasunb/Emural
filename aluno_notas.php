@@ -8,13 +8,13 @@ require_once $ROOT_PATH.'lib/semestresBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$templateBO = & new TemplateBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$turmasBO = & new TurmasBO();
-$semestresBO = & new SemestresBO();
+$templateBO = new TemplateBO();
+$autenticacaoBO = new AutenticacaoBO();
+$turmasBO = new TurmasBO();
+$semestresBO = new SemestresBO();
 
 /*require_once $ROOT_PATH.'lib/alunosBO.php';
-$alunosBO = & new AlunosBO();
+$alunosBO = new AlunosBO();
 $aluno = $alunosBO->retornaPorCodigo(8);
 session_start();
 $_SESSION["aluno"] = serialize($aluno);/**/
@@ -28,7 +28,7 @@ $semestre = & $semestresBO->retornaUltimoSemestre();
 
 $tpl_main = $templateBO->carregarPaginaAlunoNotas($aluno);
 
-$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl->loadTemplateFile('aluno_notas.tpl');
 
 $tpl->setVariable(array(
@@ -36,7 +36,7 @@ $tpl->setVariable(array(
 	"ano"  => $semestre->ano
 ));
 
-$tpl_tabela = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl_tabela->loadTemplateFile('tabela_com_titulo.tpl');
 
 $templateBO->iniciarTabela($tpl_tabela);

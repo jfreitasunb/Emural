@@ -8,7 +8,7 @@ class GruposBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new GruposDAO();
+		$this->DAO = new GruposDAO();
 	}
 
 
@@ -67,7 +67,7 @@ class GruposBO extends BO
 
 		$grupo = $lista_grupos[0];
 
-		$moodleBO = & new MoodleBO();
+		$moodleBO = new MoodleBO();
 		$moodleBO->grupoCriar($grupo);
 
 		return $grupo;

@@ -8,7 +8,7 @@ class MonitoresBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new MonitoresDAO();
+		$this->DAO = new MonitoresDAO();
 	}
 
 
@@ -38,7 +38,7 @@ class MonitoresBO extends BO
 
 	public function inserir($dados)
 	{
-		$pessoasBO = & new PessoasBO();
+		$pessoasBO = new PessoasBO();
 
 		$dados->tipo = 'monitor';
 

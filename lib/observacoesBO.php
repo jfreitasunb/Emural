@@ -11,8 +11,8 @@ class ObservacoesBO extends BO
 
 	function __construct()
 	{
-		$this->DAO = & new ObservacoesDAO();
-		$this->linkBO = & new LinkBO();
+		$this->DAO = new ObservacoesDAO();
+		$this->linkBO = new LinkBO();
 	}
 
 

@@ -12,7 +12,7 @@ require_once $ROOT_PATH.'lib/emailBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$semestresBO = & new SemestresBO();
+$semestresBO = new SemestresBO();
 
 $semestre = & $semestresBO->retornaUltimoSemestre();
 
@@ -20,7 +20,7 @@ $mensagem = array();
 $dados = null;
 
 if($_POST) {
-	$dados = & new stdClass();
+	$dados = new stdClass();
 	//$dados->matricula = $_POST['matricula'];
 	$email_temp = str_replace(' ', '', $_POST['email']);
 	$email_temp = strtolower($email_temp);
@@ -59,16 +59,16 @@ if($_POST) {
 
 	if (!count($mensagem)) {
 		if (strcmp($dados->senha, $dados->confirmar_senha) == 0) {
-			$pessoasBO = & new PessoasBO();
+			$pessoasBO = new PessoasBO();
 			$aluno = $pessoasBO->retornaPorUsuario($dados->matricula);
 
 			if ($aluno !== null) {
 				if (!strlen($aluno->senha) && !strlen($aluno->email)) {
-					$composicao_turmasBO = & new ComposicaoTurmasBO();
+					$composicao_turmasBO = new ComposicaoTurmasBO();
 					if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
 						if($pessoasBO->mudarEmailPessoa($aluno, $dados->email)) {
 							$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
-							$emailBO = & new EmailBO();
+							$emailBO = new EmailBO();
 							$emailBO->enviarValidacao($aluno);
 							$mensagem[] = "E-mail e senha cadastrados com sucesso.</br> Verifique a mensagem de confirmação no seu e-mail.";
 							$dados = null;
@@ -94,16 +94,16 @@ if($_POST) {
 		}
 	}
 }
-$templateBO = & new TemplateBO();
+$templateBO = new TemplateBO();
 
 $tpl_main = & $templateBO->carregarCabecalhoRodapeMat();
 
-$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl->loadTemplateFile('cadastro.tpl');
 
 unset($semestre->codigo);
 
-$disciplinasBO = & new DisciplinasBO();
+$disciplinasBO = new DisciplinasBO();
 $disciplinasBO->preencheCombo($tpl, $dados);
 
 if ($dados !== null) {
@@ -114,7 +114,7 @@ if ($dados !== null) {
 	));
 
 	if (strlen($dados->disciplina)) {
-		$turmasBO = & new TurmasBO();
+		$turmasBO = new TurmasBO();
 		$turmasBO->preencheComboListaAlunos($tpl, $dados, $semestre);
 	}
 }

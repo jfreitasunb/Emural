@@ -11,19 +11,19 @@ require_once $ROOT_PATH.'lib/linkBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$templateBO = & new TemplateBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
-$disciplinasBO = & new DisciplinasBO();
-$alunosBO = & new AlunosBO();
-$composicaoTurmasBO = & new ComposicaoTurmasBO();
-$linkBO = & new LinkBO();
+$templateBO = new TemplateBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
+$disciplinasBO = new DisciplinasBO();
+$alunosBO = new AlunosBO();
+$composicaoTurmasBO = new ComposicaoTurmasBO();
+$linkBO = new LinkBO();
 
 $coordenador = $autenticacaoBO->verificarCoordenador();
 
 $tpl_main = $templateBO->carregarPaginaRelatorioCoordenadorPorcentagemMencoes();
 
-$tpl_pagina = & new HTML_Template_Sigma($ROOT_PATH.'template/relatorios');
+$tpl_pagina = new HTML_Template_Sigma($ROOT_PATH.'template/relatorios');
 $tpl_pagina->loadTemplateFile('coordenador_porcentagem_mencoes.tpl');
 
 if($_POST) {
@@ -32,7 +32,7 @@ if($_POST) {
 	$dados->disciplina = $_POST['disciplina'];
 	$dados->opcao_curso = $_POST['opcao_curso'];
 
-	$tpl_tabela = & new HTML_Template_Sigma($ROOT_PATH.'template');
+	$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl_tabela->loadTemplateFile('tabela_relatorios.tpl');
 	
 	$semestre_inicio = & $semestresBO->retornaPorCodigo($dados->inicio);

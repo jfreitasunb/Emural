@@ -11,7 +11,7 @@ class PessoasBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new PessoasDAO();
+		$this->DAO = new PessoasDAO();
 	}
 
 
@@ -99,7 +99,7 @@ class PessoasBO extends BO
 	{
 		GLOBAL $ALERTAS, $SENHAS_CODIFICADAS;
 
-		$alunosBO = & new AlunosBO();
+		$alunosBO = new AlunosBO();
 		$aluno = $alunosBO->retornaPorMatricula($aluno_dados->matricula);
 
 		if($aluno_dados->nova_senha == $aluno_dados->nova_senha_2) {
@@ -181,7 +181,7 @@ class PessoasBO extends BO
 
 	public function preenchePaginaEmail($tpl, $pessoa)
 	{
-		$preenche = & new stdClass();
+		$preenche = new stdClass();
 		$preenche->email = $pessoa->email;
 
 		$this->preencherObjeto($tpl, $pessoa);
@@ -204,7 +204,7 @@ class PessoasBO extends BO
 
 				$this->DAO->updateCamposDeFiltro($update, $filtro);
 
-				$moodleBO = & new MoodleBO();
+				$moodleBO = new MoodleBO();
 				$moodleBO->usuarioAtualizar($pessoa);
 
 				$alerta["NOTY_ECS"] = "";

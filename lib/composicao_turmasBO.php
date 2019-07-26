@@ -8,7 +8,7 @@ class ComposicaoTurmasBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new ComposicaoTurmasDAO();
+		$this->DAO = new ComposicaoTurmasDAO();
 	}
 
 
@@ -112,7 +112,7 @@ class ComposicaoTurmasBO extends BO
 
 	public function retornaArrayPorcentagemMencoes($dados)
 	{
-		$semestresBO = & new SemestresBO();
+		$semestresBO = new SemestresBO();
 
 		$semestre_inicio = & $semestresBO->retornaPorCodigo($dados->inicio);
 		$semestre_fim = & $semestresBO->retornaPorCodigo($dados->fim);
@@ -200,7 +200,7 @@ class ComposicaoTurmasBO extends BO
 
 	public function retornaArrayPorcentagemAprovados($dados)
 	{
-		$semestresBO = & new SemestresBO();
+		$semestresBO = new SemestresBO();
 
 		$semestre_inicio = & $semestresBO->retornaPorCodigo($dados->inicio);
 		$semestre_fim = & $semestresBO->retornaPorCodigo($dados->fim);

@@ -12,13 +12,13 @@ require_once $ROOT_PATH.'lib/semestresBO.php';
 require_once 'HTML/Template/Sigma.php';
 require_once 'HTTP.php';
 
-$urlBO = & new URLBO();
-$templateBO = & new TemplateBO();
-$turmasBO = & new TurmasBO();
-$observacoesBO = & new ObservacoesBO();
-$linkBO = & new LinkBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
+$urlBO = new URLBO();
+$templateBO = new TemplateBO();
+$turmasBO = new TurmasBO();
+$observacoesBO = new ObservacoesBO();
+$linkBO = new LinkBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
 
 $url = & $urlBO->codigoSegundoTerceiroNivel();
 
@@ -49,7 +49,7 @@ if($_POST) {
 
 $tpl_main = $templateBO->carregarPaginaAvisos($professor,$semestre,$turma);
 
-$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl->loadTemplateFile('avisos.tpl');
 
 

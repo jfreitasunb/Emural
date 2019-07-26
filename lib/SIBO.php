@@ -9,7 +9,7 @@ class SIBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new SIDAO();
+		$this->DAO = new SIDAO();
 	}
 
 

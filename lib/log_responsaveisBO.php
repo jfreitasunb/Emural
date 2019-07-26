@@ -7,7 +7,7 @@ class LogResponsaveisBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new LogResponsaveisDAO();
+		$this->DAO = new LogResponsaveisDAO();
 	}
 
 

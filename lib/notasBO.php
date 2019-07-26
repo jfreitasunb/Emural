@@ -8,7 +8,7 @@ class NotasBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new NotasDAO();
+		$this->DAO = new NotasDAO();
 	}
 
 
@@ -59,7 +59,7 @@ class NotasBO extends BO
 	{
 		$notas = $this->retornaNotasParaCalculoMedia($turma->codigo,$aluno->codigo);
 
-		$calcular = & new calcularMediaBO();
+		$calcular = new calcularMediaBO();
 
 		$return["media"] = $calcular->executar($turma->compisicao_nota,$notas);
 		$return["mencao"] = $this->mencaoDaMedia($return["media"]);
