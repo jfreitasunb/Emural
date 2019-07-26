@@ -5,7 +5,7 @@ $ROOT = "/";
 $ROOT_PATH = "/var/www/emural/";
 
 $SITE = "http://192.168.0.27/";
-$SITEM = "http://192.168.0.253/";
+$SITEM = "http://192.168.0.28/";
 //$SITE = "http://127.0.0.1:8083/";
 
 $CHARSET = "utf-8";
@@ -37,7 +37,7 @@ $TITULO = "E-mural - Mural Eletrônico de Notas do Departamento de Matemática -
 
 $DEPARTAMENTO = "matematica";
 
-$URL_MOODLE = "http://192.168.0.253";
+$URL_MOODLE = "http://192.168.0.28";
 $TOKEN_MOODLE = '412521a258356bd2f1acb1e2aa3c25cf';
 
 $SERVICOS_MOODLE = array();
