@@ -35,7 +35,7 @@ class EmailBO
 	{
 		global $EMAIL_VALIDACAO_ORIGEM, $SITE;
 
-		$linkBO = & new LinkBO();
+		$linkBO = new LinkBO();
 
 		$from = $EMAIL_VALIDACAO_ORIGEM;
 		$from_name = "E-mural";
@@ -51,7 +51,7 @@ class EmailBO
 	{
 		global $EMAIL_VALIDACAO_ORIGEM, $SITE;
 
-		$linkBO = & new LinkBO();
+		$linkBO = new LinkBO();
 
 		$from = $EMAIL_VALIDACAO_ORIGEM;
 		$from_name = "E-mural";

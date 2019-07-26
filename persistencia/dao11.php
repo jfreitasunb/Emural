@@ -27,7 +27,7 @@ class DAO1x1 extends DAO
 			$this->_db->commit();
 		}
 
-		$retorno = & new stdClass();
+		$retorno = new stdClass();
 		foreach($insert as $key => $value)
 		{
 			$retorno->$key .= $value;

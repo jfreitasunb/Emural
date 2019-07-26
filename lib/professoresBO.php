@@ -9,13 +9,13 @@ class ProfessoresBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new ProfessoresDAO();
+		$this->DAO = new ProfessoresDAO();
 	}
 
 
 	public function inserir($dados)
 	{
-		$pessoasBO = & new PessoasBO();
+		$pessoasBO = new PessoasBO();
 
 		$dados->tipo = 'professor';
 
@@ -40,7 +40,7 @@ class ProfessoresBO extends BO
 			if(count($obj_ret)) {
 				$retorno = & $obj_ret[0];
 			} else {
-				$siBO = & new SIBO();
+				$siBO = new SIBO();
 				$usuario_si = $siBO->retornaUsuarioSIPorCodigoSI($codigo_si);
 				$usuario_si->email = $usuario_si->usuario."@mat.unb.br";
 				$professor = $this->inserir($usuario_si);

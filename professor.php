@@ -8,13 +8,13 @@ require_once $ROOT_PATH.'lib/semestresBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$turmasBO = & new TurmasBO();
-$templateBO = & new TemplateBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
+$turmasBO = new TurmasBO();
+$templateBO = new TemplateBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
 
 /*require_once $ROOT_PATH.'lib/professoresBO.php';
-$professoresBO = & new ProfessoresBO();
+$professoresBO = new ProfessoresBO();
 $professor = $professoresBO->retornaPorCodigo(1);
 session_start();
 $_SESSION["professor"] = serialize($professor);/**/
@@ -29,7 +29,7 @@ $semestre = & $semestresBO->retornaUltimoSemestre();
 
 $tpl_main = $templateBO->carregarPaginaProfessor($professor,$semestre);
 
-$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 
 
 $tpl->loadTemplateFile('professor.tpl');

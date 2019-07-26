@@ -11,13 +11,13 @@ class AvaliacoesBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new AvaliacoesDAO();
+		$this->DAO = new AvaliacoesDAO();
 	}
 
 
 	public function preencherTurmaMenu($tpl,$turma)
 	{
-		$linkBO = & new LinkBO();
+		$linkBO = new LinkBO();
 
 		$lista_avaliacoes = & $this->retornaAvaliacoesDeTurma($turma);
 
@@ -179,8 +179,8 @@ class AvaliacoesBO extends BO
 	public function preencheTabelaAvaliacoes($tpl,$turma,$avaliacao_atual = null,$tipo = "padrao")
 	{
 		if($turma !== null) {
-			$notasBO = & new NotasBO();
-			$composicaoTurmasBO = & new ComposicaoTurmasBO();
+			$notasBO = new NotasBO();
+			$composicaoTurmasBO = new ComposicaoTurmasBO();
 
 			$existe_observacao = false;
 			$existe_medias_mencoes = false;
@@ -651,8 +651,8 @@ class AvaliacoesBO extends BO
 
 	public function retornaArrayAlunosProvasMedia($turma)
 	{
-		$notasBO = & new NotasBO();
-		$composicaoTurmasBO = & new ComposicaoTurmasBO();
+		$notasBO = new NotasBO();
+		$composicaoTurmasBO = new ComposicaoTurmasBO();
 
 		$matriculados = $composicaoTurmasBO->retornaAlunosMatriculados($turma);
 

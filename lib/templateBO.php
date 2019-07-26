@@ -18,7 +18,7 @@ class TemplateBO
 	{
 		GLOBAL $ROOT_PATH, $ROOT;
 
-		$this->linkBO = & new LinkBO();
+		$this->linkBO = new LinkBO();
 
 		$this->root_path = $ROOT_PATH;
 		$this->root = $ROOT;
@@ -27,12 +27,12 @@ class TemplateBO
 
 	private function carregarCabecalhoERodape()
 	{
-		$tpl_pagina = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl_pagina = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl_pagina->loadTemplateFile('cabecalho_rodape.tpl');
 
 		$this->iniciarCabecalhoRodape($tpl_pagina);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('rodape.tpl');
 
 		$tpl->setVariable(array(
@@ -49,11 +49,11 @@ class TemplateBO
 
 	private function carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre)
 	{
-		$turmas_BO = & new TurmasBO();
+		$turmas_BO = new TurmasBO();
 
 		$tpl_pagina = & $this->carregarCabecalhoERodape();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('menu_professor.tpl');
 
 		$turmas_BO->preencherMenuProfessor($tpl,$professor,$semestre->ano,$semestre->semestre);
@@ -75,11 +75,11 @@ class TemplateBO
 
 	private function carregarCabecalhoERodapeDeAlunoComMenu($aluno, $existe_menu = true)
 	{
-		$turmas_BO = & new TurmasBO();
+		$turmas_BO = new TurmasBO();
 
 		$tpl_pagina = & $this->carregarCabecalhoERodape();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('menu_aluno.tpl');
 
 		$this->iniciarMenuAluno($tpl, $aluno, $existe_menu);
@@ -101,11 +101,11 @@ class TemplateBO
 
 	private function carregarCabecalhoERodapeDeCoordenadorComMenu()
 	{
-		$turmas_BO = & new TurmasBO();
+		$turmas_BO = new TurmasBO();
 
 		$tpl_pagina = & $this->carregarCabecalhoERodape();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('menu_coordenador.tpl');
 
 		$this->iniciarMenuCoordenador($tpl);
@@ -128,7 +128,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -163,7 +163,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -194,7 +194,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -225,7 +225,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -250,7 +250,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -281,7 +281,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -312,7 +312,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor, $semestre);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -332,7 +332,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -352,7 +352,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -377,7 +377,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -402,7 +402,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno, $existe_menu);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -427,7 +427,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -447,7 +447,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -472,7 +472,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -497,7 +497,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -522,7 +522,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -547,7 +547,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -572,7 +572,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -603,7 +603,7 @@ class TemplateBO
 	{
 		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
 
 		$tpl->setVariable(array(
@@ -882,7 +882,7 @@ class TemplateBO
 
 	public function carregarCabecalhoRodapeMat()
 	{
-		$tpl_pagina = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl_pagina = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl_pagina->loadTemplateFile('mat_cabecalho_rodape.tpl');
 
 		$this->iniciarCabecalhoRodapeMat($tpl_pagina);
@@ -893,12 +893,12 @@ class TemplateBO
 
 	public function carregarCabecalhoRodapeSomente()
 	{
-		$tpl_pagina = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl_pagina = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl_pagina->loadTemplateFile('cabecalho_rodape.tpl');
 
 		$this->iniciarCabecalhoRodape($tpl_pagina);
 
-		$tpl = & new HTML_Template_Sigma($this->root_path.'template');
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('rodape.tpl');
 
 		$tpl->setVariable(array(
@@ -917,8 +917,8 @@ class TemplateBO
 
 	public function fechar($tpl)
 	{
-		$alertasBO = & new AlertasBO();
-		$urlBO = & new URLBO();
+		$alertasBO = new AlertasBO();
+		$urlBO = new URLBO();
 
 		$tpl->parse("body");
 

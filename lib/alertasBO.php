@@ -185,7 +185,7 @@ class AlertasBO
 	{
 		GLOBAL $ROOT_PATH, $ROOT, $ALERTAS;
 
-		$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+		$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 		$tpl->loadTemplateFile('alertas.tpl');
 
 		if($ALERTAS !== null && count($ALERTAS)) {

@@ -8,7 +8,7 @@ class SemestresBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new SemestresDAO();
+		$this->DAO = new SemestresDAO();
 	}
 
 

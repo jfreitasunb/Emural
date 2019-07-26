@@ -11,13 +11,13 @@ require_once $ROOT_PATH.'lib/composicao_turmasBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$urlBO = & new URLBO();
-$turmasBO = & new TurmasBO();
-$templateBO = & new TemplateBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
-$avaliacoesBO = & new AvaliacoesBO();
-$composicaoTurmasBO = & new ComposicaoTurmasBO();
+$urlBO = new URLBO();
+$turmasBO = new TurmasBO();
+$templateBO = new TemplateBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
+$avaliacoesBO = new AvaliacoesBO();
+$composicaoTurmasBO = new ComposicaoTurmasBO();
 
 $url = $urlBO->codigoSegundoNivel();
 
@@ -44,7 +44,7 @@ if($_POST) {
 
 $tpl_main = $templateBO->carregarPaginaCoordenadorRevisaoMencoes();
 
-$tpl_pagina = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl_pagina = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl_pagina->loadTemplateFile('coordenador_revisao_mencoes.tpl');
 
 $turmasBO->preencherObjeto($tpl_pagina,$turma,"turma_");
@@ -52,7 +52,7 @@ $turmasBO->preencheComboMesmoSemestre($tpl_pagina,$turma);
 $semestresBO->preencheComboAnoSemestreExcetoAtual($tpl_pagina,$turma);
 
 if($turma !== null) {
-	$tpl_tabela = & new HTML_Template_Sigma($ROOT_PATH.'template');
+	$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl_tabela->loadTemplateFile('tabela.tpl');
 
 	$avaliacoesBO->preencheTabelaAvaliacoes($tpl_tabela,$turma,null,"medias_mencoes");

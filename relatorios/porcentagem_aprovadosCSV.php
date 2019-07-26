@@ -5,8 +5,8 @@ require_once $ROOT_PATH.'lib/autenticacaoBO.php';
 require_once $ROOT_PATH.'lib/relatoriosBO.php';
 require_once $ROOT_PATH.'lib/composicao_turmasBO.php';
 
-$autenticacaoBO = & new AutenticacaoBO();
-$composicarTurmasBO = & new ComposicaoTurmasBO();
+$autenticacaoBO = new AutenticacaoBO();
+$composicarTurmasBO = new ComposicaoTurmasBO();
 
 $coordenador = $autenticacaoBO->verificarCoordenador();
 

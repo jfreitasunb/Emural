@@ -7,7 +7,7 @@ class CodigoItemBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new Codigo_ItemDAO();
+		$this->DAO = new Codigo_ItemDAO();
 	}
 
 

@@ -5,7 +5,7 @@ require_once $ROOT_PATH.'lib/codigo_itemBO.php';
 $string = $_POST['queryString'];
 //echo $string."<br>";
 if(strlen($string) > 0) {
-	$codigoItemBO = & new CodigoItemBO();
+	$codigoItemBO = new CodigoItemBO();
 	$itens = & $codigoItemBO->retornaAutoSuggestTipoAvaliacao($string);
 
 	if(count($itens)) {

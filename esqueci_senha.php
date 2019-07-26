@@ -9,10 +9,10 @@ require_once $ROOT_PATH.'lib/alertasBO.php';
 
 require_once $ROOT_PATH.'lib/linkBO.php';
 
-$urlBO = & new URLBO();
+$urlBO = new URLBO();
 $url = $urlBO->informacoesGet();
 
-$templateBO = & new TemplateBO();
+$templateBO = new TemplateBO();
 
 $dados = null;
 
@@ -23,14 +23,14 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 	$pessoasBO =  & new PessoasBO();
 	$pessoa = $pessoasBO->retornaPorHastEsqueciSenha($hast_esqueci);
 
-	$linkBO = & new LinkBO();
+	$linkBO = new LinkBO();
 	if ($pessoa === null) {
 		HTTP::redirect($linkBO->getEsqueciSenha());
 		exit();
 	}
 
 	if ($_POST) {
-		$dados = & new stdClass();
+		$dados = new stdClass();
 		$dados->senha = $_POST['senha'];
 		$dados->confirmar_senha = $_POST['confirmar_senha'];
 
@@ -55,7 +55,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 		}
 	}
 
-	$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+	$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl->loadTemplateFile('mudar_senha.tpl');
 
 	$tpl->setVariable(array(
@@ -67,7 +67,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 		$tpl_main = $templateBO->carregarCabecalhoRodapeMat();
 
 		if (count($ALERTAS)) {
-			$alertasBO = & new AlertasBO();
+			$alertasBO = new AlertasBO();
 			$alertas = $alertasBO->getAlertas();
 
 			foreach($ALERTAS as $aviso => $nada) {
@@ -85,7 +85,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 		));
 		$tpl_main->parse("adicionar_conteudo_topo");
 
-		$alertasBO = & new AlertasBO();
+		$alertasBO = new AlertasBO();
 		$alertasBO->preencheAlertas($tpl_main);
 	}
 
@@ -98,7 +98,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 	$tpl_main->show();
 } else {
 	if ($_POST) {
-		$dados = & new stdClass();
+		$dados = new stdClass();
 		$dados->matricula = preg_replace("/[^0-9 ]/", '', $_POST['matricula']);
 		$dados->email = trim($_POST['email']);
 
@@ -108,7 +108,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 			$ALERTAS['ESEV'] = "";
 		}
 
-		$pessoasBO = & new PessoasBO();
+		$pessoasBO = new PessoasBO();
 		$pessoa = $pessoasBO->retornaPorUsuario($dados->matricula);
 
 		if (!count($ALERTAS)) {
@@ -122,7 +122,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 							$tipo = "moodle";
 						}
 
-						$emailBO = & new EmailBO();
+						$emailBO = new EmailBO();
 						$emailBO->enviarEsqueciSenha($pessoa, $tipo);
 						$ALERTAS['ESEEMS'] = "";
 						$dados = null;
@@ -138,7 +138,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 		}
 	}
 
-	$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+	$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl->loadTemplateFile('esqueci_senha.tpl');
 
 	if ($dados !== null) {
@@ -154,7 +154,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 		$tpl_main = $templateBO->carregarCabecalhoRodapeMat();
 
 		if (count($ALERTAS)) {
-			$alertasBO = & new AlertasBO();
+			$alertasBO = new AlertasBO();
 			$alertas = $alertasBO->getAlertas();
 
 			foreach($ALERTAS as $aviso => $nada) {
@@ -172,7 +172,7 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 		));
 		$tpl_main->parse("adicionar_conteudo_topo");
 
-		$alertasBO = & new AlertasBO();
+		$alertasBO = new AlertasBO();
 		$alertasBO->preencheAlertas($tpl_main);
 	}
 

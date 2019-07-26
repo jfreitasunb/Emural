@@ -14,8 +14,8 @@ if(isset($_POST['codigoDisciplina'])) {
 }
 
 if(strlen($codigo_disciplina) > 0) {
-	$semestresBO = & new SemestresBO();
-	$turmasDAO = & new TurmasDAO();
+	$semestresBO = new SemestresBO();
+	$turmasDAO = new TurmasDAO();
 
 	$semestre = $semestresBO->retornaUltimoSemestre();
 

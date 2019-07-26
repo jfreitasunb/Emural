@@ -11,13 +11,13 @@ require_once $ROOT_PATH.'lib/linkBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$urlBO = & new URLBO();
-$turmasBO = & new TurmasBO();
-$templateBO = & new TemplateBO();
-$avaliacoesBO = & new AvaliacoesBO();
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
-$linkBO = & new LinkBO();
+$urlBO = new URLBO();
+$turmasBO = new TurmasBO();
+$templateBO = new TemplateBO();
+$avaliacoesBO = new AvaliacoesBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
+$linkBO = new LinkBO();
 
 $url = & $urlBO->codigoSegundoNivel();
 
@@ -81,7 +81,7 @@ $semestre = & $semestresBO->retornaUltimoSemestre();
 
 $tpl_main = $templateBO->carregarPaginaConfiguracaoTurma($professor,$semestre,$turma);
 
-$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 
 $tpl->loadTemplateFile('turma_configuracao.tpl');
 $turmasBO->preencherObjeto($tpl,$turma,"turma_");

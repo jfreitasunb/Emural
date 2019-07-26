@@ -8,8 +8,8 @@ class ResponsaveisBO extends BO
 {
 	function __construct()
 	{
-		$this->DAO = & new ResponsaveisDAO();
-		$this->linkBO = & new LinkBO();
+		$this->DAO = new ResponsaveisDAO();
+		$this->linkBO = new LinkBO();
 	}
 
 

@@ -13,8 +13,8 @@ require_once 'HTML/Template/Sigma.php';
 
 define('CAMINHO_UPLOAD_ARQUIVO', $ROOT_PATH."upload/");
 
-$autenticacaoBO = & new AutenticacaoBO();
-$semestresBO = & new SemestresBO();
+$autenticacaoBO = new AutenticacaoBO();
+$semestresBO = new SemestresBO();
 
 
 $coordenador = $autenticacaoBO->verificarCoordenador();
@@ -24,7 +24,7 @@ $semestre = & $semestresBO->retornaUltimoSemestre();
 $novo = false;
 
 if($_POST) {
-	$semestre_alterar = & new stdClass();
+	$semestre_alterar = new stdClass();
 	$semestre_alterar->ano = $_POST['ano'];
 	$semestre_alterar->semestre = $_POST['semestre'];
 	$semestre_alterar->inicio = $_POST['inicio'];
@@ -66,13 +66,13 @@ if($_POST) {
 
 	$semestre = & $semestresBO->retornaUltimoSemestre();
 
-	$turmasBO = & new TurmasBO();
+	$turmasBO = new TurmasBO();
 
 	if($novo) {
-		$pessoasBO = & new PessoasBO();
+		$pessoasBO = new PessoasBO();
 		$pessoasBO->zerarCodigoMoodle();
 
-		$monitoresBO = & new MonitoresBO();
+		$monitoresBO = new MonitoresBO();
 		$monitoresBO->desativarMonitores();
 
 		$turmasBO->atualizacaoTurmasInicioSemestre($semestre, $disciplinas_juntas);
@@ -81,17 +81,17 @@ if($_POST) {
 	}
 }
 
-$templateBO = & new TemplateBO();
+$templateBO = new TemplateBO();
 $tpl_main = $templateBO->carregarPaginaCoordenadorSemestres();
 
-$tpl = & new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl->loadTemplateFile('coordenador_semestres.tpl');
 
 $templateBO->iniciarCoordenadorSemestres($tpl);
 
 $semestresBO->preencheFormularioCoordenadorSemestres($tpl, $semestre);
 
-$disciplinasBO = & new DisciplinasBO();
+$disciplinasBO = new DisciplinasBO();
 $disciplinasBO->preencheCombosCoordenadorSemestre($tpl);
 
 $tpl_main->setVariable(array(

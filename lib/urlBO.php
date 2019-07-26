@@ -120,7 +120,7 @@ class URLBO {
 
 	function informacoesGet()
 	{
-		$url = & new stdClass();
+		$url = new stdClass();
 
 		if(isset($_GET)) {
 			foreach ($_GET as $chave => $valor) {
