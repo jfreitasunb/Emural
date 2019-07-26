@@ -1,0 +1,102 @@
+stdClass Object
+(
+    [codigo] => 2
+    [professor] => 3
+    [disciplina] => 2
+    [periodo] => Diurno
+    [descricao] => C
+    [ano] => 2012
+    [semestre] => 2
+    [compisicao_nota] => 
+    [sala] => 
+    [exibe_media] => 
+    [exibe_mencao] => 
+    [disciplina_descricao] => CALCULO 1
+    [creditos] => 6
+    [codigo_cpd] => 113034
+)
+stdClass Object
+(
+    [codigo] => 3
+    [professor] => 4
+    [disciplina] => 2
+    [periodo] => Diurno
+    [descricao] => E
+    [ano] => 2012
+    [semestre] => 2
+    [compisicao_nota] => 
+    [sala] => 
+    [exibe_media] => 
+    [exibe_mencao] => 
+    [disciplina_descricao] => CALCULO 1
+    [creditos] => 6
+    [codigo_cpd] => 113034
+)
+stdClass Object
+(
+    [codigo] => 4
+    [professor] => 4
+    [disciplina] => 2
+    [periodo] => Noturno
+    [descricao] => G
+    [ano] => 2012
+    [semestre] => 2
+    [compisicao_nota] => 
+    [sala] => 
+    [exibe_media] => 
+    [exibe_mencao] => 
+    [disciplina_descricao] => CALCULO 1
+    [creditos] => 6
+    [codigo_cpd] => 113034
+)
+stdClass Object
+(
+    [codigo] => 5
+    [professor] => 4
+    [disciplina] => 2
+    [periodo] => Noturno
+    [descricao] => T
+    [ano] => 2012
+    [semestre] => 2
+    [compisicao_nota] => 
+    [sala] => 
+    [exibe_media] => 
+    [exibe_mencao] => 
+    [disciplina_descricao] => CALCULO 1
+    [creditos] => 6
+    [codigo_cpd] => 113034
+)
+stdClass Object
+(
+    [codigo] => 6
+    [professor] => 5
+    [disciplina] => 3
+    [periodo] => Diurno
+    [descricao] => A
+    [ano] => 2012
+    [semestre] => 2
+    [compisicao_nota] => 
+    [sala] => 
+    [exibe_media] => 
+    [exibe_mencao] => 
+    [disciplina_descricao] => CALCULO 2
+    [creditos] => 6
+    [codigo_cpd] => 113042
+)
+stdClass Object
+(
+    [codigo] => 7
+    [professor] => 5
+    [disciplina] => 3
+    [periodo] => Diurno
+    [descricao] => K
+    [ano] => 2012
+    [semestre] => 2
+    [compisicao_nota] => 
+    [sala] => 
+    [exibe_media] => 
+    [exibe_mencao] => 
+    [disciplina_descricao] => CALCULO 2
+    [creditos] => 6
+    [codigo_cpd] => 113042
+)

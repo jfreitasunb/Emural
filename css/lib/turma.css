@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+
+#lista_tarefas_monitores {
+	list-style: disc;
+	padding: 0 0 0 15px;
+}
+
+#lista_tarefas_monitores li {
+	padding-bottom: 10px;
+}
+
+.tit_14 {
+	margin: 0 0 15px 0;
+}

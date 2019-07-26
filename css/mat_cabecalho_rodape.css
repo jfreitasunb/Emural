@@ -1,0 +1,102 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 0;
+}
+
+input, body, select {
+	font-family: 'MyriadPro-Regular';
+	color: #454749;
+	font-size: 12pt;
+}
+
+p{
+	font-size: 14px;
+	font-family: 'MyriadPro-Regular';
+	margin: 0 0 3px;
+}
+
+.container {
+	width: 960px;
+	margin: 0 auto;
+	padding: 0;
+}
+
+.clear {
+	clear: both;
+}
+
+.left {
+	width: 250px;
+	float: left;
+}
+
+.right {
+	width: 710px;
+	float: right;
+}
+
+.logo {
+	margin: 15px 30px 10px 25px;
+}
+
+#mensagem {
+	margin-bottom: 25px;
+	color: #aa0000;
+}
+
+#corpo_conteudo {
+	border-top: 2px solid #00427e;
+	border-bottom: 2px solid #00427e;
+	padding-top: 20px;
+	padding-bottom: 40px;
+	min-width: 970px;
+}
+
+#corpo_conteudo form {
+	margin: 0 310px
+}
+
+#corpo_conteudo .field {
+	float: left;
+	width: 100%;
+	margin-bottom: 5px;
+}
+
+#corpo_conteudo .field label {
+	float: left;
+	display: block;
+	width: 120px;
+	text-align: right;
+	padding-right: 5px;
+	line-height: 22px;
+	vertical-align: middle;
+}
+
+#corpo_conteudo .field input,
+#corpo_conteudo .field select {
+	float: left;
+	display: block;
+	width: 200px;
+}
+
+.submit {
+	float: right;
+	margin-top: 10px;
+}
+
+#footer{
+	padding-top: 15px;
+}
+#footer .left{
+	width:50%;
+	float:left;
+	text-align:left;
+}
+
+.blue {
+	color: #00427e;
+}
+.text-center {
+	text-align: center;
+}

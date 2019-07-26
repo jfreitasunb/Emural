@@ -1,0 +1,76 @@
+-- Executar como postgres
+-- 2012/05/30
+
+CREATE OR REPLACE FUNCTION to_ascii(bytea, name)
+RETURNS text STRICT AS 'to_ascii_encname' LANGUAGE internal IMMUTABLE;
+
+-- 2012/08/20
+
+INSERT INTO semestres(sem_ano, sem_seme) VALUES (2012, 1);
+
+
+
+
+-- 2014/09/21
+
+ALTER TABLE alunos DROP COLUMN alu_emai RESTRICT;
+ALTER TABLE pessoas ADD COLUMN pes_emai varchar(80);
+
+
+
+
+-- 2014/10/10
+
+ALTER TABLE pessoas ADD COLUMN pes_cmdl integer;
+ALTER TABLE turmas ADD COLUMN tur_cmdl integer;
+
+CREATE TABLE grupos
+(
+  gru_cgru serial NOT NULL,
+  gru_ctur integer,
+  gru_cmdl integer,
+  CONSTRAINT grupo_pkey PRIMARY KEY (gru_cgru),
+  CONSTRAINT "grupos_turmaFK" FOREIGN KEY (gru_ctur)
+      REFERENCES turmas (tur_ctur) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+
+
+
+
+-- 2014/11/28
+
+ALTER TABLE pessoas ADD COLUMN pes_eval boolean;
+ALTER TABLE pessoas ADD COLUMN pes_econ varchar(100);
+
+UPDATE pessoas SET pes_emai = pes_usua || '@mat.unb.br', pes_eval = true WHERE pes_tipo = 'professor';
+
+
+
+
+-- 2015/02/10
+
+UPDATE pessoas SET pes_nome = regexp_replace(pes_nome, 
+       E'( Tr)?[\r\n\t\f\s\n ]*$', 
+        '', 'g');
+        
+
+
+
+-- 2015/03/09
+
+ALTER TABLE avaliacoes ALTER COLUMN ava_stat SET DEFAULT true;
+
+
+
+
+-- 2015/03/10
+
+ALTER SEQUENCE pessoa_pes_cpes_seq RENAME TO pessoas_pes_cpes_seq;
+
+
+
+
+-- 2015/03/17
+
+ALTER TABLE pessoas ADD COLUMN pes_smud varchar(100);

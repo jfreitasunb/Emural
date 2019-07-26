@@ -1,0 +1,120 @@
+
+RewriteEngine on
+
+
+
+RewriteRule   ^/turma_configuracao.php(.*)						/turma_configuracao.php$1							[L,PT]
+RewriteRule   ^/turma_configuracao(.*)							/turma_configuracao.php$1							[L,PT]
+RewriteRule   ^/turma_configuracao.html(.*)						/turma_configuracao.php$1							[L,PT]
+
+RewriteRule   ^/medias_mencoes.php(.*)							/medias_mencoes.php$1								[L,PT]
+RewriteRule   ^/medias_mencoes(.*)								/medias_mencoes.php$1								[L,PT]
+RewriteRule   ^/medias_mencoes.html(.*)							/medias_mencoes.php$1								[L,PT]
+
+RewriteRule   ^/professor.php(.*)								/professor.php$1									[L,PT]
+RewriteRule   ^/professor(.*)									/professor.php$1									[L,PT]
+RewriteRule   ^/professor.html(.*)								/professor.php$1									[L,PT]
+
+RewriteRule   ^/turma.php(.*)									/turma.php$1										[L,PT]
+RewriteRule   ^/turma(.*)										/turma.php$1										[L,PT]
+RewriteRule   ^/turma.html(.*)									/turma.php$1										[L,PT]
+
+RewriteRule   ^/avaliacao.php(.*)								/avaliacao.php$1									[L,PT]
+RewriteRule   ^/avaliacao(.*)									/avaliacao.php$1									[L,PT]
+RewriteRule   ^/avaliacao.html(.*)								/avaliacao.php$1									[L,PT]
+
+RewriteRule   ^/avisos.php(.*)									/avisos.php$1										[L,PT]
+RewriteRule   ^/avisos(.*)										/avisos.php$1										[L,PT]
+RewriteRule   ^/avisos.html(.*)									/avisos.php$1										[L,PT]
+
+RewriteRule   ^/monitores.php(.*)								/monitores.php$1									[L,PT]
+RewriteRule   ^/monitores(.*)									/monitores.php$1									[L,PT]
+RewriteRule   ^/monitores.html(.*)								/monitores.php$1									[L,PT]
+
+RewriteRule   ^/sair.php(.*)									/sair.php$1											[L,PT]
+RewriteRule   ^/sair(.*)										/sair.php$1											[L,PT]
+RewriteRule   ^/sair.html(.*)									/sair.php$1											[L,PT]
+
+RewriteRule   ^/coordenador.php(.*)								/coordenador.php$1									[L,PT]
+RewriteRule   ^/coordenador(.*)									/coordenador.php$1									[L,PT]
+RewriteRule   ^/coordenador.html(.*)							/coordenador.php$1									[L,PT]
+
+RewriteRule   ^/semestres.php(.*)								/coordenador_semestres.php$1						[L,PT]
+RewriteRule   ^/semestres(.*)									/coordenador_semestres.php$1						[L,PT]
+RewriteRule   ^/semestres.html(.*)								/coordenador_semestres.php$1						[L,PT]
+
+RewriteRule   ^/revisao_mencoes.php(.*)							/coordenador_revisao_mencoes.php$1					[L,PT]
+RewriteRule   ^/revisao_mencoes(.*)								/coordenador_revisao_mencoes.php$1					[L,PT]
+RewriteRule   ^/revisao_mencoes.html(.*)						/coordenador_revisao_mencoes.php$1					[L,PT]
+
+RewriteRule   ^/senha.php(.*)									/coordenador_senha.php$1							[L,PT]
+RewriteRule   ^/senha(.*)										/coordenador_senha.php$1							[L,PT]
+RewriteRule   ^/senha.html(.*)									/coordenador_senha.php$1							[L,PT]
+
+RewriteRule   ^/aluno_senha.php(.*)								/coordenador_aluno_senha.php$1						[L,PT]
+RewriteRule   ^/aluno_senha(.*)									/coordenador_aluno_senha.php$1						[L,PT]
+RewriteRule   ^/aluno_senha.html(.*)							/coordenador_aluno_senha.php$1						[L,PT]
+
+RewriteRule   ^/aluno_email.php(.*)								/coordenador_aluno_email.php$1						[L,PT]
+RewriteRule   ^/aluno_email(.*)									/coordenador_aluno_email.php$1						[L,PT]
+RewriteRule   ^/aluno_email.html(.*)							/coordenador_aluno_email.php$1						[L,PT]
+
+RewriteRule   ^/relatorios/turmaCSV.php(.*)						/relatorios/turmaCSV.php$1							[L,PT]
+RewriteRule   ^/relatorios/turmaCSV(.*)							/relatorios/turmaCSV.php$1							[L,PT]
+RewriteRule   ^/relatorios/turmaCSV.html(.*)					/relatorios/turmaCSV.php$1							[L,PT]
+
+RewriteRule   ^/relatorios/porcentagem_mencoesCSV.php(.*)		/relatorios/porcentagem_mencoesCSV.php$1			[L,PT]
+RewriteRule   ^/relatorios/porcentagem_mencoesCSV(.*)			/relatorios/porcentagem_mencoesCSV.php$1			[L,PT]
+RewriteRule   ^/relatorios/porcentagem_mencoesCSV.html(.*)		/relatorios/porcentagem_mencoesCSV.php$1			[L,PT]
+
+RewriteRule   ^/relatorios/porcentagem_aprovadosCSV.php(.*)		/relatorios/porcentagem_aprovadosCSV.php$1			[L,PT]
+RewriteRule   ^/relatorios/porcentagem_aprovadosCSV(.*)			/relatorios/porcentagem_aprovadosCSV.php$1			[L,PT]
+RewriteRule   ^/relatorios/porcentagem_aprovadosCSV.html(.*)	/relatorios/porcentagem_aprovadosCSV.php$1			[L,PT]
+
+RewriteRule   ^/relatorios/lista_alunosCSV.php(.*)				/relatorios/lista_alunosCSV.php$1					[L,PT]
+RewriteRule   ^/relatorios/lista_alunosCSV(.*)					/relatorios/lista_alunosCSV.php$1					[L,PT]
+RewriteRule   ^/relatorios/lista_alunosCSV.html(.*)				/relatorios/lista_alunosCSV.php$1					[L,PT]
+
+RewriteRule   ^/relatorios/porcentagem_mencoes.php(.*)			/coordenador_relatorio_porcentagem_mencoes.php$1	[L,PT]
+RewriteRule   ^/relatorios/porcentagem_mencoes(.*)				/coordenador_relatorio_porcentagem_mencoes.php$1	[L,PT]
+RewriteRule   ^/relatorios/porcentagem_mencoes.html(.*)			/coordenador_relatorio_porcentagem_mencoes.php$1	[L,PT]
+
+RewriteRule   ^/relatorios/porcentagem_aprovados.php(.*)		/coordenador_relatorio_porcentagem_aprovados.php$1	[L,PT]
+RewriteRule   ^/relatorios/porcentagem_aprovados(.*)			/coordenador_relatorio_porcentagem_aprovados.php$1	[L,PT]
+RewriteRule   ^/relatorios/porcentagem_aprovados.html(.*)		/coordenador_relatorio_porcentagem_aprovados.php$1	[L,PT]
+
+RewriteRule   ^/relatorios/lista_alunos.php(.*)					/coordenador_relatorio_lista_alunos.php$1			[L,PT]
+RewriteRule   ^/relatorios/lista_alunos(.*)						/coordenador_relatorio_lista_alunos.php$1			[L,PT]
+RewriteRule   ^/relatorios/lista_alunos.html(.*)				/coordenador_relatorio_lista_alunos.php$1			[L,PT]
+
+RewriteRule   ^/relatorios/reprovados_disciplina.php(.*)		/coordenador_relatorio_reprovados_disciplina.php$1	[L,PT]
+RewriteRule   ^/relatorios/reprovados_disciplina(.*)			/coordenador_relatorio_reprovados_disciplina.php$1	[L,PT]
+RewriteRule   ^/relatorios/reprovados_disciplina.html(.*)		/coordenador_relatorio_reprovados_disciplina.php$1	[L,PT]
+
+RewriteRule   ^/notas.php(.*)									/aluno_notas.php$1									[L,PT]
+RewriteRule   ^/notas(.*)										/aluno_notas.php$1									[L,PT]
+RewriteRule   ^/notas.html(.*)									/aluno_notas.php$1									[L,PT]
+
+RewriteRule   ^/alterar_senha.php(.*)							/aluno_senha.php$1									[L,PT]
+RewriteRule   ^/alterar_senha(.*)								/aluno_senha.php$1									[L,PT]
+RewriteRule   ^/alterar_senha.html(.*)							/aluno_senha.php$1									[L,PT]
+
+RewriteRule   ^/alterar_email.php(.*)							/aluno_email.php$1									[L,PT]
+RewriteRule   ^/alterar_email(.*)								/aluno_email.php$1									[L,PT]
+RewriteRule   ^/alterar_email.html(.*)							/aluno_email.php$1									[L,PT]
+
+RewriteRule   ^/aluno.php(.*)									/aluno.php$1										[L,PT]
+RewriteRule   ^/aluno(.*)										/aluno.php$1										[L,PT]
+RewriteRule   ^/aluno.html(.*)									/aluno.php$1										[L,PT]
+
+RewriteRule   ^/email_confirma.php(.*)							/email_confirma.php$1								[L,PT]
+RewriteRule   ^/email_confirma(.*)								/email_confirma.php$1								[L,PT]
+RewriteRule   ^/email_confirma.html(.*)							/email_confirma.php$1								[L,PT]
+
+RewriteRule   ^/cadastro.php(.*)								/cadastro.php$1										[L,PT]
+RewriteRule   ^/cadastro(.*)									/cadastro.php$1										[L,PT]
+RewriteRule   ^/cadastro.html(.*)								/cadastro.php$1										[L,PT]
+
+RewriteRule   ^/esqueci_senha.php(.*)							/esqueci_senha.php$1								[L,PT]
+RewriteRule   ^/esqueci_senha(.*)								/esqueci_senha.php$1								[L,PT]
+RewriteRule   ^/esqueci_senha.html(.*)							/esqueci_senha.php$1								[L,PT]

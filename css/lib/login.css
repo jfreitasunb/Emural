@@ -1,0 +1,84 @@
+@CHARSET "UTF-8";
+
+#corpo_pagina{
+	margin: -5px 0 0 0;
+}
+
+#corpo{
+	padding: 20px 0 0 0;
+}
+
+#esquerda {
+	border-width: 0px;
+	float: left;
+	width: 707px;
+	margin: 0 20px 0 0;
+	padding: 0 0;
+}
+
+#titulo_esquerda {
+	background-color: #00427E;
+	height: 32px;
+	padding-left: 90px;
+	color: #FFFFFF;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#titulo_esquerda span,
+#titulo_direita span {
+	line-height: 32px;
+	vertical-align: middle;
+}
+
+#conteudo_esquerda {
+	padding: 11px 90px 78px 90px;
+	text-align: justify;
+}
+
+#titulo_direita {
+	background-color: #008C45;
+	height: 32px;
+	padding-left: 15px;
+	color: #FFFFFF;
+	vertical-align: middle;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+#direita {
+	border-width: 0px;
+	float: left;
+	width: 227px;
+	margin: 0 0 0 0;
+	padding: 0 0;
+}
+
+#conteudo_direita {
+	text-align: right;
+	padding: 10px 6px 0 0;
+}
+
+#conteudo_direita div {
+	padding: 0 0 5px 0;
+}
+
+#conteudo_direita .input_login {
+	width: 142px;
+	height: 24px;
+	margin: 0 0 0 7px;
+}
+
+#conteudo_direita .meio_centralizado {
+	text-align: center;
+	padding-left: 69px;
+}
+
+#conteudo_direita #div_submit {
+	margin-top: 10px;
+}
+
+#conteudo_direita #div_submit input {
+	padding-left: 20px;
+	padding-right: 20px;
+}

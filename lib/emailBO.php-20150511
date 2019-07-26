@@ -1,0 +1,67 @@
+<?php
+
+require_once $ROOT_PATH."lib/linkBO.php";
+require_once $ROOT_PATH."lib/phpmailer.inc.php";
+
+class EmailBO
+{
+	private function enviar($subject, $text, $from, $from_name, $to)
+	{
+		global $SMTP;
+
+		$mail = new phpmailer();
+		$mail->AddAddress($to);
+
+		$mail->IsSMTP(); // set mailer to use SMTP
+		$mail->Host = $SMTP["host"];  // specify main and backup server
+		//$mail->Host = "127.0.0.1";  // specify main and backup server
+		//$mail->AddAddress("ellen@site.com");   // name is optional
+		//$mail->AddReplyTo("info@site.com", "Information");
+		$mail->WordWrap = $SMTP["wordWrap"];    // set word wrap
+		//$mail->AddAttachment("c:\\temp\\js-bak.sql");  // add attachments
+		//$mail->AddAttachment("c:/temp/11-10-00.zip");
+
+		$mail->IsHTML(true);    // set email format to HTML
+		$mail->Subject = $subject;
+		$mail->From = $from ;
+		$mail->FromName = $from_name;
+		$mail->Body = $text;
+
+		$mail->Send();
+	}
+
+
+	public function enviarValidacao($pessoa)
+	{
+		global $EMAIL_VALIDACAO_ORIGEM, $SITE, $SITEM;
+
+		$linkBO = & new LinkBO();
+
+		$from = $EMAIL_VALIDACAO_ORIGEM;
+		$from_name = "E-mural";
+		$to = $pessoa->email;
+		$subject = "Confirmação de email";
+		$text = 'Prezado '.$pessoa->nome.'<br><br>Para confirmar esse email como o email de acesso da matricula: '.$pessoa->usuario.' ao <a href="'.$SITE.'" target="_blank">E-mural</a> e ao <a href="'.$SITEM.'" target="_blank">MoodleMat</a>, entre neste <a href="'.$linkBO->getEmailConfirmacaoExterno($pessoa).'" target="_blank">'.$linkBO->getEmailConfirmacaoExterno($pessoa).'</a>';
+
+		$this->enviar($subject, $text, $from, $from_name, $to);
+	}
+
+
+	public function enviarEsqueciSenha($pessoa, $tipo = null)
+	{
+		global $EMAIL_VALIDACAO_ORIGEM, $SITE;
+
+		$linkBO = & new LinkBO();
+
+		$from = $EMAIL_VALIDACAO_ORIGEM;
+		$from_name = "E-mural";
+		$to = $pessoa->email;
+		$subject = "Esqueci a senha";
+
+		$text  = 'Prezado '.$pessoa->nome.'<br><br>Foi feito um pedido de mudança de senha na sua conta no mat.unb.br.<br>';
+		$text .= 'Para redefinir a senha, entre neste link:  <a href="'.$linkBO->getEsqueciSenhaFormularioMudarSenhaExterno($pessoa, $tipo).'" target="_blank">'.$linkBO->getEsqueciSenhaFormularioMudarSenhaExterno($pessoa, $tipo).'</a><br><br>';
+		$text .= 'Caso não tenha pedido a mudança de senha ignore esse email.';
+
+		$this->enviar($subject, $text, $from, $from_name, $to);
+	}
+}
