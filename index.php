@@ -8,15 +8,15 @@ require_once $ROOT_PATH.'lib/urlBO.php';
 
 require_once 'HTML/Template/Sigma.php';
 
-$templateBO = new TemplateBO();
-$autenticacaoBO = new AutenticacaoBO();
-$pessoasBO = new PessoasBO();
-$urlBO = new URLBO();
+$templateBO = & new TemplateBO();
+$autenticacaoBO = & new AutenticacaoBO();
+$pessoasBO = & new PessoasBO();
+$urlBO = & new URLBO();
 
 $autenticacaoBO->redirecionarCasoLogado();
 
 if($_POST) {
-	$login = new stdClass();
+	$login = & new stdClass();
 	$login->usuario = $_POST['usuario'];
 	$login->senha = $_POST['senha'];
 
@@ -30,7 +30,7 @@ $urlBO->receberAlertas();
 $tpl_main = $templateBO->carregarCabecalhoRodapeSomente();
 
 
-$tpl_pagina = new HTML_Template_Sigma($ROOT_PATH.'template');
+$tpl_pagina = & new HTML_Template_Sigma($ROOT_PATH.'template');
 
 $tpl_pagina->loadTemplateFile('login.tpl');
 
