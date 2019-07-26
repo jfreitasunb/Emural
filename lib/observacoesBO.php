@@ -24,7 +24,7 @@ class ObservacoesBO extends BO
 		$ordem["data_divulgacao"] = "DESC";
 		$ordem["codigo"] = "ASC";
 
-		$lista_observacoes = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_observacoes = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista_observacoes)) {
 			foreach($lista_observacoes as $observacao)
@@ -72,10 +72,10 @@ class ObservacoesBO extends BO
 			$filtro["codigo"] = $codigo;
 			$filtro["valido"] = "true";
 
-			$obj_ret = & $this->DAO->recuperaDeFiltro($filtro);
+			$obj_ret = $this->DAO->recuperaDeFiltro($filtro);
 
 			if(count($obj_ret)) {
-				$observacao = & $obj_ret[0];
+				$observacao = $obj_ret[0];
 			} else {
 				$observacao = null;
 			}

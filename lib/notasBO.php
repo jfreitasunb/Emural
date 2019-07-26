@@ -20,7 +20,7 @@ class NotasBO extends BO
 
 		$ordem["matricula"] = "ASC";
 
-		$lista = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista)) {
 			return $lista;
@@ -73,7 +73,7 @@ class NotasBO extends BO
 		$filtro["aluno"] = $aluno_codigo;
 		$filtro["ava_ctur"] = $turma_codigo;
 
-		$lista = & $this->DAO->recuperaDeFiltroDeAvaliacoes($filtro);
+		$lista = $this->DAO->recuperaDeFiltroDeAvaliacoes($filtro);
 
 		$notas = null;
 
@@ -105,7 +105,7 @@ class NotasBO extends BO
 
 	public function preencheGraficoNotasTurma($tpl, $turma)
 	{
-		$lista = & $this->DAO->recuperaQuantidadeMencoesDeTurma($turma);
+		$lista = $this->DAO->recuperaQuantidadeMencoesDeTurma($turma);
 
 		if(count($lista)) {
 			$preenche->quantidade_sr = "";
@@ -146,7 +146,7 @@ class NotasBO extends BO
 
 		$ordem['ava_drea'] = "ASC";
 
-		$lista = & $this->DAO->recuperaDeFiltroDeAvaliacoesCompleto($filtro,$ordem);
+		$lista = $this->DAO->recuperaDeFiltroDeAvaliacoesCompleto($filtro,$ordem);
 
 		if(count($lista))
 			return $lista;

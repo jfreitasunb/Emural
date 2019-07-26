@@ -43,9 +43,9 @@ if($_POST) {
 	} else
 		$dados->apenas_aprovados = false;
 
-	$semestre = & $semestresBO->retornaPorCodigo($dados->semestre);
-	$disciplina = & $disciplinasBO->retornaPorCodigo($dados->disciplina);
-	$turma = & $turmasBO->retornaPorCodigo($dados->turma);
+	$semestre = $semestresBO->retornaPorCodigo($dados->semestre);
+	$disciplina = $disciplinasBO->retornaPorCodigo($dados->disciplina);
+	$turma = $turmasBO->retornaPorCodigo($dados->turma);
 
 	$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl_tabela->loadTemplateFile('tabela_com_titulo.tpl');

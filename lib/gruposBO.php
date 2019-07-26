@@ -23,7 +23,7 @@ class GruposBO extends BO
 
 		$filtro['turma'] = $turma_codigo;
 
-		$lista = & $this->DAO->recuperaDeFiltro($filtro);
+		$lista = $this->DAO->recuperaDeFiltro($filtro);
 
 		if(count($lista)) {
 			return $lista[0];
@@ -46,7 +46,7 @@ class GruposBO extends BO
 		$filtro['ano'] = $semestre->ano;
 		$filtro['semestre'] = $semestre->semestre;
 
-		$lista = & $this->DAO->recuperaDeFiltro($filtro);
+		$lista = $this->DAO->recuperaDeFiltro($filtro);
 
 		if(count($lista)) {
 			return $lista[0];
@@ -59,7 +59,7 @@ class GruposBO extends BO
 	public function cadastrar($turma)
 	{
 		$insert['turma'] = $turma->codigo;
-		$grupo = & $this->DAO->inserir($insert);
+		$grupo = $this->DAO->inserir($insert);
 
 		$filtro['codigo'] = $grupo->codigo;
 
@@ -88,7 +88,7 @@ class GruposBO extends BO
 
 	public function retornaDisciplinasQuePossuemGrupoNoSemestre($semestre)
 	{
-		$lista = & $this->DAO->recuperaDisciplinasQuePossuemGrupoNoSemestre($semestre);
+		$lista = $this->DAO->recuperaDisciplinasQuePossuemGrupoNoSemestre($semestre);
 
 		if(count($lista)) {
 			return $lista;

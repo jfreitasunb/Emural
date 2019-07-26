@@ -24,7 +24,7 @@ $aluno = $autenticacaoBO->verificarAluno();
 if($_POST) {
 }
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
 $tpl_main = $templateBO->carregarPaginaAlunoNotas($aluno);
 

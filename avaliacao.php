@@ -19,12 +19,12 @@ $notasBO = new NotasBO();
 $autenticacaoBO = new AutenticacaoBO();
 $semestresBO = new SemestresBO();
 
-$url = & $urlBO->codigoSegundoNivel();
-$avaliacao = & $avaliacoesBO->retornaPorCodigo($url->codigo);
+$url = $urlBO->codigoSegundoNivel();
+$avaliacao = $avaliacoesBO->retornaPorCodigo($url->codigo);
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$turma = & $turmasBO->retornaPorCodigoSemestreAtual($avaliacao->turma,$semestre);
+$turma = $turmasBO->retornaPorCodigoSemestreAtual($avaliacao->turma,$semestre);
 
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
@@ -73,7 +73,7 @@ if($_POST) {
 
 	$avaliacoesBO->atualizarDatas($avaliacao,$avaliacao_atualizar);
 
-	$avaliacao = & $avaliacoesBO->retornaPorCodigo($url->codigo);
+	$avaliacao = $avaliacoesBO->retornaPorCodigo($url->codigo);
 	//print_r($notas);
 	$ALERTAS["AVASS"] = "";
 }

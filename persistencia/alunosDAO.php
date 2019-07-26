@@ -34,7 +34,7 @@ class AlunosDAO extends DAO1x1
 
 		$where = $this->whereDeFiltro($filtro,$this->mapaAtributosGeral);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosGeral)."
 				FROM ($this->tabela
@@ -43,7 +43,7 @@ class AlunosDAO extends DAO1x1
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -52,7 +52,7 @@ class AlunosDAO extends DAO1x1
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -64,7 +64,7 @@ class AlunosDAO extends DAO1x1
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT distinct alu_ocur as opcao_curso
 				FROM $this->tabela
@@ -72,7 +72,7 @@ class AlunosDAO extends DAO1x1
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -81,7 +81,7 @@ class AlunosDAO extends DAO1x1
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

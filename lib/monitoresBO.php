@@ -18,7 +18,7 @@ class MonitoresBO extends BO
 
 		$ordem["nome"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_obj = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		foreach($lista_obj as $obj)
 		{
@@ -42,13 +42,13 @@ class MonitoresBO extends BO
 
 		$dados->tipo = 'monitor';
 
-		$pessoa = & $pessoasBO->inserir($dados);
+		$pessoa = $pessoasBO->inserir($dados);
 
 		$insert['codigo'] = $pessoa->codigo;
 		$insert['codigo_usuario_si'] = $dados->coduser;
 		$insert['status'] = 'true';
 
-		$professor = & $this->DAO->inserir($insert);
+		$professor = $this->DAO->inserir($insert);
 
 		return $this->retornaPorCodigo($professor->codigo);;
 	}

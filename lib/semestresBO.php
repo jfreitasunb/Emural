@@ -17,7 +17,7 @@ class SemestresBO extends BO
 		$ordem["ano"] = "DESC";
 		$ordem["semestre"] = "DESC";
 
-		$lista = & $this->DAO->recuperaDeFiltro(null,$ordem,0,1);
+		$lista = $this->DAO->recuperaDeFiltro(null,$ordem,0,1);
 
 		if(count($lista)) {
 			return $lista[0];
@@ -59,7 +59,7 @@ class SemestresBO extends BO
 		$ordem["ano"] = "DESC";
 		$ordem["semestre"] = "DESC";
 
-		$lista = & $this->DAO->recuperaDeFiltro(null,$ordem,1);
+		$lista = $this->DAO->recuperaDeFiltro(null,$ordem,1);
 
 		if(count($lista)) {
 			foreach($lista as $semestre)
@@ -86,7 +86,7 @@ class SemestresBO extends BO
 		$ordem["ano"] = "DESC";
 		$ordem["semestre"] = "DESC";
 
-		$lista = & $this->DAO->recuperaDeFiltro(null,$ordem,1);
+		$lista = $this->DAO->recuperaDeFiltro(null,$ordem,1);
 
 		if(count($lista)) {
 			foreach($lista as $semestre)
@@ -124,7 +124,7 @@ class SemestresBO extends BO
 		$ordem["ano"] = "DESC";
 		$ordem["semestre"] = "DESC";
 
-		$lista = & $this->DAO->recuperaDeFiltro(null,$ordem,1);
+		$lista = $this->DAO->recuperaDeFiltro(null,$ordem,1);
 
 		if(count($lista)) {
 			foreach($lista as $semestre)

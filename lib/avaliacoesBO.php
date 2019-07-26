@@ -19,7 +19,7 @@ class AvaliacoesBO extends BO
 	{
 		$linkBO = new LinkBO();
 
-		$lista_avaliacoes = & $this->retornaAvaliacoesDeTurma($turma);
+		$lista_avaliacoes = $this->retornaAvaliacoesDeTurma($turma);
 
 		//echo count($lista_avaliacoes)."<br><br>";
 		//print_r($lista_avaliacoes);
@@ -43,7 +43,7 @@ class AvaliacoesBO extends BO
 		$peso = array();
 
 		if($manter_avaliacoes) {
-			$lista_avaliacoes = & $this->retornaAvaliacoesDeTurma($turma);
+			$lista_avaliacoes = $this->retornaAvaliacoesDeTurma($turma);
 
 			foreach($lista_avaliacoes as $avaliacao)
 			{
@@ -103,7 +103,7 @@ class AvaliacoesBO extends BO
 		$peso = array();
 
 		if($manter_avaliacoes) {
-			$lista_avaliacoes = & $this->retornaAvaliacoesDeTurma($turma);
+			$lista_avaliacoes = $this->retornaAvaliacoesDeTurma($turma);
 
 			foreach($lista_avaliacoes as $avaliacao)
 			{
@@ -210,7 +210,7 @@ class AvaliacoesBO extends BO
 			$ordem["data_realizacao"] = "ASC";
 			$ordem["nome"] = "ASC";
 
-			$lista_avaliacoes = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+			$lista_avaliacoes = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 			$matriculados = $composicaoTurmasBO->retornaAlunosMatriculados($turma);
 
@@ -483,7 +483,7 @@ class AvaliacoesBO extends BO
 		$ordem["data_realizacao"] = "ASC";
 		$ordem["nome"] = "ASC";
 
-		$lista_avaliacoes = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_avaliacoes = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		$atual = 2;
 		$anterior = true;
@@ -545,7 +545,7 @@ class AvaliacoesBO extends BO
 
 		$ordem["nome"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_obj = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		foreach($lista_obj as $obj)
 		{
@@ -571,7 +571,7 @@ class AvaliacoesBO extends BO
 		$ordem["data_realizacao"] = "ASC";
 		$ordem["nome"] = "ASC";
 
-		$lista_avaliacoes = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_avaliacoes = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		$obj_avaliacao_check->nome = "Matricula";
 		$obj_avaliacao_check->id = 0;
@@ -675,7 +675,7 @@ class AvaliacoesBO extends BO
 		$ordem["data_realizacao"] = "ASC";
 		$ordem["nome"] = "ASC";
 
-		$lista_avaliacoes = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_avaliacoes = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		foreach($lista_avaliacoes as $avaliacao)
 		{
@@ -752,7 +752,7 @@ class AvaliacoesBO extends BO
 	{
 		$ordem["nome"] = "ASC";
 
-		$lista = & $this->DAO->recuperaAvaliacoesAplicadas($turma,$ordem);
+		$lista = $this->DAO->recuperaAvaliacoesAplicadas($turma,$ordem);
 		
 		if(count($lista)) {
 			return $lista;

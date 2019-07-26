@@ -33,7 +33,7 @@ class TurmasBO extends BO
 		$ordem["disciplina_descricao"] = "ASC";
 		$ordem["descricao"] = "ASC";
 
-		$lista_turmas = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_turmas = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		$turma_preenche = null;
 		foreach($lista_turmas as $turma)
@@ -94,12 +94,12 @@ class TurmasBO extends BO
 
 		$ordem['codigo'] = "DESC";
 
-		$lista = & $this->DAO->recuperaDeFiltroDeComposicaoTurma($filtro,$ordem);
+		$lista = $this->DAO->recuperaDeFiltroDeComposicaoTurma($filtro,$ordem);
 
 		if(count($lista)) {
 			foreach($lista as $turma)
 			{
-				$notas = & $notasBO->retornaNotasTurmaAluno($turma,$aluno);
+				$notas = $notasBO->retornaNotasTurmaAluno($turma,$aluno);
 
 				$observacoes = null;
 				if(count($notas)) {
@@ -163,10 +163,10 @@ class TurmasBO extends BO
 		$filtro["ano"] = $semestre->ano;
 		$filtro["semestre"] = $semestre->semestre;
 
-		$obj_ret = & $this->DAO->recuperaDeFiltro($filtro);
+		$obj_ret = $this->DAO->recuperaDeFiltro($filtro);
 
 		if(count($obj_ret)) {
-			$retorno = & $obj_ret[0];
+			$retorno = $obj_ret[0];
 		} else {
 			$retorno = null;
 		}
@@ -179,10 +179,10 @@ class TurmasBO extends BO
 	{
 		$filtro["codigo"] = $codigo;
 
-		$obj_ret = & $this->DAO->recuperaDeFiltro($filtro);
+		$obj_ret = $this->DAO->recuperaDeFiltro($filtro);
 
 		if(count($obj_ret)) {
-			$retorno = & $obj_ret[0];
+			$retorno = $obj_ret[0];
 			if($retorno->ano == $semestre->ano && $retorno->semestre == $semestre->semestre) {
 				$retorno = null;
 			}
@@ -202,10 +202,10 @@ class TurmasBO extends BO
 		$ordem['disciplina_descricao'] = "ASC";
 		$ordem['descricao'] = "ASC";
 
-		$lista = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista)) {
-			$retorno = & $lista;
+			$retorno = $lista;
 		} else {
 			$retorno = null;
 		}
@@ -240,7 +240,7 @@ class TurmasBO extends BO
 	public function preencheComboMesmoSemestre($tpl, $turma_selecionada = null)
 	{
 		if($turma_selecionada !== null) {
-			$lista = & $this->retornaPorSemestre($turma_selecionada);
+			$lista = $this->retornaPorSemestre($turma_selecionada);
 
 			if(count($lista)) {
 				foreach($lista as $turma)
@@ -275,7 +275,7 @@ class TurmasBO extends BO
 		$ordem["disciplina_descricao"] = "ASC";
 		$ordem["descricao"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeFiltroComGrupos($filtro,$ordem);
+		$lista_obj = $this->DAO->recuperaDeFiltroComGrupos($filtro,$ordem);
 
 
 		if(count($lista_obj)) {
@@ -300,7 +300,7 @@ class TurmasBO extends BO
 			$ordem["disciplina_descricao"] = "ASC";
 			$ordem["descricao"] = "ASC";
 
-			$lista = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+			$lista = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 			if(count($lista)) {
 				foreach($lista as $turma)
@@ -426,7 +426,7 @@ class TurmasBO extends BO
 					$turma->disciplina = $lista_disciplinas[$turma_si->codigo_cpd]->codigo;
 
 					if (isset($turmas_juntas[$turma_si->codigo_cpd])) {
-						$turma_moodle_codigo = & $turmas_juntas[$turma_si->codigo_cpd];
+						$turma_moodle_codigo = $turmas_juntas[$turma_si->codigo_cpd];
 
 						$this->cadastrar($turma, $professor, $turma_moodle_codigo);
 
@@ -558,7 +558,7 @@ class TurmasBO extends BO
 		$ordem["disciplina_descricao"] = "ASC";
 		$ordem["descricao"] = "ASC";
 
-		$lista = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista)) {
 			$composicao_turmasBO = new ComposicaoTurmasBO();
@@ -635,7 +635,7 @@ class TurmasBO extends BO
 		$ordem["disciplina_descricao"] = "ASC";
 		$ordem["descricao"] = "ASC";
 
-		$lista_turmas = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_turmas = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		$total = array();
 		$reprovados = array();
@@ -674,7 +674,7 @@ class TurmasBO extends BO
 			{
 				$this->preencherLista($tpl,$header,"celula_","adicionar_celula_titulo");
 
-				$lista_avaliacoes_aplicadas = & $avaliacoesBO->retornaAvaliacoesAplicadas($turma);
+				$lista_avaliacoes_aplicadas = $avaliacoesBO->retornaAvaliacoesAplicadas($turma);
 
 				if(count($lista_avaliacoes_aplicadas)) {
 					unset($notas);
@@ -844,7 +844,7 @@ class TurmasBO extends BO
 	{
 		$semestreBO = new SemestresBO();
 
-		$semestre = & $semestreBO->retornaPorCodigo($dados->ano_semestre);
+		$semestre = $semestreBO->retornaPorCodigo($dados->ano_semestre);
 
 		$filtro["ano"] = $semestre->ano;
 		$filtro["semestre"] = $semestre->semestre;
@@ -856,7 +856,7 @@ class TurmasBO extends BO
 		$ordem["disciplina_descricao"] = "ASC";
 		$ordem["descricao"] = "ASC";
 
-		$lista = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista)) {
 			$composicao_turmasBO = new ComposicaoTurmasBO();

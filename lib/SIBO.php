@@ -17,7 +17,7 @@ class SIBO extends BO
 	{
 		$filtro["usuario"] = $usuario;
 
-		$lista = & $this->DAO->recuperaDeUsuario($filtro);
+		$lista = $this->DAO->recuperaDeUsuario($filtro);
 
 		if(count($lista)) {
 			return $lista[0];
@@ -31,7 +31,7 @@ class SIBO extends BO
 	{
 		$filtro["coduser"] = $codigo_si;
 
-		$lista = & $this->DAO->recuperaDeUsuario($filtro);
+		$lista = $this->DAO->recuperaDeUsuario($filtro);
 
 		if(count($lista)) {
 			return $lista[0];
@@ -52,7 +52,7 @@ class SIBO extends BO
 		$ordem["disciplina_descricao"] = "ASC";
 		$ordem["descricao"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeTurma($filtro,$ordem);
+		$lista_obj = $this->DAO->recuperaDeTurma($filtro,$ordem);
 
 
 		if(count($lista_obj)) {
@@ -74,7 +74,7 @@ class SIBO extends BO
 		$filtro["codigo_cpd"] = $turma->codigo_cpd;
 		$filtro["descricao"] = $turma->descricao;
 
-		$lista = & $this->DAO->recuperaDeTurma($filtro);
+		$lista = $this->DAO->recuperaDeTurma($filtro);
 
 		if(count($lista)) {
 			return $lista[0];
@@ -91,7 +91,7 @@ class SIBO extends BO
 
 		$ordem["disciplina_descricao"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeDisciplinasMagistrais($filtro,$ordem);
+		$lista_obj = $this->DAO->recuperaDeDisciplinasMagistrais($filtro,$ordem);
 
 
 		if(count($lista_obj)) {

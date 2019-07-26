@@ -34,7 +34,7 @@ class GruposDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro, $this->mapaAtributosGeral);
 
-		$ordem = & $this->orderBy($ordemarray, $this->mapaAtributosGeral);
+		$ordem = $this->orderBy($ordemarray, $this->mapaAtributosGeral);
 
 		if(strlen($limit) > 0)
 			$limit = "LIMIT $limit";
@@ -53,7 +53,7 @@ class GruposDAO extends DAO
 				$limit
 				$offset";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -62,7 +62,7 @@ class GruposDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -87,7 +87,7 @@ class GruposDAO extends DAO
 
 				WHERE tur_ano = $semestre->ano AND tur_seme = $semestre->semestre";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -96,7 +96,7 @@ class GruposDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

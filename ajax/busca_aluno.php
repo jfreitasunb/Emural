@@ -7,9 +7,9 @@ if ($_POST && strlen($busca = $_POST['busca'])) {
 	$aluno = null;
 
 	if (is_numeric($busca)) {
-		$aluno = & $alunosBO->retornaPorMatricula($busca);
+		$aluno = $alunosBO->retornaPorMatricula($busca);
 	} else {
-		$aluno = & $alunosBO->retornaPorEmail($busca);
+		$aluno = $alunosBO->retornaPorEmail($busca);
 	}
 
 	echo json_encode($aluno);

@@ -19,7 +19,7 @@ class ComposicaoTurmasBO extends BO
 
 		$ordem["matricula"] = "ASC";
 
-		$lista_alunos = & $this->DAO->recuperaDeFiltro($filtro,$ordem);
+		$lista_alunos = $this->DAO->recuperaDeFiltro($filtro,$ordem);
 
 		if(count($lista_alunos)) {
 			return $lista_alunos;
@@ -49,7 +49,7 @@ class ComposicaoTurmasBO extends BO
 
 	public function preencheTabelaRelatorioPorcentagemMencoes($tpl,$dados,$semestre_inicio,$semestre_fim)
 	{
-		$lista = & $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
+		$lista = $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
 
 		if(count($lista)) {
 			$item->titulo = "Ano";
@@ -114,10 +114,10 @@ class ComposicaoTurmasBO extends BO
 	{
 		$semestresBO = new SemestresBO();
 
-		$semestre_inicio = & $semestresBO->retornaPorCodigo($dados->inicio);
-		$semestre_fim = & $semestresBO->retornaPorCodigo($dados->fim);
+		$semestre_inicio = $semestresBO->retornaPorCodigo($dados->inicio);
+		$semestre_fim = $semestresBO->retornaPorCodigo($dados->fim);
 
-		$lista = & $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
+		$lista = $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
 
 		$coluna['ano'] = "Ano";
 		$coluna['semestre'] = "Semestre";
@@ -150,7 +150,7 @@ class ComposicaoTurmasBO extends BO
 
 	public function preencheGraficoRelatorioPorcentagemAprovados($tpl,$dados,$semestre_inicio,$semestre_fim)
 	{
-		$lista = & $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
+		$lista = $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
 
 		if(count($lista)) {
 			$item->descricao = "Aprovado";
@@ -202,10 +202,10 @@ class ComposicaoTurmasBO extends BO
 	{
 		$semestresBO = new SemestresBO();
 
-		$semestre_inicio = & $semestresBO->retornaPorCodigo($dados->inicio);
-		$semestre_fim = & $semestresBO->retornaPorCodigo($dados->fim);
+		$semestre_inicio = $semestresBO->retornaPorCodigo($dados->inicio);
+		$semestre_fim = $semestresBO->retornaPorCodigo($dados->fim);
 
-		$lista = & $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
+		$lista = $this->DAO->recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $dados->disciplina, $dados->opcao_curso);
 
 		$coluna['ano'] = "Ano";
 		$coluna['semestre'] = "Semestre";
@@ -239,7 +239,7 @@ class ComposicaoTurmasBO extends BO
 
 	public function retornaArrayPorTurma($turma)
 	{
-		$lista_obj = & $this->retornaAlunosMatriculados($turma);
+		$lista_obj = $this->retornaAlunosMatriculados($turma);
 
 		if(count($lista_obj)) {
 			foreach($lista_obj as $obj)

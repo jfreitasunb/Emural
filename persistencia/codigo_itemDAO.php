@@ -30,7 +30,7 @@ class Codigo_ItemDAO extends DAO
 				ORDER BY cit_desc DESC
 				LIMIT ".LIMIT_AUTO_SUGGEST;
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -38,7 +38,7 @@ class Codigo_ItemDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -54,7 +54,7 @@ class Codigo_ItemDAO extends DAO
 				ORDER BY cit_desc DESC
 				LIMIT ".LIMIT_AUTO_SUGGEST;
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -62,7 +62,7 @@ class Codigo_ItemDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

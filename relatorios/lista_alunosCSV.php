@@ -24,7 +24,7 @@ if($_POST) {
 	else
 		$dados->apenas_aprovados = false;
 
-	$lista = & $turmasBO->retornaArrayListaAlunos($dados);
+	$lista = $turmasBO->retornaArrayListaAlunos($dados);
 
 	header("Content-type: application/csv"); 
 	header("Content-Disposition: \"inline; filename=relatorio.csv\"");

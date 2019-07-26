@@ -21,9 +21,9 @@ $composicaoTurmasBO = new ComposicaoTurmasBO();
 
 $url = $urlBO->codigoSegundoNivel();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$turma = & $turmasBO->retornaPorCodigoExcetoSemestreAtual($url->codigo, $semestre);
+$turma = $turmasBO->retornaPorCodigoExcetoSemestreAtual($url->codigo, $semestre);
 
 $coordenador = $autenticacaoBO->verificarCoordenador();
 

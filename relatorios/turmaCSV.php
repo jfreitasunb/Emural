@@ -14,15 +14,15 @@ $autenticacaoBO = new AutenticacaoBO();
 $semestresBO = new SemestresBO();
 $avaliacoesBO = new AvaliacoesBO();
 
-$url = & $urlBO->codigoTerceiroNivel();
+$url = $urlBO->codigoTerceiroNivel();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$turma = & $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
+$turma = $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
 
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
-$lista = & $avaliacoesBO->retornaArrayAlunosProvasMedia($turma);
+$lista = $avaliacoesBO->retornaArrayAlunosProvasMedia($turma);
 
 header("Content-type: application/csv"); 
 header("Content-Disposition: \"inline; filename=relatorio.csv\"");

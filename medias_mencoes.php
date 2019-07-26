@@ -20,11 +20,11 @@ $composicaoTurmasBO = new ComposicaoTurmasBO();
 $autenticacaoBO = new AutenticacaoBO();
 $semestresBO = new SemestresBO();
 
-$url = & $urlBO->codigoSegundoNivel();
+$url = $urlBO->codigoSegundoNivel();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$turma = & $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
+$turma = $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
 
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
@@ -54,7 +54,7 @@ if($_POST) {
 
 	$turmasBO->atualizarExibirMediaMencao($turma,$turma_alterar);
 
-	$turma = & $turmasBO->retornaPorCodigo($url->codigo);
+	$turma = $turmasBO->retornaPorCodigo($url->codigo);
 
 	$ALERTAS["MMFAS"] = "";
 }

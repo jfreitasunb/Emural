@@ -27,12 +27,12 @@ class AvaliacoesDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SET DATESTYLE = SQL, DMY;
 				SELECT ".$this->atributosSelect()." FROM $this->tabela $where $ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -41,7 +41,7 @@ class AvaliacoesDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -51,7 +51,7 @@ class AvaliacoesDAO extends DAO
 	{
 		$this->conectar();
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SET DATESTYLE = SQL, DMY;
 				SELECT DISTINCT ".$this->atributosSelect()."
@@ -61,7 +61,7 @@ class AvaliacoesDAO extends DAO
 					  ava_stat = 'true'
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -70,7 +70,7 @@ class AvaliacoesDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
