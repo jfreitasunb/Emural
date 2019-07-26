@@ -19,12 +19,12 @@ class ProfessoresBO extends BO
 
 		$dados->tipo = 'professor';
 
-		$pessoa = & $pessoasBO->inserir($dados);
+		$pessoa = $pessoasBO->inserir($dados);
 
 		$insert['codigo'] = $pessoa->codigo;
 		$insert['codigo_usuario_si'] = $dados->coduser;
 
-		$professor = & $this->DAO->inserir($insert);
+		$professor = $this->DAO->inserir($insert);
 
 		return $this->retornaPorCodigo($professor->codigo);;
 	}
@@ -35,16 +35,16 @@ class ProfessoresBO extends BO
 		if(strlen($codigo_si)>0) {
 			$filtro["codigo_usuario_si"] = $codigo_si;
 
-			$obj_ret = & $this->DAO->recuperaDeFiltro($filtro);
+			$obj_ret = $this->DAO->recuperaDeFiltro($filtro);
 
 			if(count($obj_ret)) {
-				$retorno = & $obj_ret[0];
+				$retorno = $obj_ret[0];
 			} else {
 				$siBO = new SIBO();
 				$usuario_si = $siBO->retornaUsuarioSIPorCodigoSI($codigo_si);
 				$usuario_si->email = $usuario_si->usuario."@mat.unb.br";
 				$professor = $this->inserir($usuario_si);
-				$retorno = & $professor;
+				$retorno = $professor;
 			}
 		} else {
 			$retorno =  null;

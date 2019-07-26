@@ -35,9 +35,9 @@ if($_POST) {
 	$tpl_grafico = new HTML_Template_Sigma($ROOT_PATH.'template/relatorios');
 	$tpl_grafico->loadTemplateFile('grafico_barras.tpl');
 	
-	$semestre_inicio = & $semestresBO->retornaPorCodigo($dados->inicio);
-	$semestre_fim = & $semestresBO->retornaPorCodigo($dados->fim);
-	$disciplina = & $disciplinasBO->retornaPorCodigo($dados->disciplina);
+	$semestre_inicio = $semestresBO->retornaPorCodigo($dados->inicio);
+	$semestre_fim = $semestresBO->retornaPorCodigo($dados->fim);
+	$disciplina = $disciplinasBO->retornaPorCodigo($dados->disciplina);
 
 	$preencheu = $composicaoTurmasBO->preencheGraficoRelatorioPorcentagemAprovados($tpl_grafico,$dados,$semestre_inicio,$semestre_fim);
 

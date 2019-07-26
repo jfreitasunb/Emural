@@ -15,7 +15,7 @@ class DisciplinasBO extends BO
 	{
 		$ordem["descricao"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeFiltro(null,$ordem);
+		$lista_obj = $this->DAO->recuperaDeFiltro(null,$ordem);
 
 		$preencher = new stdClass();
 		foreach($lista_obj as $obj)
@@ -38,7 +38,7 @@ class DisciplinasBO extends BO
 	{
 		$ordem["descricao"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeFiltro(null,$ordem);
+		$lista_obj = $this->DAO->recuperaDeFiltro(null,$ordem);
 
 
 		if(count($lista_obj)) {
@@ -68,7 +68,7 @@ class DisciplinasBO extends BO
 	{
 		$ordem["descricao"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeFiltro(null,$ordem);
+		$lista_obj = $this->DAO->recuperaDeFiltro(null,$ordem);
 
 		$preencher = new stdClass();
 		foreach($lista_obj as $obj)

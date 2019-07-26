@@ -36,7 +36,7 @@ class NotasDAO extends DAONxN
 
 		$where = $this->whereDeFiltro($filtro,$this->mapaAtributosGeral);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosGeral)."
 				FROM (($this->tabela
@@ -46,7 +46,7 @@ class NotasDAO extends DAONxN
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -55,7 +55,7 @@ class NotasDAO extends DAONxN
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -67,7 +67,7 @@ class NotasDAO extends DAONxN
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT ava_cava AS avaliacao,
 					   not_calu AS aluno,
@@ -80,7 +80,7 @@ class NotasDAO extends DAONxN
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -89,7 +89,7 @@ class NotasDAO extends DAONxN
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -132,7 +132,7 @@ ON id_nome = id_ss
 
 ORDER BY data_nome";
 //print_r($sql);
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -141,7 +141,7 @@ ORDER BY data_nome";
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -153,7 +153,7 @@ ORDER BY data_nome";
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SET DATESTYLE = SQL, DMY;
 				SELECT ava_cava AS avaliacao,
@@ -169,7 +169,7 @@ ORDER BY data_nome";
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -178,7 +178,7 @@ ORDER BY data_nome";
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

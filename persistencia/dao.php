@@ -259,7 +259,7 @@ class DAO
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		if(strlen($limit) > 0)
 			$limit = "LIMIT $limit";
@@ -269,7 +269,7 @@ class DAO
 
 		$sql = "SELECT ".$this->atributosSelect()." FROM $this->tabela $where $ordem $limit $offset";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -278,7 +278,7 @@ class DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -290,14 +290,14 @@ class DAO
 
 		$this->_db->beginTransaction();
 
-		$res = & $this->_db->query("SELECT NEXTVAL('".$this->tabela."_".$this->mapaAtributos["codigo"]."_seq"."')");
+		$res = $this->_db->query("SELECT NEXTVAL('".$this->tabela."_".$this->mapaAtributos["codigo"]."_seq"."')");
 
 		if(PEAR::isError($res)) {
 			print_r($res);
 			$this->_db->rollback();
 			throw new Exception("Erro de insersao no banco!");
 		}
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		$codigo = $lista[0]->nextval;
 
@@ -315,7 +315,7 @@ class DAO
 
 		$sql = "INSERT INTO $this->tabela ".$this->insertCampos($insert)." VALUES ".$this->insertValores($insert) ;
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res)) {
 			print_r($res);
@@ -348,7 +348,7 @@ class DAO
 		$sql = "UPDATE $this->tabela SET $set $where";
 		//echo $sql."<br>"; return;
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -367,7 +367,7 @@ class DAO
 
 		$sql = "DELETE FROM $this->tabela $where";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -380,7 +380,7 @@ class DAO
 
 	public function executar($sql)
 	{
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{

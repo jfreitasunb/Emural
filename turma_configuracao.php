@@ -19,9 +19,9 @@ $autenticacaoBO = new AutenticacaoBO();
 $semestresBO = new SemestresBO();
 $linkBO = new LinkBO();
 
-$url = & $urlBO->codigoSegundoNivel();
+$url = $urlBO->codigoSegundoNivel();
 
-$turma = & $turmasBO->retornaPorCodigo($url->codigo);
+$turma = $turmasBO->retornaPorCodigo($url->codigo);
 
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
@@ -77,7 +77,7 @@ if($_POST) {
 	}
 }
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
 $tpl_main = $templateBO->carregarPaginaConfiguracaoTurma($professor,$semestre,$turma);
 

@@ -42,14 +42,14 @@ class SIDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro, $this->mapaAtributosUsuario);
 
-		$ordem = & $this->orderBy($ordemarray, $this->mapaAtributosUsuario);
+		$ordem = $this->orderBy($ordemarray, $this->mapaAtributosUsuario);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosUsuario)."
 				FROM users INNER JOIN unix ON unix.coduser = users.coduser
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -58,7 +58,7 @@ class SIDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -72,7 +72,7 @@ class SIDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro, $this->mapaAtributosTurma);
 
-		$ordem = & $this->orderBy($ordemarray, $this->mapaAtributosTurma);
+		$ordem = $this->orderBy($ordemarray, $this->mapaAtributosTurma);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosTurma)."
 				FROM (oferta_lista_de_ofertas
@@ -80,7 +80,7 @@ class SIDAO extends DAO
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -89,7 +89,7 @@ class SIDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -103,7 +103,7 @@ class SIDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro, $this->mapaAtributosDisciplilasMagistrais);
 
-		$ordem = & $this->orderBy($ordemarray, $this->mapaAtributosDisciplilasMagistrais);
+		$ordem = $this->orderBy($ordemarray, $this->mapaAtributosDisciplilasMagistrais);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosDisciplilasMagistrais)."
 				FROM (oferta_disciplinas_magistral
@@ -111,7 +111,7 @@ class SIDAO extends DAO
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -120,7 +120,7 @@ class SIDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

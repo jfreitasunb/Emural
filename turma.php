@@ -21,11 +21,11 @@ $logResponsaveisBO = new LogResponsaveisBO();
 $autenticacaoBO = new AutenticacaoBO();
 $semestresBO = new SemestresBO();
 
-$url = & $urlBO->codigoSegundoNivel();
+$url = $urlBO->codigoSegundoNivel();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$turma = & $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
+$turma = $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
 
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 

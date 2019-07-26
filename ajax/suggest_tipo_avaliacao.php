@@ -6,7 +6,7 @@ $string = $_POST['queryString'];
 //echo $string."<br>";
 if(strlen($string) > 0) {
 	$codigoItemBO = new CodigoItemBO();
-	$itens = & $codigoItemBO->retornaAutoSuggestTipoAvaliacao($string);
+	$itens = $codigoItemBO->retornaAutoSuggestTipoAvaliacao($string);
 
 	if(count($itens)) {
 		echo '<ul class="suggest_box">';

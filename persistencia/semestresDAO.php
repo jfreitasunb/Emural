@@ -22,7 +22,7 @@ class SemestresDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		if(strlen($limit) > 0)
 			$limit = "LIMIT $limit";
@@ -34,7 +34,7 @@ class SemestresDAO extends DAO
 				SELECT ".$this->atributosSelect()." FROM $this->tabela $where $ordem $limit $offset";
 
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -43,7 +43,7 @@ class SemestresDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

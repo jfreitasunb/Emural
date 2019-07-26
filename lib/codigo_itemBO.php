@@ -14,10 +14,10 @@ class CodigoItemBO extends BO
 	public function retornaAutoSuggestTipoAvaliacao($inicio)
 	{
 		if(strlen($inicio)>0) {
-			$obj_ret = & $this->DAO->recuperaAutoSuggestTipoAvaliacao($inicio);
+			$obj_ret = $this->DAO->recuperaAutoSuggestTipoAvaliacao($inicio);
 
 			if(count($obj_ret)) {
-				$retorno = & $obj_ret;
+				$retorno = $obj_ret;
 			} else {
 				$retorno = null;
 			}
@@ -52,10 +52,10 @@ class CodigoItemBO extends BO
 	{
 		if(strlen($descricao_resumida2)>0) {
 
-			$obj_ret = & $this->DAO->recuperaPorTipoDescricaoResumida2(AVALIACAO_TIPO,$descricao_resumida2);
+			$obj_ret = $this->DAO->recuperaPorTipoDescricaoResumida2(AVALIACAO_TIPO,$descricao_resumida2);
 
 			if(count($obj_ret)) {
-				$retorno = & $obj_ret[0];
+				$retorno = $obj_ret[0];
 			} else {
 				$retorno = null;
 			}

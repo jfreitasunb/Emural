@@ -12,7 +12,7 @@ class DAONxN extends DAO
 
 		$sql = "INSERT INTO $this->tabela ".$this->insertCampos($insert)." VALUES ".$this->insertValores($insert) ;
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{

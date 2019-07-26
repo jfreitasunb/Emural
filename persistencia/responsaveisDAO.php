@@ -24,7 +24,7 @@ class ResponsaveisDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT ".$this->atributosSelect().",
 					   ava_ctur AS turma
@@ -35,7 +35,7 @@ class ResponsaveisDAO extends DAO
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -44,7 +44,7 @@ class ResponsaveisDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -56,7 +56,7 @@ class ResponsaveisDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT res_cres AS codigo,
 					   ava_nome AS nome_avaliacao,
@@ -70,7 +70,7 @@ class ResponsaveisDAO extends DAO
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -79,7 +79,7 @@ class ResponsaveisDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

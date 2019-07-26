@@ -14,7 +14,7 @@ require_once 'HTML/Template/Sigma.php';
 
 $semestresBO = new SemestresBO();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
 $mensagem = array();
 $dados = null;
@@ -96,7 +96,7 @@ if($_POST) {
 }
 $templateBO = new TemplateBO();
 
-$tpl_main = & $templateBO->carregarCabecalhoRodapeMat();
+$tpl_main = $templateBO->carregarCabecalhoRodapeMat();
 
 $tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 $tpl->loadTemplateFile('cadastro.tpl');

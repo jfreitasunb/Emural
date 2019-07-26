@@ -19,7 +19,7 @@ $semestresBO = new SemestresBO();
 
 $coordenador = $autenticacaoBO->verificarCoordenador();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
 $novo = false;
 
@@ -64,7 +64,7 @@ if($_POST) {
 		}
 	}
 
-	$semestre = & $semestresBO->retornaUltimoSemestre();
+	$semestre = $semestresBO->retornaUltimoSemestre();
 
 	$turmasBO = new TurmasBO();
 

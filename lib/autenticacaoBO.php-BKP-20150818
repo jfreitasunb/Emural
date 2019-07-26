@@ -56,11 +56,11 @@ class AutenticacaoBO
 		$alunosBO = new AlunosBO();
 		$turmasBO = new TurmasBO();
 
-		$pessoa = & $pessoasBO->retornaPorUsuario($login->usuario);
+		$pessoa = $pessoasBO->retornaPorUsuario($login->usuario);
 
 		//não está na base de dados
 		if($pessoa === null) {
-			$usuarioSI = & $SIBO->retornaUsuarioSIPorLogin($login->usuario);
+			$usuarioSI = $SIBO->retornaUsuarioSIPorLogin($login->usuario);
 
 			if($usuarioSI !== null) {
 				switch ($usuarioSI->tipo) {
@@ -80,26 +80,26 @@ class AutenticacaoBO
 			//usuario existe e senha confere
 
 			if($SENHAS_CODIFICADAS) {
-				$login->senha = & crypt($login->senha_digitada,$pessoa->senha);
+				$login->senha = crypt($login->senha_digitada,$pessoa->senha);
 			}
 
 			if(strcmp($pessoa->senha, $login->senha) == 0) {
 				switch ($pessoa->tipo) {
 					case "coord":
-						$coordenador = & $pessoa;
+						$coordenador = $pessoa;
 						$_SESSION["coordenador"] = serialize($coordenador);
 						break;
 					case "professor":
-						$professor = & $professoresBO->retornaPorCodigo($pessoa->codigo);
+						$professor = $professoresBO->retornaPorCodigo($pessoa->codigo);
 						$_SESSION["professor"] = serialize($professor);
 						$turmasBO->atualizacaoTurmasProfessor($professor);
 						break;
 					case "monitor":
-						$monitor = & $monitoresBO->retornaPorCodigo($pessoa->codigo);
+						$monitor = $monitoresBO->retornaPorCodigo($pessoa->codigo);
 						$_SESSION["monitor"] = serialize($monitor);
 						break;
 					case "aluno":
-						$aluno = & $alunosBO->retornaPorCodigo($pessoa->codigo);
+						$aluno = $alunosBO->retornaPorCodigo($pessoa->codigo);
 						$_SESSION["aluno"] = serialize($aluno);
 						break;
 				}
@@ -111,11 +111,11 @@ class AutenticacaoBO
 
 					$ultimo_nome = trim($pessoasBO->retornaUltimoNome($pessoa));
 					if($SENHAS_CODIFICADAS) {
-						$ultimo_nome = & crypt($ultimo_nome,$login->senha);
+						$ultimo_nome = crypt($ultimo_nome,$login->senha);
 					}
 
 					if(strcmp($ultimo_nome, $login->senha) == 0) {
-						$aluno = & $alunosBO->retornaPorCodigo($pessoa->codigo);
+						$aluno = $alunosBO->retornaPorCodigo($pessoa->codigo);
 						$_SESSION["aluno"] = serialize($aluno);
 					} else {
 						$ALERTAS["LSNC"] = "";
@@ -123,10 +123,10 @@ class AutenticacaoBO
 				} else {
 					//procurar no SI se é um professor ou monitor que mudou a senha.
 					if(strcmp($pessoa->tipo,"professor") == 0 || strcmp($pessoa->tipo,"monitor") == 0) {
-						$usuarioSI = & $SIBO->retornaUsuarioSIPorLogin($login->usuario);
+						$usuarioSI = $SIBO->retornaUsuarioSIPorLogin($login->usuario);
 
 						if($SENHAS_CODIFICADAS) {
-							$login->senha = & crypt($login->senha_digitada,$usuarioSI->senha);
+							$login->senha = crypt($login->senha_digitada,$usuarioSI->senha);
 						}
 
 						if(strcmp($usuarioSI->senha, $login->senha) == 0){
@@ -134,12 +134,12 @@ class AutenticacaoBO
 
 							switch ($pessoa->tipo) {
 								case "professor":
-									$professor = & $professoresBO->retornaPorCodigo($pessoa->codigo);
+									$professor = $professoresBO->retornaPorCodigo($pessoa->codigo);
 									$_SESSION["professor"] = serialize($professor);
 									$turmasBO->atualizacaoTurmasProfessor($professor);
 									break;
 								case "monitor":
-									$monitor = & $monitoresBO->retornaPorCodigo($pessoa->codigo);
+									$monitor = $monitoresBO->retornaPorCodigo($pessoa->codigo);
 									$_SESSION["monitor"] = serialize($monitor);
 									break;
 							}
@@ -237,11 +237,11 @@ class AutenticacaoBO
 		$retorno = new stdClass();
 		$retorno->success = false;
 
-		$pessoa = & $pessoasBO->retornaPorUsuario($usuario);
+		$pessoa = $pessoasBO->retornaPorUsuario($usuario);
 
 		//não está na base de dados
 		if($pessoa === null) {
-			$usuarioSI = & $SIBO->retornaUsuarioSIPorLogin($usuario);
+			$usuarioSI = $SIBO->retornaUsuarioSIPorLogin($usuario);
 
 			if($usuarioSI !== null) {
 				switch ($usuarioSI->tipo) {
@@ -265,7 +265,7 @@ class AutenticacaoBO
 					$retorno->reason = "NPE"; //Não possui email
 				} else {
 					if($SENHAS_CODIFICADAS) {
-						$senha = & crypt($senha_digitada,$pessoa->senha);
+						$senha = crypt($senha_digitada,$pessoa->senha);
 					}
 
 					if(strcmp($pessoa->senha, $senha) == 0) {
@@ -273,11 +273,11 @@ class AutenticacaoBO
 					} else {
 						//procurar no SI se é um professor ou monitor que mudou a senha.
 						if(strcmp($pessoa->tipo,"professor") == 0 || strcmp($pessoa->tipo,"monitor") == 0) {
-							$usuarioSI = & $SIBO->retornaUsuarioSIPorLogin($usuario);
+							$usuarioSI = $SIBO->retornaUsuarioSIPorLogin($usuario);
 
 							if ($usuarioSI !== null) {
 								if($SENHAS_CODIFICADAS) {
-									$senha = & crypt($senha_digitada,$usuarioSI->senha);
+									$senha = crypt($senha_digitada,$usuarioSI->senha);
 								}
 
 								if(strcmp($usuarioSI->senha, $senha) == 0) {

@@ -16,7 +16,7 @@ class LogResponsaveisBO extends BO
 		$filtro["ava_ctur"] = $turma->codigo;
 		$ordem["data_hora"] = "DESC";
 
-		$lista = & $this->DAO->recuperaDeFiltroComResponsaveisAvaliacoesMonitor($filtro,$ordem);
+		$lista = $this->DAO->recuperaDeFiltroComResponsaveisAvaliacoesMonitor($filtro,$ordem);
 
 		if(count($lista)) {
 			foreach($lista as $log)

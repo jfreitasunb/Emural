@@ -27,8 +27,8 @@ $tpl_pagina->loadTemplateFile('coordenador_reprovados_disciplina.tpl');
 if($_POST) {
 	$dados->disciplina = $_POST['disciplina'];
 
-	$disciplina = & $disciplinasBO->retornaPorCodigo($dados->disciplina);
-	$semestre = & $semestresBO->retornaUltimoSemestre();
+	$disciplina = $disciplinasBO->retornaPorCodigo($dados->disciplina);
+	$semestre = $semestresBO->retornaUltimoSemestre();
 
 	$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl_tabela->loadTemplateFile('tabela_com_titulo.tpl');

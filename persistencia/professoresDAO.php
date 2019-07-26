@@ -32,7 +32,7 @@ class ProfessoresDAO extends DAO1x1
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		if(strlen($limit) > 0)
 			$limit = "LIMIT $limit";
@@ -49,7 +49,7 @@ class ProfessoresDAO extends DAO1x1
 				$limit
 				$offset";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -58,7 +58,7 @@ class ProfessoresDAO extends DAO1x1
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

@@ -35,9 +35,9 @@ if($_POST) {
 	$tpl_tabela = new HTML_Template_Sigma($ROOT_PATH.'template');
 	$tpl_tabela->loadTemplateFile('tabela_relatorios.tpl');
 	
-	$semestre_inicio = & $semestresBO->retornaPorCodigo($dados->inicio);
-	$semestre_fim = & $semestresBO->retornaPorCodigo($dados->fim);
-	$disciplina = & $disciplinasBO->retornaPorCodigo($dados->disciplina);
+	$semestre_inicio = $semestresBO->retornaPorCodigo($dados->inicio);
+	$semestre_fim = $semestresBO->retornaPorCodigo($dados->fim);
+	$disciplina = $disciplinasBO->retornaPorCodigo($dados->disciplina);
 
 	$preencheu = $composicaoTurmasBO->preencheTabelaRelatorioPorcentagemMencoes($tpl_tabela,$dados,$semestre_inicio,$semestre_fim);
 

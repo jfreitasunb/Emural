@@ -19,7 +19,7 @@ class PessoasBO extends BO
 	{
 		$filtro['usuario'] = $usuario;
 
-		$lista = & $this->DAO->recuperaDeFiltro($filtro);
+		$lista = $this->DAO->recuperaDeFiltro($filtro);
 
 		if(count($lista)) {
 			return $lista[0];
@@ -42,7 +42,7 @@ class PessoasBO extends BO
 			$insert['email'] = $dados->email;
 		}
 
-		$pessoa = & $this->DAO->inserir($insert);
+		$pessoa = $this->DAO->inserir($insert);
 
 		return $pessoa;
 	}

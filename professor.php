@@ -24,7 +24,7 @@ $professor = $autenticacaoBO->verificarProfessor();
 if($_POST) {
 }
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
 
 $tpl_main = $templateBO->carregarPaginaProfessor($professor,$semestre);

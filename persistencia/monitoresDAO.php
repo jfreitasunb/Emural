@@ -29,7 +29,7 @@ class MonitoresDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosGeral)."
 				FROM ($this->tabela
@@ -38,7 +38,7 @@ class MonitoresDAO extends DAO
 				$where 
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -47,7 +47,7 @@ class MonitoresDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

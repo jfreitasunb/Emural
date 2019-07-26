@@ -36,7 +36,7 @@ if(strlen($codigo_semestre) > 0) {
 	$ordem['disciplina_descricao'] = "ASC";
 	$ordem['descricao'] = "ASC";
 
-	$lista_turmas = & $turmasDAO->recuperaDeFiltro($filtro,$ordem);
+	$lista_turmas = $turmasDAO->recuperaDeFiltro($filtro,$ordem);
 
 	if(count($lista_turmas)) {
 		echo '<option value="0"></option>';

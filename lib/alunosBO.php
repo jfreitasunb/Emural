@@ -17,10 +17,10 @@ class AlunosBO extends BO
 		if(strlen($matricula)>0) {
 			$filtro["matricula"] = $matricula;
 
-			$obj_ret = & $this->DAO->recuperaDeFiltro($filtro);
+			$obj_ret = $this->DAO->recuperaDeFiltro($filtro);
 
 			if(count($obj_ret)) {
-				$retorno = & $obj_ret[0];
+				$retorno = $obj_ret[0];
 			} else {
 				$retorno = null;
 			}
@@ -37,10 +37,10 @@ class AlunosBO extends BO
 		if(strlen($email)>0) {
 			$filtro["email"] = $email;
 
-			$obj_ret = & $this->DAO->recuperaDeFiltro($filtro);
+			$obj_ret = $this->DAO->recuperaDeFiltro($filtro);
 
 			if(count($obj_ret)) {
-				$retorno = & $obj_ret[0];
+				$retorno = $obj_ret[0];
 			} else {
 				$retorno = null;
 			}
@@ -56,7 +56,7 @@ class AlunosBO extends BO
 	{
 		$ordem["opcao_curso"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDistinctOpcaoCursoDeFiltro(null,$ordem);
+		$lista_obj = $this->DAO->recuperaDistinctOpcaoCursoDeFiltro(null,$ordem);
 
 		foreach($lista_obj as $obj)
 		{
@@ -82,13 +82,13 @@ class AlunosBO extends BO
 		$pessoa->nome = $dados->nome;
 		$pessoa->usuario = $dados->matricula;
 
-		$pessoa = & $pessoasBO->inserir($pessoa);
+		$pessoa = $pessoasBO->inserir($pessoa);
 
 		$insert['codigo'] = $pessoa->codigo;
 		$insert['matricula'] = $dados->matricula;
 		$insert['opcao_curso'] = $dados->opcao_curso;
 
-		$aluno = & $this->DAO->inserir($insert);
+		$aluno = $this->DAO->inserir($insert);
 
 		return $this->retornaPorCodigo($aluno->codigo);
 	}

@@ -39,10 +39,10 @@ class BO
 		if(strlen($codigo)>0) {
 			$filtro["codigo"] = $codigo;
 
-			$obj_ret = & $this->DAO->recuperaDeFiltro($filtro);
+			$obj_ret = $this->DAO->recuperaDeFiltro($filtro);
 
 			if(count($obj_ret)) {
-				$retorno = & $obj_ret[0];
+				$retorno = $obj_ret[0];
 			}
 		}
 

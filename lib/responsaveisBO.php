@@ -18,10 +18,10 @@ class ResponsaveisBO extends BO
 		if(strlen($codigo)>0) {
 			$filtro["codigo"] = $codigo;
 
-			$obj_ret = & $this->DAO->recuperaDeAvaliacao($filtro);
+			$obj_ret = $this->DAO->recuperaDeAvaliacao($filtro);
 
 			if(count($obj_ret)) {
-				$obj = & $obj_ret[0];
+				$obj = $obj_ret[0];
 			} else {
 				$obj = null;
 			}
@@ -45,7 +45,7 @@ class ResponsaveisBO extends BO
 		$ordem["nome_avaliacao"] = "ASC";
 		$ordem["nome_monitor"] = "ASC";
 
-		$lista_obj = & $this->DAO->recuperaDeAvaliacaoMonitor($filtro);
+		$lista_obj = $this->DAO->recuperaDeAvaliacaoMonitor($filtro);
 
 		if(count($lista_obj)) {
 			foreach($lista_obj as $obj)

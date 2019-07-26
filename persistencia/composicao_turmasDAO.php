@@ -42,7 +42,7 @@ class ComposicaoTurmasDAO extends DAONxN
 
 		$where = $this->whereDeFiltro($filtro);
 
-		$ordem = & $this->orderBy($ordemarray);
+		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosGeral)."
 				FROM (($this->tabela
@@ -52,7 +52,7 @@ class ComposicaoTurmasDAO extends DAONxN
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -61,7 +61,7 @@ class ComposicaoTurmasDAO extends DAONxN
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -102,7 +102,7 @@ class ComposicaoTurmasDAO extends DAONxN
 				(SELECT tur_ano AS ano_ss, tur_seme AS semestre_ss, count(*) AS ct_ss FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = '".$opcao_curso."' AND ctu_mens = 'SS' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_ss
 				ON ano_ss = ano AND semestre_ss = semestre)";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -111,7 +111,7 @@ class ComposicaoTurmasDAO extends DAONxN
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

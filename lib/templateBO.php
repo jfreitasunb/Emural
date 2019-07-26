@@ -51,7 +51,7 @@ class TemplateBO
 	{
 		$turmas_BO = new TurmasBO();
 
-		$tpl_pagina = & $this->carregarCabecalhoERodape();
+		$tpl_pagina = $this->carregarCabecalhoERodape();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('menu_professor.tpl');
@@ -77,7 +77,7 @@ class TemplateBO
 	{
 		$turmas_BO = new TurmasBO();
 
-		$tpl_pagina = & $this->carregarCabecalhoERodape();
+		$tpl_pagina = $this->carregarCabecalhoERodape();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('menu_aluno.tpl');
@@ -103,7 +103,7 @@ class TemplateBO
 	{
 		$turmas_BO = new TurmasBO();
 
-		$tpl_pagina = & $this->carregarCabecalhoERodape();
+		$tpl_pagina = $this->carregarCabecalhoERodape();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('menu_coordenador.tpl');
@@ -126,7 +126,7 @@ class TemplateBO
 
 	public function carregarPaginaAvaliacao($professor,$semestre,$turma,$avaliacao)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -161,7 +161,7 @@ class TemplateBO
 
 	public function carregarPaginaMonitores($professor,$semestre,$turma)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -192,7 +192,7 @@ class TemplateBO
 
 	public function carregarPaginaAvisos($professor,$semestre,$turma)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -223,7 +223,7 @@ class TemplateBO
 
 	public function carregarPaginaTurma($professor,$semestre,$turma)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -248,7 +248,7 @@ class TemplateBO
 
 	public function carregarPaginaConfiguracaoTurma($professor,$semestre,$turma)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -279,7 +279,7 @@ class TemplateBO
 
 	public function carregarPaginaMediasMencoes($professor,$semestre,$turma)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeProfessorComMenu($professor,$semestre);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -310,7 +310,7 @@ class TemplateBO
 
 	public function carregarPaginaProfessor($professor,$semestre)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeProfessorComMenu($professor, $semestre);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeProfessorComMenu($professor, $semestre);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -330,7 +330,7 @@ class TemplateBO
 
 	public function carregarPaginaAluno($aluno)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -350,7 +350,7 @@ class TemplateBO
 
 	public function carregarPaginaAlunoNotas($aluno)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -375,7 +375,7 @@ class TemplateBO
 
 	public function carregarPaginaAlunoSenha($aluno)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -400,7 +400,7 @@ class TemplateBO
 
 	public function carregarPaginaAlunoEmail($aluno, $existe_menu)
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno, $existe_menu);
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeAlunoComMenu($aluno, $existe_menu);
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -425,7 +425,7 @@ class TemplateBO
 
 	public function carregarPaginaCoordenador()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -445,7 +445,7 @@ class TemplateBO
 
 	public function carregarPaginaCoordenadorSenha()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -470,7 +470,7 @@ class TemplateBO
 
 	public function carregarPaginaCoordenadorAlunoSenha()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -495,7 +495,7 @@ class TemplateBO
 
 	public function carregarPaginaCoordenadorAlunoEmail()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -520,7 +520,7 @@ class TemplateBO
 
 	public function carregarPaginaCoordenadorSemestres()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -545,7 +545,7 @@ class TemplateBO
 
 	public function carregarPaginaCoordenadorRevisaoMencoes()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -570,7 +570,7 @@ class TemplateBO
 
 	public function carregarPaginaRelatorioCoordenadorPorcentagemMencoes()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');
@@ -601,7 +601,7 @@ class TemplateBO
 
 	public function carregarPaginaRelatorioCoordenadorPorcentagemAprovados()
 	{
-		$tpl_pagina = & $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
 
 		$tpl = new HTML_Template_Sigma($this->root_path.'template');
 		$tpl->loadTemplateFile('navegacao.tpl');

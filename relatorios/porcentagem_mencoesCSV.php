@@ -16,7 +16,7 @@ if($_POST) {
 	$dados->disciplina = $_POST['disciplina'];
 	$dados->opcao_curso = $_POST['opcao_curso'];
 
-	$lista = & $composicarTurmasBO->retornaArrayPorcentagemMencoes($dados);
+	$lista = $composicarTurmasBO->retornaArrayPorcentagemMencoes($dados);
 
 	header("Content-type: application/csv"); 
 	header("Content-Disposition: \"inline; filename=relatorio.csv\"");

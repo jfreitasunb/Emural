@@ -6,7 +6,7 @@ $matricula = $_POST['matricula'];
 //echo $string."<br>";
 if(strlen($matricula) > 0) {
 	$alunosBO = new AlunosBO();
-	$aluno = & $alunosBO->retornaPorMatricula($matricula);
+	$aluno = $alunosBO->retornaPorMatricula($matricula);
 
 	if(count($aluno)) {
 		//print_r($aluno);

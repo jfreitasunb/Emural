@@ -84,7 +84,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 						$grupo = null;
 						if (strlen($turma->grupo_codigo_moodle)) {
 							$grupoBO = new GruposBO();
-							$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
+							$grupo = $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 						}
 
 						$moodleBO->cursoMatricular($turma, $aluno, $grupo);
@@ -101,7 +101,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 						$grupo = null;
 						if (strlen($turma->grupo_codigo_moodle)) {
 							$grupoBO = new GruposBO();
-							$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
+							$grupo = $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 						}
 
 						$composicao_turmasBO->matricularAlunoTurma($aluno, $turma);
@@ -114,7 +114,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 						$grupo = null;
 						if (strlen($turma->grupo_codigo_moodle)) {
 							$grupoBO = new GruposBO();
-							$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
+							$grupo = $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 						}
 
 						$composicao_turmasBO->desmatricularAlunoTurma($aluno->codigo_aluno, $turma);
@@ -145,7 +145,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 					$grupo = null;
 					if (strlen($turma->grupo_codigo_moodle)) {
 						$grupoBO = new GruposBO();
-						$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
+						$grupo = $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 					}
 
 					$moodleBO->cursoMatricular($turma, $aluno, $grupo);
@@ -162,7 +162,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 					$grupo = null;
 					if (strlen($turma->grupo_codigo_moodle)) {
 						$grupoBO = new GruposBO();
-						$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
+						$grupo = $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 					}
 
 					$composicao_turmasBO->matricularAlunoTurma($aluno,$turma);
@@ -175,7 +175,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 					$grupo = null;
 					if (strlen($turma->grupo_codigo_moodle)) {
 						$grupoBO = new GruposBO();
-						$grupo = & $grupoBO->retornaPorCodigo($turma->grupo_codigo);
+						$grupo = $grupoBO->retornaPorCodigo($turma->grupo_codigo);
 					}
 
 					$composicao_turmasBO->desmatricularAlunoTurma($aluno->codigo_aluno, $turma);

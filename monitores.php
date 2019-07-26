@@ -23,13 +23,13 @@ $linkBO = new LinkBO();
 $autenticacaoBO = new AutenticacaoBO();
 $semestresBO = new SemestresBO();
 
-$url = & $urlBO->codigoSegundoTerceiroNivel();
+$url = $urlBO->codigoSegundoTerceiroNivel();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$turma = & $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
+$turma = $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
 
-$responsavel = & $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
+$responsavel = $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
 
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
@@ -45,7 +45,7 @@ if($_POST) {
 
 	$responsaveisBO->inserirAtualizar($valores,$responsavel);
 
-	$responsavel = & $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
+	$responsavel = $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
 } if ($url->deletar) {
 	$responsaveisBO->desativar($responsavel);
 

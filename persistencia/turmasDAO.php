@@ -43,7 +43,7 @@ class TurmasDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro, $this->mapaAtributosGeral);
 
-		$ordem = & $this->orderBy($ordemarray, $this->mapaAtributosGeral);
+		$ordem = $this->orderBy($ordemarray, $this->mapaAtributosGeral);
 
 		if(strlen($limit) > 0)
 			$limit = "LIMIT $limit";
@@ -61,7 +61,7 @@ class TurmasDAO extends DAO
 				$limit
 				$offset";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -70,7 +70,7 @@ class TurmasDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -82,7 +82,7 @@ class TurmasDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro, $this->mapaAtributosGeral);
 
-		$ordem = & $this->orderBy($ordemarray, $this->mapaAtributosGeral);
+		$ordem = $this->orderBy($ordemarray, $this->mapaAtributosGeral);
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosGeral).",
 						ctu_medi AS media,
@@ -95,7 +95,7 @@ class TurmasDAO extends DAO
 				$where
 				$ordem";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -104,7 +104,7 @@ class TurmasDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}
@@ -116,7 +116,7 @@ class TurmasDAO extends DAO
 
 		$where = $this->whereDeFiltro($filtro, $this->mapaAtributosGeralGrupo);
 
-		$ordem = & $this->orderBy($ordemarray, $this->mapaAtributosGeralGrupo);
+		$ordem = $this->orderBy($ordemarray, $this->mapaAtributosGeralGrupo);
 
 		if(strlen($limit) > 0)
 			$limit = "LIMIT $limit";
@@ -135,7 +135,7 @@ class TurmasDAO extends DAO
 				$limit
 				$offset";
 
-		$res = & $this->_db->query($sql);
+		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
@@ -144,7 +144,7 @@ class TurmasDAO extends DAO
 			throw new Exception("Erro na consulta ao banco!");
 		}
 
-		$lista = & $res->fetchAll(MDB2_FETCHMODE_OBJECT);
+		$lista = $res->fetchAll(MDB2_FETCHMODE_OBJECT);
 
 		return $lista;
 	}

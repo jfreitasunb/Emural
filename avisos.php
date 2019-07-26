@@ -20,13 +20,13 @@ $linkBO = new LinkBO();
 $autenticacaoBO = new AutenticacaoBO();
 $semestresBO = new SemestresBO();
 
-$url = & $urlBO->codigoSegundoTerceiroNivel();
+$url = $urlBO->codigoSegundoTerceiroNivel();
 
-$semestre = & $semestresBO->retornaUltimoSemestre();
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$turma = & $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
+$turma = $turmasBO->retornaPorCodigoSemestreAtual($url->codigo,$semestre);
 
-$observacao = & $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
+$observacao = $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
 
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
@@ -39,7 +39,7 @@ if($_POST) {
 
 	$observacoesBO->inserirAtualizar($valores,$observacao);
 
-	$observacao = & $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
+	$observacao = $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
 } else if (isset($_GET["d"])) {
 	$observacoesBO->desativar($observacao);
 
