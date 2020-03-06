@@ -369,3 +369,4 @@
 05/08/2015 22:31:57 - Erro acesso banco    - MDB2 Error: unknown error
 28/08/2015 08:21:30 - Erro                 - Erro na consulta ao banco classe composicaoturmasDAO
 15/09/2015 16:02:08 - Erro                 - Erro na consulta ao banco classe composicaoturmasDAO
+06/03/2020 17:30:02 - Erro                 - Erro na consulta ao banco classe DAO
