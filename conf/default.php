@@ -4,7 +4,7 @@
 $ROOT = "/";
 $ROOT_PATH = "/var/www/emural/";
 
-$SITE = "http://192.168.0.27/";
+$SITE = "http://127.0.0.1:8087/";
 $SITEM = "http://192.168.0.28/";
 //$SITE = "http://127.0.0.1:8083/";
 
