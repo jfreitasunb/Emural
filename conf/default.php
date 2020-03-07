@@ -16,11 +16,11 @@ $BANCO["host"]     = "127.0.0.1";
 $BANCO["dbname"]   = "emural";
 $BANCO["dbport"]   = "5432";
 
-$BANCOSI ["user"]     = "si";
-$BANCOSI ["password"] = "estudos";
-$BANCOSI ["host"]     = "127.0.0.1";
-$BANCOSI ["dbname"]   = "si";
-$BANCOSI ["dbport"]   = "5432";
+$BANCOSI["user"]     = "si";
+$BANCOSI["password"] = "estudos";
+$BANCOSI["host"]     = "127.0.0.1";
+$BANCOSI["dbname"]   = "si";
+$BANCOSI["dbport"]   = "5432";
 
 $SMTP ["host"] = "127.0.0.1";
 $SMTP ["wordWrap"] = "70";
