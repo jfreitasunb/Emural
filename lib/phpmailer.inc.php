@@ -28,8 +28,8 @@ class phpmailer
 	var $CharSet     = "UTF-8";
 	var $ContentType = "text/plain";
 	var $Encoding    = "8bit";
-	var $From        = "root@localhost";
-	var $FromName    = "root";
+	var $from        = "root@localhost";
+	var $fromName    = "root";
 	var $to          = array();
 	var $cc          = array();
 	var $bcc         = array();
@@ -259,7 +259,7 @@ class phpmailer
 	function create_header() {
 		$header = array();
 		$header[] = sprintf("From: %s <%s>\n", $this->FromName, trim($this->From));
-		$header[] = $from;
+		$header[] = "temp";
 		$header[] = $this->addr_append("To", $this->to);
 		if(count($this->cc) > 0)
 			$header[] = $this->addr_append("cc", $this->cc);

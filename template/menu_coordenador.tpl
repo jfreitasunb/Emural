@@ -17,6 +17,7 @@
 					<li><a href="{revisao_mencoes_link}">Revisão de Menções</a></li>
 					<li><a href="{alterar_senha_aluno_link}">Alterar Senha Aluno</a></li>
 					<li><a href="{alterar_email_aluno_link}">Alterar Email Aluno</a></li>
+					<li><a href="{link_mudanca_senha}">Link Senha</a></li>
 				</ul>
 			</li>
 		</ul>
