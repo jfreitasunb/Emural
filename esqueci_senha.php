@@ -20,7 +20,7 @@ $dados = null;
 if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 	$hast_esqueci = $_GET['esqueci'];
 
-	$pessoasBO =  & new PessoasBO();
+	$pessoasBO =  new PessoasBO();
 	$pessoa = $pessoasBO->retornaPorHastEsqueciSenha($hast_esqueci);
 
 	$linkBO = new LinkBO();
