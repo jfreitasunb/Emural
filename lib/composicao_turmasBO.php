@@ -12,10 +12,16 @@ class ComposicaoTurmasBO extends BO
 	}
 
 
-	public function retornaAlunosMatriculados($turma)
+	public function retornaAlunosMatriculados($turma, $status = true)
 	{
 		$filtro["turma"] = $turma->codigo;
-		$filtro["status"] = "true";
+
+		if ($status) {
+			$filtro["status"] = "true";
+		}else{
+			$filtro["status"] = "false";
+		}
+		
 
 		$ordem["matricula"] = "ASC";
 
@@ -237,9 +243,9 @@ class ComposicaoTurmasBO extends BO
 	}
 
 
-	public function retornaArrayPorTurma($turma)
+	public function retornaArrayPorTurma($turma, $status = true)
 	{
-		$lista_obj = $this->retornaAlunosMatriculados($turma);
+		$lista_obj = $this->retornaAlunosMatriculados($turma, $status);
 
 		if(count($lista_obj)) {
 			foreach($lista_obj as $obj)
