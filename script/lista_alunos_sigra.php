@@ -67,20 +67,19 @@
 
 		if(count($lista_turmas_arquivo) > 1) {
 			$turma_arquivo = $lista_turmas_arquivo[0];
-//echo"<pre>:";print_r(strlen($turma_arquivo->descricao));echo":</pre><br><br>";
-//echo"<pre>";print_r($lista_turmas);echo"</pre><br><br>";
+
 			if(isset($lista_turmas[$turma_arquivo->codigo_cpd.$turma_arquivo->descricao])) {
 				$turma = $lista_turmas[$turma_arquivo->codigo_cpd.$turma_arquivo->descricao];
 
 
-				$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma);
+				$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, true);
 
 				foreach($turma_arquivo->alunos as $key => $aluno_arquivo)
 				{
-echo"<pre>";print_r($aluno_arquivo);echo"</pre><br><br>";
+
 					if(isset($lista_alunos[$key])) {
 						$aluno = $alunosBO->retornaPorMatricula($aluno_arquivo->matricula);
-echo"<pre>";print_r($aluno);echo"</pre><br><br>";
+
 						$grupo = null;
 						if (strlen($turma->grupo_codigo_moodle)) {
 							$grupoBO = new GruposBO();
@@ -108,6 +107,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 						$moodleBO->cursoMatricular($turma, $aluno, $grupo);
 					}
 				}
+				$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, false);
 				if(count($lista_alunos)) {
 					foreach($lista_alunos as $aluno)
 					{
@@ -135,7 +135,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 		if(isset($lista_turmas[$turma_arquivo->codigo_cpd.$turma_arquivo->descricao])) {
 			$turma = $lista_turmas[$turma_arquivo->codigo_cpd.$turma_arquivo->descricao];
 
-			$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma);
+			$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, true);
 
 			foreach($turma_arquivo->alunos as $key => $aluno_arquivo)
 			{
@@ -169,6 +169,7 @@ echo"<pre>";print_r($aluno);echo"</pre><br><br>";
 					$moodleBO->cursoMatricular($turma, $aluno, $grupo);
 				}
 			}
+			$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, false);
 			if(count($lista_alunos)) {
 				foreach($lista_alunos as $aluno)
 				{
