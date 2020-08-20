@@ -4,8 +4,8 @@
 $ROOT = "/";
 $ROOT_PATH = "/var/www/emural/";
 
-$SITE = "http://127.0.0.1:8087/";
-$SITEM = "http://192.168.0.28/";
+$SITE = "http://192.168.122.62/";
+$SITEM = "http://192.168.122.62/";
 //$SITE = "http://127.0.0.1:8083/";
 
 $CHARSET = "utf-8";
@@ -25,7 +25,7 @@ $BANCOSI["dbport"]   = "5432";
 $SMTP ["host"] = "127.0.0.1";
 $SMTP ["wordWrap"] = "70";
 
-$EMAIL_VALIDACAO_ORIGEM = "moodlemat@mat.unb.br";
+$EMAIL_VALIDACAO_ORIGEM = "informatica@mat.unb.br";
 
 $CONCATENACAO_VALIDACAO_EMAIL = "string para concatenacao para geracao do codigo de validacao do email, essa string deve ser muito grande para garantir que o hast gerado não seja reversível.";
 

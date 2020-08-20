@@ -517,6 +517,29 @@ class TemplateBO
 		return $tpl_pagina;
 	}
 
+	public function carregarPaginaCoordenadorLinkSenha()
+	{
+		$tpl_pagina = $this->carregarCabecalhoERodapeDeCoordenadorComMenu();
+
+		$tpl = new HTML_Template_Sigma($this->root_path.'template');
+		$tpl->loadTemplateFile('navegacao.tpl');
+
+		$tpl->setVariable(array(
+			"caminho_link_url"  => $this->linkBO->getCoordenador(),
+			"caminho_link_descricao" => "Início"
+		));
+		$tpl->parse("caminho_link");
+		$tpl->setVariable(array(
+			"caminho_comum_descricao" => "Link para mudança de senha"
+		));
+
+		$tpl_pagina->setVariable(array(
+			"conteudo"  => $tpl->get()
+		));
+		$tpl_pagina->parse("body");
+
+		return $tpl_pagina;
+	}
 
 	public function carregarPaginaCoordenadorSemestres()
 	{
@@ -688,6 +711,7 @@ class TemplateBO
 			'senha_link' => $this->linkBO->getCoordenadorSenha(),
 			'alterar_senha_aluno_link' => $this->linkBO->getCoordenadorAlunoSenha(),
 			'alterar_email_aluno_link' => $this->linkBO->getCoordenadorAlunoEmail(),
+			'link_mudanca_senha' => $this->linkBO->getCoordenadorLinkMudancaSenha(),
 			'relatorio_porcentagem_mencoes_link' => $this->linkBO->getCoordenadorRelatorioPorcentagemMencoes(),
 			'relatorio_porcentagem_aprovados_link' => $this->linkBO->getCoordenadorRelatorioPorcentagemAprovados(),
 			'relatorio_lista_alunos_link' => $this->linkBO->getCoordenadorRelatorioListaAlunos(),

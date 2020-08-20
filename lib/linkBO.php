@@ -247,7 +247,11 @@ class LinkBO
 		return $this->root."aluno_email";
 	}
 
-
+	public function getCoordenadorLinkMudancaSenha()
+	{
+		return $this->root."link_senha";
+	}
+	
 	public function getCoordenadorRelatorioPorcentagemMencoes()
 	{
 		return $this->root."relatorios/porcentagem_mencoes";

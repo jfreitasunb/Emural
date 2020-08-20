@@ -59,6 +59,10 @@ RewriteRule   ^/aluno_email.php(.*)								/coordenador_aluno_email.php$1						[
 RewriteRule   ^/aluno_email(.*)									/coordenador_aluno_email.php$1						[L,PT]
 RewriteRule   ^/aluno_email.html(.*)							/coordenador_aluno_email.php$1						[L,PT]
 
+RewriteRule   ^/link_senha.php(.*)                             /coordenador_link_senha.php$1                      [L,PT]
+RewriteRule   ^/link_senha(.*)                                 /coordenador_link_senha.php$1                      [L,PT]
+RewriteRule   ^/link_senha.html(.*)                            /coordenador_link_senha.php$1                      [L,PT]
+
 RewriteRule   ^/relatorios/turmaCSV.php(.*)						/relatorios/turmaCSV.php$1							[L,PT]
 RewriteRule   ^/relatorios/turmaCSV(.*)							/relatorios/turmaCSV.php$1							[L,PT]
 RewriteRule   ^/relatorios/turmaCSV.html(.*)					/relatorios/turmaCSV.php$1							[L,PT]

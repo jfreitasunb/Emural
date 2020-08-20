@@ -258,8 +258,12 @@ class PessoasBO extends BO
 		$return = null;
 
 		if ($hast_esqueci !== NULL && strlen($hast_esqueci) > 32) {
+
+
 			$pessoa_codigo = substr($hast_esqueci, 32);
+
 			$hast_esqueci = substr($hast_esqueci, 0, 32);
+
 
 			$pessoa = $this->retornaPorCodigo($pessoa_codigo);
 

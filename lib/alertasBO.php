@@ -159,6 +159,11 @@ class AlertasBO
 		$this->lista['ESUNA'] = $alerta;
 		unset($alerta);
 
+		$alerta['tipo'] = "warning";
+		$alerta['mensagem'] = "E-mail não cadastrado!";
+		$this->lista['EMNC'] = $alerta;
+		unset($alerta);
+
 		$alerta['tipo'] = "success";
 		$alerta['mensagem'] = "Enviado e-mail para mudança de senha.";
 		$this->lista['ESEEMS'] = $alerta;
