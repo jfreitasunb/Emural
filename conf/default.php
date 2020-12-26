@@ -18,7 +18,7 @@ $BANCO["dbport"]   = "5432";
 
 $BANCOSI["user"]     = "si";
 $BANCOSI["password"] = "estudos";
-$BANCOSI["host"]     = "127.0.0.1";
+$BANCOSI["host"]     = "192.168.122.36";
 $BANCOSI["dbname"]   = "si";
 $BANCOSI["dbport"]   = "5432";
 
@@ -37,7 +37,7 @@ $TITULO = "E-mural - Mural Eletrônico de Notas do Departamento de Matemática -
 
 $DEPARTAMENTO = "matematica";
 
-$URL_MOODLE = "http://192.168.0.28";
+$URL_MOODLE = "http://192.168.122.69";
 $TOKEN_MOODLE = '412521a258356bd2f1acb1e2aa3c25cf';
 
 $SERVICOS_MOODLE = array();

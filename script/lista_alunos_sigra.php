@@ -20,7 +20,7 @@
 		//$arquivo = fopen("/1_BKP.txt", "r");
 		//$arquivo = fopen("/2.txt", "r");
 		//$arquivo = fopen("/3.txt", "r");
-		$arquivo = fopen("/scripts/emural/a.txt", "r");
+		$arquivo = fopen("/var/www/emural/script/alunos_MAT.txt", "r");
 	} catch (Exception $e) {
 		print_r($e);
 		exit;
@@ -88,6 +88,7 @@
 
 						$moodleBO->cursoMatricular($turma, $aluno, $grupo);
 
+						echo"<pre>:";print_r($aluno);echo":</pre><br><br>";
 						unset($lista_alunos[$key]);
 						unset($turma->alunos[$key]);
 					} else {
@@ -105,6 +106,7 @@
 
 						$composicao_turmasBO->matricularAlunoTurma($aluno, $turma);
 						$moodleBO->cursoMatricular($turma, $aluno, $grupo);
+						
 					}
 				}
 				$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, false);
