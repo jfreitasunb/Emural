@@ -34,6 +34,7 @@ class MoodleBO
 				$ultimoNome = " ";
 			}
 
+
 			$usuario = new stdClass();
 			$usuario->username = $pessoa->usuario;
 			$usuario->password = 'As12345.';
@@ -58,8 +59,8 @@ class MoodleBO
 
 				$pessoasBO->alteraCodigoMoodle($pessoa, $pessoa_moodle->id);
 			} elseif (is_object($resposta)) {
-//echo"<pre>";var_dump($usuario);echo"</pre><br><br>";//Se tiver problema descomentar essa linha
-//echo"<pre>";print_r($resposta);echo"</pre><br><br>";
+echo"<pre>";var_dump($usuario);echo"</pre><br><br>";//Se tiver problema descomentar essa linha
+echo"<pre>";print_r($resposta);echo"</pre><br><br>";
 				throw new Exception($resposta->exception."\n * ".$resposta->message);
 			}
 		}
@@ -261,6 +262,13 @@ class MoodleBO
 		$resposta = $this->executarRequisicao($servico, $parametro);
 
 		if (is_object($resposta)) {
+
+			echo"<pre>:";print_r($parametro);echo":</pre><br><br>";
+
+			echo"<pre>:";print_r($turma);echo":</pre><br><br>";
+
+			echo"<pre>:";print_r($resposta);echo":</pre><br><br>";
+
 			throw new Exception($resposta->exception."\n".$resposta->message);
 		}
 
