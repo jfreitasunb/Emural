@@ -46,8 +46,14 @@ if($_POST) {
             $update_link = $PDO->prepare("UPDATE pessoas SET pes_eval = TRUE, pes_econ = NULL WHERE pes_emai = :email");
 
             $update_link->bindParam(':email', $email, PDO::PARAM_STR );
-    
-            var_dump($update_link->execute());
+
+            $pessoa = $pessoasBO->retornaPorCodigo($codigo);
+
+            $moodleBO = new MoodleBO();
+
+            $moodleBO->usuarioAtualizar($pessoa);
+
+            $update_link->execute();
         }
 
         $nome = $rows[0]['pes_nome'];
@@ -65,6 +71,12 @@ if($_POST) {
         $update_link->bindParam(':senha_mudanca', $senha_mudanca, PDO::PARAM_STR );
     
         $update_link->execute();
+
+        $pessoa = $pessoasBO->retornaPorCodigo($codigo);
+
+        $moodleBO = new MoodleBO();
+
+        $moodleBO->usuarioAtualizar($pessoa);
 
         $link_mudanca_senha = $SITE."esqueci_senha?esqueci=".$senha_mudanca.$rows[0]['pes_cpes'];
     }else{
