@@ -1,5 +1,5 @@
 <?php
-//if(isset($argv[1])) {
+if(isset($argv[1])) {
 	require_once '../conf/default.php';
 
 	require_once $ROOT_PATH.'lib/alunosBO.php';
@@ -20,7 +20,7 @@
 		//$arquivo = fopen("/1_BKP.txt", "r");
 		//$arquivo = fopen("/2.txt", "r");
 		//$arquivo = fopen("/3.txt", "r");
-		$arquivo = fopen("/var/www/emural/script/alunos_MAT.txt", "r");
+		$arquivo = fopen("/scripts/emural/a.txt", "r");
 	} catch (Exception $e) {
 		print_r($e);
 		exit;
@@ -72,7 +72,7 @@
 				$turma = $lista_turmas[$turma_arquivo->codigo_cpd.$turma_arquivo->descricao];
 
 
-				$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, true);
+				$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma);
 
 				foreach($turma_arquivo->alunos as $key => $aluno_arquivo)
 				{
@@ -109,7 +109,6 @@
 						
 					}
 				}
-				$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, false);
 				if(count($lista_alunos)) {
 					foreach($lista_alunos as $aluno)
 					{
@@ -137,7 +136,7 @@
 		if(isset($lista_turmas[$turma_arquivo->codigo_cpd.$turma_arquivo->descricao])) {
 			$turma = $lista_turmas[$turma_arquivo->codigo_cpd.$turma_arquivo->descricao];
 
-			$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, true);
+			$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma);
 
 			foreach($turma_arquivo->alunos as $key => $aluno_arquivo)
 			{
@@ -171,8 +170,9 @@
 					$moodleBO->cursoMatricular($turma, $aluno, $grupo);
 				}
 			}
-			$lista_alunos = $composicao_turmasBO->retornaArrayPorTurma($turma, false);
 			if(count($lista_alunos)) {
+				print_r($lista_alunos);
+				die();
 				foreach($lista_alunos as $aluno)
 				{
 					$grupo = null;
@@ -187,5 +187,5 @@
 			}
 		}
 	}
-//}
+}
 ?>
