@@ -1,5 +1,5 @@
 <?php
-if(isset($argv[1])) {
+//if(isset($argv[1])) {
 	require_once '../conf/default.php';
 
 	require_once $ROOT_PATH.'lib/alunosBO.php';
@@ -187,5 +187,5 @@ if(isset($argv[1])) {
 			}
 		}
 	}
-}
+//}
 ?>
