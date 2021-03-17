@@ -27,9 +27,11 @@ class MoodleBO
 	{
 		if (!isset($pessoa->codigo_moodle) || !strlen($pessoa->codigo_moodle)) {
 			$nome_array = explode(' ', $pessoa->nome);
+
 			$primeiroNome = $nome_array[0];
 			if (count($nome_array) > 1) {
-				$ultimoNome = $nome_array[count($nome_array) - 1];
+				// $ultimoNome = $nome_array[count($nome_array) - 1];
+				$ultimoNome = str_replace($primeiroNome, "", $pessoa->nome);
 			} else {
 				$ultimoNome = " ";
 			}
@@ -40,7 +42,7 @@ class MoodleBO
 			$usuario->password = 'As12345.';
 			$usuario->firstname = $primeiroNome;
 			$usuario->lastname = $ultimoNome;
-			$usuario->email = strlen($pessoa->email) ? $pessoa->email : $pessoa->usuario."@mat.unb.br";
+			$usuario->email = strlen($pessoa->email) ? $pessoa->email : $pessoa->usuario."@aluno.unb.br";
 			$usuario->auth = 'emural';
 			$usuario->lang = 'pt_br';
 			$usuario->country = 'BR';
