@@ -381,3 +381,4 @@
 20/08/2020 18:08:27 - Erro                 - Erro na consulta ao banco classe pessoasDAO
 20/08/2020 18:30:57 - Erro                 - Erro na consulta ao banco classe pessoasDAO
 20/08/2020 18:32:25 - Erro                 - Erro na consulta ao banco classe pessoasDAO
+17/03/2021 20:11:49 - Erro acesso banco    - MDB2 Error: connect failed

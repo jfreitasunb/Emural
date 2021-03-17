@@ -390,6 +390,7 @@ class TurmasBO extends BO
 
 		$lista_turmas = $this->retornaArrayPorSemestre($semestre);
 		$lista_turmas_si = $siBO->retornaArrayTurmasPorSemestre($semestre);
+
 		$lista_disciplinas = $disciplinasBO->retornaArray();
 
 		$disciplinas_unidas = null;
