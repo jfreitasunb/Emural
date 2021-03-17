@@ -171,8 +171,7 @@
 				}
 			}
 			if(count($lista_alunos)) {
-				print_r($lista_alunos);
-				die();
+				
 				foreach($lista_alunos as $aluno)
 				{
 					$grupo = null;

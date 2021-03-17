@@ -15,8 +15,5 @@ if ($_POST && isset($_POST['user']) && isset($_POST['password'])) {
 	$retorno = $autenticacaoBO->pode_logar($_POST['user'], $_POST['password']);
 
 	$json = json_encode($retorno);
-
-	echo $json;
-	die();
 }
 ?>
