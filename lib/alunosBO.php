@@ -75,12 +75,15 @@ class AlunosBO extends BO
 
 	public function inserir($dados)
 	{
+		
 		$pessoasBO = new PessoasBO();
 
 		$pessoa = new stdClass();
 		$pessoa->tipo = 'aluno';
 		$pessoa->nome = $dados->nome;
 		$pessoa->usuario = $dados->matricula;
+		$pessoa->email = $dados->matricula."@aluno.unb.br";
+		$pessoa->email_valido = True;
 
 		$pessoa = $pessoasBO->inserir($pessoa);
 
