@@ -49,8 +49,10 @@ class SIBO extends BO
 			$filtro["professor"] = $professor->codigo_usuario_si;
 		}
 
+		$ordem["professor"] = "ASC";
 		$ordem["disciplina_descricao"] = "ASC";
 		$ordem["descricao"] = "ASC";
+
 
 		$lista_obj = $this->DAO->recuperaDeTurma($filtro,$ordem);
 
