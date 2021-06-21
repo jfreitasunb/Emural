@@ -382,3 +382,18 @@
 20/08/2020 18:30:57 - Erro                 - Erro na consulta ao banco classe pessoasDAO
 20/08/2020 18:32:25 - Erro                 - Erro na consulta ao banco classe pessoasDAO
 17/03/2021 20:11:49 - Erro acesso banco    - MDB2 Error: connect failed
+15/06/2021 20:55:00 - Erro                 - Erro na consulta ao banco classe semestresDAO
+15/06/2021 20:55:02 - Erro                 - Erro na consulta ao banco classe semestresDAO
+15/06/2021 20:55:08 - Erro                 - Erro na consulta ao banco classe semestresDAO
+15/06/2021 20:55:09 - Erro                 - Erro na consulta ao banco classe semestresDAO
+15/06/2021 20:55:10 - Erro                 - Erro na consulta ao banco classe pessoasDAO
+15/06/2021 20:55:12 - Erro                 - Erro na consulta ao banco classe pessoasDAO
+15/06/2021 20:55:16 - Erro                 - Erro na consulta ao banco classe pessoasDAO
+21/06/2021 19:18:44 - Erro acesso banco    - MDB2 Error: connect failed
+21/06/2021 19:25:44 - Erro acesso banco    - MDB2 Error: connect failed
+21/06/2021 19:25:49 - Erro acesso banco    - MDB2 Error: connect failed
+21/06/2021 19:25:54 - Erro acesso banco    - MDB2 Error: connect failed
+21/06/2021 19:26:32 - Erro acesso banco    - MDB2 Error: connect failed
+21/06/2021 19:37:22 - Erro acesso banco    - MDB2 Error: connect failed
+21/06/2021 19:37:27 - Erro acesso banco    - MDB2 Error: connect failed
+21/06/2021 19:37:34 - Erro acesso banco    - MDB2 Error: connect failed
