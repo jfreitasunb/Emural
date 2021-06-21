@@ -80,7 +80,7 @@ if($_POST) {
 							if($pessoasBO->mudarEmailPessoa($aluno, $dados->email)) {
 								$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
 								$emailBO = new EmailBO();
-								echo $emailBO->enviarValidacao($aluno);
+								$emailBO->enviarValidacao($aluno);
 								$mensagem[] = "E-mail e senha cadastrados com sucesso.</br> Verifique a mensagem de confirmação no seu e-mail.";
 								$dados = null;
 								$moodleBO = new MoodleBO();
@@ -106,9 +106,6 @@ if($_POST) {
 					} else {
 						$mensagem[] = "Turma incorreta.";
 					}
-				} else {
-					$mensagem[] = "Aluno com matricula ".$dados->matricula." já possui senha e/ou e-mail cadastrado(a).";
-					$mensagem[] = "Entre em contato com seu professor.";
 				}
 			} else {
 				$mensagem[] = "Matricula ".$dados->matricula." não está pre cadastrada.";
