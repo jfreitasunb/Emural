@@ -56,13 +56,41 @@ if($_POST) {
 		$mensagem[] = "e-mail inválido.";
 	}
 
-
-	if (!count($mensagem)) {
+    if (!count($mensagem)) {
 		if (strcmp($dados->senha, $dados->confirmar_senha) == 0) {
 			$pessoasBO = new PessoasBO();
-			$aluno = $pessoasBO->retornaPorUsuario($dados->matricula);
-
-			if ($aluno !== null) {
+            $aluno = $pessoasBO->retornaPorUsuario($dados->matricula);
+           //  var_dump($aluno);
+           // die();
+            if ($aluno !== null) {
+            	if (strlen($aluno->email)) {
+            		if  ($dados->email == $aluno->email) {
+	                    $composicao_turmasBO = new ComposicaoTurmasBO();
+						if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
+							$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
+							$mensagem[] = "E-mail e senha cadastrados com sucesso.";
+							$dados = null;
+							$pessoa = $pessoasBO->retornaPorCodigo($aluno->codigo);
+							$moodleBO = new MoodleBO();
+							$moodleBO->usuarioAtualizar($pessoa);
+						}
+	                } else {
+	                    $composicao_turmasBO = new ComposicaoTurmasBO();
+						if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
+							if($pessoasBO->mudarEmailPessoa($aluno, $dados->email)) {
+								$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
+								$emailBO = new EmailBO();
+								echo $emailBO->enviarValidacao($aluno);
+								$mensagem[] = "E-mail e senha cadastrados com sucesso.</br> Verifique a mensagem de confirmação no seu e-mail.";
+								$dados = null;
+								$moodleBO = new MoodleBO();
+								$moodleBO->usuarioAtualizar($pessoa);
+							} elseif (isset($ALERTAS["EJU"])) {
+								$mensagem[] = "E-mail já está sendo usado, cadastre outro ou procure o coordenador.";
+							}
+						}
+	                }
+            	}
 				if (!strlen($aluno->senha) && !strlen($aluno->email)) {
 					$composicao_turmasBO = new ComposicaoTurmasBO();
 					if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
