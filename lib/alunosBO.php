@@ -83,7 +83,7 @@ class AlunosBO extends BO
 		$pessoa->nome = $dados->nome;
 		$pessoa->usuario = $dados->matricula;
 		$pessoa->email = $dados->matricula."@aluno.unb.br";
-		$pessoa->email_valido = True;
+		$pessoa->email_valido = 'true';
 
 		$pessoa = $pessoasBO->inserir($pessoa);
 
