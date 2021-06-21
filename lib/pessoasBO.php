@@ -42,6 +42,10 @@ class PessoasBO extends BO
 			$insert['email'] = $dados->email;
 		}
 
+		if(isset($dados->email_valido)) {
+			$insert['email_valido'] = $dados->email_valido;
+		}
+
 		$pessoa = $this->DAO->inserir($insert);
 
 		return $pessoa;
@@ -138,7 +142,6 @@ class PessoasBO extends BO
 			$filtro_validacao['email'] = $email;
 
 			$lista_validacao = $this->DAO->recuperaDeFiltro($filtro_validacao);
-
 			if (count($lista_validacao)) {
 				$pessoa_validacao = $lista_validacao[0];
 
