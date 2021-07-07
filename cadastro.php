@@ -68,7 +68,7 @@ if($_POST) {
 	                    $composicao_turmasBO = new ComposicaoTurmasBO();
 						if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
 							$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
-							$mensagem[] = "E-mail e senha cadastrados com sucesso.";
+							$mensagem[] = 'E-mail e senha cadastrados com sucesso. Agora você já pode acessar o <a href="'.$SITE.'">E-mural</a> , ou o <a href="'.$SITEM.'">MoodleMAT</a>';
 							$dados = null;
 							$pessoa = $pessoasBO->retornaPorCodigo($aluno->codigo);
 							$moodleBO = new MoodleBO();
