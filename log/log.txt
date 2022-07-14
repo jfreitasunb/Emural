@@ -397,3 +397,5 @@
 21/06/2021 19:37:22 - Erro acesso banco    - MDB2 Error: connect failed
 21/06/2021 19:37:27 - Erro acesso banco    - MDB2 Error: connect failed
 21/06/2021 19:37:34 - Erro acesso banco    - MDB2 Error: connect failed
+29/11/2021 19:12:00 - Erro acesso banco    - MDB2 Error: connect failed
+29/11/2021 19:39:30 - Erro acesso banco    - MDB2 Error: connect failed
