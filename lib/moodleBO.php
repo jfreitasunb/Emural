@@ -28,10 +28,10 @@ class MoodleBO
 		if (!isset($pessoa->codigo_moodle) || !strlen($pessoa->codigo_moodle)) {
 			$nome_array = explode(' ', $pessoa->nome);
 
-			$primeiroNome = $nome_array[0];
+			$primeiroNome = trim($nome_array[0]);
 			if (count($nome_array) > 1) {
 				// $ultimoNome = $nome_array[count($nome_array) - 1];
-				$ultimoNome = str_replace($primeiroNome, "", $pessoa->nome);
+				$ultimoNome = trim(str_replace($primeiroNome, "", $pessoa->nome));
 			} else {
 				$ultimoNome = " ";
 			}
