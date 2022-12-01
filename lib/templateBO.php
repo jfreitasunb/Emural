@@ -60,7 +60,7 @@ class TemplateBO
 		$this->iniciarMenuProfessor($tpl,$professor);
 
 		$tpl_pagina->setVariable(array(
-			"conteudo_topo"  => "<img alt='' src='".$this->root."images/topo_menu.png'>"
+			"conteudo_topo"  => "<img alt='' src='".$this->root."images/topo_menu2.png'>"
 		));
 		$tpl_pagina->parse("adicionar_conteudo_topo");
 
@@ -86,7 +86,7 @@ class TemplateBO
 
 
 		$tpl_pagina->setVariable(array(
-			"conteudo_topo"  => "<img alt='' src='".$this->root."images/topo_menu.png'>"
+			"conteudo_topo"  => "<img alt='' src='".$this->root."images/topo_menu2.png'>"
 		));
 		$tpl_pagina->parse("adicionar_conteudo_topo");
 
@@ -111,7 +111,7 @@ class TemplateBO
 		$this->iniciarMenuCoordenador($tpl);
 
 		$tpl_pagina->setVariable(array(
-			"conteudo_topo"  => "<img alt='' src='".$this->root."images/topo_menu.png'>"
+			"conteudo_topo"  => "<img alt='' src='".$this->root."images/topo_menu2.png'>"
 		));
 		$tpl_pagina->parse("adicionar_conteudo_topo");
 
@@ -930,7 +930,7 @@ class TemplateBO
 		));
 
 		$tpl_pagina->setVariable(array(
-			'conteudo_topo' => "<img alt='' src='images/topo_login.png'>",
+			'conteudo_topo' => "<img alt='' src='images/topo_login2.png'>",
 			'rodape'  => $tpl->get()
 		));
 		$tpl_pagina->parse("adicionar_conteudo_topo");
