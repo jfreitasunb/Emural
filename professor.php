@@ -29,13 +29,13 @@ $semestre = $semestresBO->retornaUltimoSemestre();
 
 $tpl_main = $templateBO->carregarPaginaProfessor($professor,$semestre);
 
+
 $tpl = new HTML_Template_Sigma($ROOT_PATH.'template');
 
 
 $tpl->loadTemplateFile('professor.tpl');
 
 $templateBO->iniciarProfessor($tpl);
-
 
 $tpl_main->setVariable(array(
 	"conteudo"  => $tpl->get()
