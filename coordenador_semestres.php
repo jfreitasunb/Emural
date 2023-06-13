@@ -69,6 +69,7 @@ if($_POST) {
 	$turmasBO = new TurmasBO();
 
 	if($novo) {
+	
 		$pessoasBO = new PessoasBO();
 		$pessoasBO->zerarCodigoMoodle();
 
@@ -77,6 +78,7 @@ if($_POST) {
 
 		$turmasBO->atualizacaoTurmasInicioSemestre($semestre, $disciplinas_juntas);
 	} else {
+		
 		$turmasBO->atualizacaoTurmasInicioSemestre($semestre);
 	}
 }
