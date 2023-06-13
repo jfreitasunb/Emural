@@ -401,3 +401,9 @@
 29/11/2021 19:39:30 - Erro acesso banco    - MDB2 Error: connect failed
 01/12/2022 13:26:30 - Erro acesso banco    - MDB2 Error: connect failed
 01/12/2022 13:26:37 - Erro acesso banco    - MDB2 Error: connect failed
+13/06/2023 12:28:01 - Erro                 - Erro na consulta ao banco classe turmasDAO
+13/06/2023 12:28:10 - Erro                 - Erro na consulta ao banco classe turmasDAO
+13/06/2023 12:33:34 - Erro                 - Erro na consulta ao banco classe turmasDAO
+13/06/2023 12:36:57 - Erro                 - Erro na consulta ao banco classe turmasDAO
+13/06/2023 12:37:37 - Erro                 - Erro na consulta ao banco classe turmasDAO
+13/06/2023 12:38:28 - Erro                 - Erro na consulta ao banco classe turmasDAO
