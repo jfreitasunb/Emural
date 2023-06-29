@@ -15,6 +15,8 @@ class ComposicaoTurmasBO extends BO
 	public function retornaAlunosMatriculados($turma)
 	{
 		$filtro["turma"] = $turma->codigo;
+
+		$filtro["status"] = "t";
 		
 		$ordem["matricula"] = "ASC";
 
