@@ -33,7 +33,7 @@ class MoodleBO
 				// $ultimoNome = $nome_array[count($nome_array) - 1];
 				$ultimoNome = trim(str_replace($primeiroNome, "", $pessoa->nome));
 			} else {
-				$ultimoNome = " ";
+				$ultimoNome = "sem";
 			}
 
 
