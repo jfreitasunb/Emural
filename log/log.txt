@@ -407,3 +407,9 @@
 13/06/2023 12:36:57 - Erro                 - Erro na consulta ao banco classe turmasDAO
 13/06/2023 12:37:37 - Erro                 - Erro na consulta ao banco classe turmasDAO
 13/06/2023 12:38:28 - Erro                 - Erro na consulta ao banco classe turmasDAO
+15/08/2023 18:50:17 - Erro                 - Erro na consulta ao banco classe turmasDAO
+15/08/2023 18:50:37 - Erro                 - Erro na consulta ao banco classe turmasDAO
+15/08/2023 18:50:48 - Erro                 - Erro na consulta ao banco classe turmasDAO
+15/08/2023 18:51:50 - Erro                 - Erro na consulta ao banco classe turmasDAO
+15/08/2023 18:53:23 - Erro                 - Erro na consulta ao banco classe turmasDAO
+15/08/2023 18:54:24 - Erro                 - Erro na consulta ao banco classe turmasDAO
