@@ -56,6 +56,16 @@ if($_POST) {
 		$mensagem[] = "e-mail inválido.";
 	}
 
+	// Validate password strength
+	$uppercase = preg_match('@[A-Z]@', $dados->senha);
+	$lowercase = preg_match('@[a-z]@', $dados->senha);
+	$number    = preg_match('@[0-9]@', $dados->senha);
+	$specialChars = preg_match('@[^\w]@', $dados->senha);
+
+	if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($dados->senha) < 8) {
+    	$mensagem[] = "Sua tenha deve conter pelo menos 8 caracteres, sendo pelo menos 1 lestra maiúscula, 1 letra minúscula, 1 número e 1 caracter especial.";
+	}
+
     if (!count($mensagem)) {
 		if (strcmp($dados->senha, $dados->confirmar_senha) == 0) {
 			$pessoasBO = new PessoasBO();
