@@ -179,6 +179,11 @@ class AlertasBO
 		$this->lista['ESCSV'] = $alerta;
 		unset($alerta);
 
+		$alerta['tipo'] = 'warning';
+		$alerta['mensagem'] = "Sua tenha deve conter pelo menos 8 caracteres, sendo pelo menos 1 lestra maiúscula, 1 letra minúscula, 1 número e 1 caracter especial.";
+		$this->lista['STMCE'] = $alerta;
+		unset($alerta);
+
 		$alerta['tipo'] = "warning";
 		$alerta['mensagem'] = "O Senha e o Confirmar Senha devem ser iguais.";
 		$this->lista['ESSD'] = $alerta;

@@ -41,6 +41,16 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 			$ALERTAS['ESCSV'] = "";
 		}
 
+		// Validate password strength
+		$uppercase = preg_match('@[A-Z]@', $dados->senha);
+		$lowercase = preg_match('@[a-z]@', $dados->senha);
+		$number    = preg_match('@[0-9]@', $dados->senha);
+		$specialChars = preg_match('@[^\w]@', $dados->senha);
+
+		if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($dados->senha) < 8) {
+	    	$ALERTAS['STMCE'] = "";
+		}
+
 		if (!count($ALERTAS)) {
 			if (strcmp($dados->senha, $dados->confirmar_senha) == 0) {
 				$pessoasBO->mudarSenhaEsqueciSenha($pessoa, $dados->senha);
