@@ -237,11 +237,15 @@ class PessoasBO extends BO
 	{
 		$filtro['codigo'] = $pessoa->codigo;
 
-		$update['senha_mudanca'] = seg_token_aleatorio(16);
+		// O banco guarda "token|validade"; o link enviado leva só o token.
+		$token = seg_token_aleatorio(16);
+		$validade = time() + SEG_VALIDADE_LINK_SENHA;
+
+		$update['senha_mudanca'] = $token."|".$validade;
 
 		$this->DAO->updateCamposDeFiltro($update, $filtro);
 
-		$pessoa->senha_mudanca = $update['senha_mudanca'];
+		$pessoa->senha_mudanca = $token;
 	}
 
 
@@ -259,8 +263,15 @@ class PessoasBO extends BO
 
 			$pessoa = ctype_digit($pessoa_codigo) ? $this->retornaPorCodigo($pessoa_codigo) : null;
 
-			if ($pessoa !== null && seg_comparar((string) $pessoa->senha_mudanca, $hast_esqueci)) {
-				$return = $pessoa;
+			if ($pessoa !== null) {
+				$partes = explode("|", (string) $pessoa->senha_mudanca);
+
+				// Tokens antigos (sem validade) ou expirados não são aceitos.
+				if (count($partes) == 2 && ctype_digit($partes[1]) && (int) $partes[1] >= time()
+						&& seg_comparar($partes[0], $hast_esqueci)) {
+					$pessoa->senha_mudanca = $partes[0];
+					$return = $pessoa;
+				}
 			}
 		}
 

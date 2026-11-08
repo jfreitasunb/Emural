@@ -8,6 +8,8 @@ if (!defined('SEG_CSRF_CAMPO')) {
 	define('SEG_CSRF_CAMPO', 'csrf_token');
 	define('SEG_LOGIN_MAX_TENTATIVAS', 5);
 	define('SEG_LOGIN_JANELA_SEGUNDOS', 900);
+	// Validade do link de redefinição de senha (24 horas).
+	define('SEG_VALIDADE_LINK_SENHA', 86400);
 }
 
 
