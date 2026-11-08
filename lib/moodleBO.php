@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__).'/seguranca.php';
+
 require_once $ROOT_PATH.'lib/curl.php';
 require_once $ROOT_PATH.'lib/pessoasBO.php';
 require_once $ROOT_PATH.'lib/turmasBO.php';
@@ -39,7 +41,8 @@ class MoodleBO
 
 			$usuario = new stdClass();
 			$usuario->username = $pessoa->usuario;
-			$usuario->password = 'As12345.';
+			// Senha local aleatória: o login no Moodle é feito pelo E-mural (auth = 'emural').
+			$usuario->password = 'Aa1!'.seg_token_aleatorio(12);
 			$usuario->firstname = $primeiroNome;
 			$usuario->lastname = $ultimoNome;
 			$usuario->email = strlen($pessoa->email) ? $pessoa->email : $pessoa->usuario."@aluno.unb.br";

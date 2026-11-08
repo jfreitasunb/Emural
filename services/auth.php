@@ -19,7 +19,6 @@ if ($_POST && isset($_POST['user']) && isset($_POST['password'])) {
 
 	$autenticacaoBO = new AutenticacaoBO();
 	
-//$retorno = $autenticacaoBO->pode_logar('jfreitas','REMOVIDO');
 	$retorno = $autenticacaoBO->pode_logar($_POST['user'], $_POST['password']);
 
 	$json = json_encode($retorno);
