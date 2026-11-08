@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/urlBO.php';
 require_once $ROOT_PATH.'lib/templateBO.php';
@@ -43,11 +45,25 @@ if($_POST) {
 		$notasBO->inserir($avaliacao,$notas);
 	}*/
 	
+	// Só aceita notas de alunos matriculados nesta turma.
+	$composicaoTurmasBO = new ComposicaoTurmasBO();
+	$alunos_turma = array();
+	$matriculados = $composicaoTurmasBO->retornaAlunosMatriculados($turma);
+	if ($matriculados !== null) {
+		foreach ($matriculados as $matriculado) {
+			$alunos_turma[(string) $matriculado->codigo_aluno] = true;
+		}
+	}
+
 	$notas = array();
 	foreach($_POST as $key => $value)
 	{
-		if(strpos($key, "codigo_") !== false) {
+		if(strpos($key, "codigo_") === 0) {
 			$codigo = substr($key,7);
+
+			if (!isset($alunos_turma[$codigo])) {
+				continue;
+			}
 
 			$obj->aluno_codigo = $codigo;
 			$obj->nota = $value;

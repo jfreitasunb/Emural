@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/pessoasBO.php';
 require_once $ROOT_PATH."lib/autenticacaoBO.php";

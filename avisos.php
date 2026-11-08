@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/urlBO.php';
 require_once $ROOT_PATH.'lib/turmasBO.php';
@@ -41,6 +43,8 @@ if($_POST) {
 
 	$observacao = $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
 } else if (isset($_GET["d"])) {
+	seg_csrf_validar_get();
+
 	$observacoesBO->desativar($observacao);
 
 	$aviso['NOTY_AVIES'] = "";

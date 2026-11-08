@@ -76,6 +76,14 @@ class TurmasBO extends BO
 		$composicao_nota = '(';
 		foreach($pesos as $key => $value)
 		{
+			// A fórmula é apenas interpretada (nunca executada), mas mesmo assim
+			// os nomes e pesos são restringidos a um formato seguro.
+			$key = str_replace(array('"', '\\', '$'), '', $key);
+			$value = str_replace(',', '.', trim((string) $value));
+			if (!is_numeric($value)) {
+				$value = 0;
+			}
+			$value = (float) $value;
 			$composicao_nota .= '$this->peso("'.$key.'",'.$value.') + ';
 		}
 		$composicao_nota = substr($composicao_nota,0,strlen($composicao_nota)-3).')/$this->pesoTotal()';
@@ -106,8 +114,8 @@ class TurmasBO extends BO
 					foreach($notas as $nota)
 					{
 						$tpl->setVariable(array(
-							'celula_titulo'  => $nota->descricao,
-							'celula_corpo' => $nota->valor
+							'celula_titulo'  => h($nota->descricao),
+							'celula_corpo' => h($nota->valor)
 						));
 						$tpl->parse("adicionar_celula_titulo");
 						$tpl->parse("adicionar_celula_corpo");
@@ -142,14 +150,14 @@ class TurmasBO extends BO
 					foreach($observacoes as $observacao)
 					{
 						$tpl->setVariable(array(
-							'celula_corpo' => $observacao." "
+							'celula_corpo' => h($observacao)." "
 						));
 						$tpl->parse("adicionar_celula_corpo");
 					}
 				}
 
 				$tpl->setVariable(array(
-					'disciplina_nome'  => $turma->disciplina_descricao
+					'disciplina_nome'  => h($turma->disciplina_descricao)
 				));
 				$tpl->parse("adicionar_disciplina");
 			}

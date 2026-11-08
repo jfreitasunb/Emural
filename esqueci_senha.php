@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/urlBO.php';
 require_once $ROOT_PATH.'lib/templateBO.php';
@@ -70,8 +72,8 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 	$tpl->loadTemplateFile('mudar_senha.tpl');
 
 	$tpl->setVariable(array(
-		'nome' => $pessoa->nome,
-		'matricula' => $pessoa->usuario
+		'nome' => h($pessoa->nome),
+		'matricula' => h($pessoa->usuario)
 	));
 
 	if (isset($url->moodle)) {
@@ -154,8 +156,8 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 
 	if ($dados !== null) {
 		$tpl->setVariable(array(
-			'matricula' => $dados->matricula,
-			'email' => $dados->email
+			'matricula' => h($dados->matricula),
+			'email' => h($dados->email)
 		));
 	}
 

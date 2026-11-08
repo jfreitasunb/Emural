@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__).'/seguranca.php';
+
 class LinkBO
 {
 	private $root;
@@ -58,7 +60,7 @@ class LinkBO
 	{
 		$final = "";
 		if($observacao !== null) {
-			$final = "/".$observacao->codigo."?d";
+			$final = "/".$observacao->codigo."?d&".SEG_CSRF_CAMPO."=".urlencode(seg_csrf_token());
 		}
 
 		return $this->root."avisos/".$turma->codigo.$final;
@@ -86,7 +88,7 @@ class LinkBO
 	{
 		$final = "";
 		if($responsavel !== null) {
-			$final = "/".$responsavel->codigo."?d";
+			$final = "/".$responsavel->codigo."?d&".SEG_CSRF_CAMPO."=".urlencode(seg_csrf_token());
 		}
 
 		return $this->root."monitores/".$turma->codigo.$final;

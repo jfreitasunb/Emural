@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/templateBO.php';
 require_once $ROOT_PATH.'lib/autenticacaoBO.php';
@@ -37,7 +39,7 @@ if($_POST) {
 
 	if($preencheu) {
 		$tpl_pagina->setVariable(array(
-			'relatorio_disciplina_descricao'  => $disciplina->descricao,
+			'relatorio_disciplina_descricao'  => h($disciplina->descricao),
 			'relatorio_disciplina_codigo' => $disciplina->codigo,
 
 			'link_relatorio_coordenador_lista_alunos_csv' => $linkBO->getCoordenadorRelatorioListaAlunosCSV()

@@ -16,7 +16,7 @@ class DAO1x1 extends DAO
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->_db->rollback();
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");

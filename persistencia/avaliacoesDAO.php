@@ -36,7 +36,7 @@ class AvaliacoesDAO extends DAO
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -51,13 +51,15 @@ class AvaliacoesDAO extends DAO
 	{
 		$this->conectar();
 
+		$turma_codigo = (int) $turma->codigo;
+
 		$ordem = $this->orderBy($ordemarray);
 
 		$sql = "SET DATESTYLE = SQL, DMY;
 				SELECT DISTINCT ".$this->atributosSelect()."
 				FROM $this->tabela
 					 INNER JOIN notas ON not_cava = ava_cava
-				WHERE ava_ctur = $turma->codigo AND
+				WHERE ava_ctur = $turma_codigo AND
 					  ava_stat = 'true'
 				$ordem";
 
@@ -65,7 +67,7 @@ class AvaliacoesDAO extends DAO
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}

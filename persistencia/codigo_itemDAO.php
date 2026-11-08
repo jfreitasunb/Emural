@@ -26,7 +26,7 @@ class Codigo_ItemDAO extends DAO
 
 		$sql = "SELECT ".$this->atributosSelect()."
 				FROM $this->tabela
-				WHERE ".$this->mapaAtributos["tipo"]." = ".AVALIACAO_TIPO." AND UPPER( TO_ASCII(convert_to(cit_desc, 'LATIN1'),'LATIN1')) LIKE UPPER( TO_ASCII(convert_to('".addslashes($busca)."%','LATIN1'),'LATIN1'))
+				WHERE ".$this->mapaAtributos["tipo"]." = ".AVALIACAO_TIPO." AND UPPER( TO_ASCII(convert_to(cit_desc, 'LATIN1'),'LATIN1')) LIKE UPPER( TO_ASCII(convert_to(".$this->_db->quote($busca."%", 'text').",'LATIN1'),'LATIN1'))
 				ORDER BY cit_desc DESC
 				LIMIT ".LIMIT_AUTO_SUGGEST;
 
@@ -50,7 +50,7 @@ class Codigo_ItemDAO extends DAO
 
 		$sql = "SELECT ".$this->atributosSelect()."
 				FROM $this->tabela
-				WHERE ".$this->mapaAtributos["tipo"]." = ".$tipo." AND UPPER( TO_ASCII(convert_to(cit_dre2, 'LATIN1'),'LATIN1')) LIKE UPPER( TO_ASCII(convert_to('".addslashes($busca)."','LATIN1'),'LATIN1'))
+				WHERE ".$this->mapaAtributos["tipo"]." = ".(int) $tipo." AND UPPER( TO_ASCII(convert_to(cit_dre2, 'LATIN1'),'LATIN1')) LIKE UPPER( TO_ASCII(convert_to(".$this->_db->quote($busca, 'text').",'LATIN1'),'LATIN1'))
 				ORDER BY cit_desc DESC
 				LIMIT ".LIMIT_AUTO_SUGGEST;
 

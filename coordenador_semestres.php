@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/templateBO.php';
 require_once $ROOT_PATH.'lib/autenticacaoBO.php';
@@ -54,13 +56,33 @@ if($_POST) {
 
 	if(isset($_FILES["arquivo_sigra"]) && strlen($_FILES["arquivo_sigra"]["tmp_name"])) {
 		$caminho_origem = $_FILES["arquivo_sigra"]["tmp_name"];
-		$caminho_destino = CAMINHO_UPLOAD_ARQUIVO.str_replace(' ','_',$_FILES["arquivo_sigra"]["name"]);
-		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-			$caminho_origem = str_replace('/','\\',$caminho_origem);
-			$caminho_destino = str_replace('/','\\',$caminho_destino);
-		}
-		if (!move_uploaded_file($caminho_origem, $caminho_destino)) {
+
+		// Aceita apenas arquivos texto (.txt/.csv) e gera o nome no servidor,
+		// impedindo o envio de scripts (.php etc.) para a pasta de upload.
+		$nome_original = basename($_FILES["arquivo_sigra"]["name"]);
+		$extensao = strtolower(pathinfo($nome_original, PATHINFO_EXTENSION));
+		$base = preg_replace('/[^A-Za-z0-9_-]/', '_', pathinfo($nome_original, PATHINFO_FILENAME));
+		$base = substr($base, 0, 80);
+
+		$conteudo_inicio = (string) @file_get_contents($caminho_origem, false, null, 0, 4096);
+		$eh_texto = strpos($conteudo_inicio, "\0") === false && stripos($conteudo_inicio, '<?') === false;
+
+		if ($_FILES["arquivo_sigra"]["error"] !== UPLOAD_ERR_OK
+				|| !in_array($extensao, array('txt', 'csv'), true)
+				|| !$eh_texto
+				|| !is_uploaded_file($caminho_origem)) {
 			$ALERTAS["SEMAEE"] = "";
+		} else {
+			$caminho_destino = CAMINHO_UPLOAD_ARQUIVO.$base.'_'.date('Y-m-d_H_i_s').'.'.$extensao;
+			if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+				$caminho_origem = str_replace('/','\\',$caminho_origem);
+				$caminho_destino = str_replace('/','\\',$caminho_destino);
+			}
+			if (!move_uploaded_file($caminho_origem, $caminho_destino)) {
+				$ALERTAS["SEMAEE"] = "";
+			} else {
+				@chmod($caminho_destino, 0640);
+			}
 		}
 	}
 

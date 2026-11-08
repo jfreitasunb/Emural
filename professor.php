@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/turmasBO.php';
 require_once $ROOT_PATH.'lib/templateBO.php';
@@ -16,7 +18,7 @@ $semestresBO = new SemestresBO();
 /*require_once $ROOT_PATH.'lib/professoresBO.php';
 $professoresBO = new ProfessoresBO();
 $professor = $professoresBO->retornaPorCodigo(1);
-session_start();
+seg_iniciar_sessao();
 $_SESSION["professor"] = serialize($professor);/**/
 
 $professor = $autenticacaoBO->verificarProfessor();

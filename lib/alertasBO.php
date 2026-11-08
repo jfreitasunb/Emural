@@ -1,6 +1,7 @@
 <?php
 
 require_once 'HTML/Template/Sigma.php';
+require_once dirname(__FILE__).'/seguranca.php';
 
 class AlertasBO
 {
@@ -27,6 +28,11 @@ class AlertasBO
 		$alerta['tipo'] = "error";
 		$alerta['mensagem'] = "Login e senha não conferem.";
 		$this->lista['LSNC'] = $alerta;
+		unset($alerta);
+
+		$alerta['tipo'] = "error";
+		$alerta['mensagem'] = "Muitas tentativas de login sem sucesso. Aguarde 15 minutos e tente novamente.";
+		$this->lista['LBLQ'] = $alerta;
 		unset($alerta);
 
 		$alerta['tipo'] = "success";
@@ -203,7 +209,7 @@ class AlertasBO
 			{
 				if(isset($dados->link)) {
 					$tpl->setVariable(array(
-						'link'  => $dados->link,
+						'link'  => h($dados->link),
 					));
 				}
 				$tpl->setVariable(array(

@@ -138,7 +138,7 @@ class TemplateBO
 		$tpl->parse("caminho_link");
 		$tpl->setVariable(array(
 			"caminho_link_url"  => $this->linkBO->getTurma($turma),
-			"caminho_link_descricao" => $turma->disciplina_descricao." - ".$turma->descricao,
+			"caminho_link_descricao" => h($turma->disciplina_descricao." - ".$turma->descricao),
 			"nao_inicio_espaco" => " "
 		));
 		$tpl->parse("caminho_link");
@@ -147,7 +147,7 @@ class TemplateBO
 		));
 		$tpl->parse("caminho_comum");
 		$tpl->setVariable(array(
-			"caminho_comum_descricao" => $avaliacao->nome
+			"caminho_comum_descricao" => h($avaliacao->nome)
 		));
 
 		$tpl_pagina->setVariable(array(
@@ -173,7 +173,7 @@ class TemplateBO
 		$tpl->parse("caminho_link");
 		$tpl->setVariable(array(
 			"caminho_link_url"  => $this->linkBO->getTurma($turma),
-			"caminho_link_descricao" => $turma->disciplina_descricao." - ".$turma->descricao,
+			"caminho_link_descricao" => h($turma->disciplina_descricao." - ".$turma->descricao),
 			"nao_inicio_espaco" => " "
 		));
 		$tpl->parse("caminho_link");
@@ -204,7 +204,7 @@ class TemplateBO
 		$tpl->parse("caminho_link");
 		$tpl->setVariable(array(
 			"caminho_link_url"  => $this->linkBO->getTurma($turma),
-			"caminho_link_descricao" => $turma->disciplina_descricao." - ".$turma->descricao,
+			"caminho_link_descricao" => h($turma->disciplina_descricao." - ".$turma->descricao),
 			"nao_inicio_espaco" => " "
 		));
 		$tpl->parse("caminho_link");
@@ -234,7 +234,7 @@ class TemplateBO
 		));
 		$tpl->parse("caminho_link");
 		$tpl->setVariable(array(
-			"caminho_comum_descricao" => $turma->disciplina_descricao." - ".$turma->descricao
+			"caminho_comum_descricao" => h($turma->disciplina_descricao." - ".$turma->descricao)
 		));
 
 		$tpl_pagina->setVariable(array(
@@ -260,7 +260,7 @@ class TemplateBO
 		$tpl->parse("caminho_link");
 		$tpl->setVariable(array(
 			"caminho_link_url"  => $this->linkBO->getTurma($turma),
-			"caminho_link_descricao" => $turma->disciplina_descricao." - ".$turma->descricao,
+			"caminho_link_descricao" => h($turma->disciplina_descricao." - ".$turma->descricao),
 			"nao_inicio_espaco" => " "
 		));
 		$tpl->parse("caminho_link");
@@ -291,7 +291,7 @@ class TemplateBO
 		$tpl->parse("caminho_link");
 		$tpl->setVariable(array(
 			"caminho_link_url"  => $this->linkBO->getTurma($turma),
-			"caminho_link_descricao" => $turma->disciplina_descricao." - ".$turma->descricao,
+			"caminho_link_descricao" => h($turma->disciplina_descricao." - ".$turma->descricao),
 			"nao_inicio_espaco" => " "
 		));
 		$tpl->parse("caminho_link");
@@ -674,7 +674,7 @@ class TemplateBO
 			'ROOT'  => $this->root,
 			'inicio_link'  => $this->linkBO->getProfessor(),
 			'sair_link'  => $this->linkBO->getSair(),
-			'professor_nome' => $nome,
+			'professor_nome' => h($nome),
 			'saldacao' => $this->getSaldacao()
 		));
 	}
@@ -693,7 +693,7 @@ class TemplateBO
 
 		$tpl->setVariable(array(
 			'ROOT'  => $this->root,
-			'aluno_nome' => $aluno->nome,
+			'aluno_nome' => h($aluno->nome),
 			'saldacao' => $this->getSaldacao(),
 				'sair_link'  => $this->linkBO->getSair()
 		));

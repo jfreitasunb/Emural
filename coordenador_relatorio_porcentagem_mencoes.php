@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/templateBO.php';
 require_once $ROOT_PATH.'lib/autenticacaoBO.php';
@@ -45,8 +47,8 @@ if($_POST) {
 		$tpl_pagina->setVariable(array(
 			'relatorio_inicio_ano_semestre'  => $semestre_inicio->ano."/".$semestre_inicio->semestre,
 			'relatorio_fim_ano_semestre'  => $semestre_fim->ano."/".$semestre_fim->semestre,
-			'relatorio_disciplina_descricao'  => $disciplina->descricao,
-			'relatorio_opcao_curso'  => $dados->opcao_curso,
+			'relatorio_disciplina_descricao'  => h($disciplina->descricao),
+			'relatorio_opcao_curso'  => h($dados->opcao_curso),
 			'relatorio_ano_semestre_inicio_codigo' => $semestre_inicio->codigo,
 			'relatorio_ano_semestre_fim_codigo' => $semestre_fim->codigo,
 			'relatorio_disciplina_codigo' => $disciplina->codigo,

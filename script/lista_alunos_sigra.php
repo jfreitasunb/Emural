@@ -1,4 +1,10 @@
 <?php
+// Script de linha de comando: não pode ser executado pela web.
+if (PHP_SAPI !== 'cli') {
+	header('HTTP/1.1 404 Not Found');
+	exit;
+}
+
 //if(isset($argv[1])) {
 	require_once '../conf/default.php';
 

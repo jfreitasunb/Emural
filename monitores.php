@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/urlBO.php';
 require_once $ROOT_PATH.'lib/turmasBO.php';
@@ -47,6 +49,8 @@ if($_POST) {
 
 	$responsavel = $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
 } if ($url->deletar) {
+	seg_csrf_validar_get();
+
 	$responsaveisBO->desativar($responsavel);
 
 	$aviso['NOTY_MONES'] = "";

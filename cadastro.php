@@ -1,5 +1,7 @@
 <?php
 require_once 'conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+seg_proteger();
 
 require_once $ROOT_PATH.'lib/semestresBO.php';
 require_once $ROOT_PATH.'lib/disciplinasBO.php';
@@ -66,66 +68,51 @@ if($_POST) {
     	$mensagem[] = "Sua tenha deve conter pelo menos 8 caracteres, sendo pelo menos 1 lestra maiúscula, 1 letra minúscula, 1 número e 1 caracter especial.";
 	}
 
-    if (!count($mensagem)) {
-		if (strcmp($dados->senha, $dados->confirmar_senha) == 0) {
-			$pessoasBO = new PessoasBO();
-            $aluno = $pessoasBO->retornaPorUsuario($dados->matricula);
-           //  var_dump($aluno);
-           // die();
-            if ($aluno !== null) {
-            	if (strlen($aluno->email)) {
-            		if  ($dados->email == $aluno->email) {
-	                    $composicao_turmasBO = new ComposicaoTurmasBO();
-						if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
-							$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
-							$mensagem[] = 'E-mail e senha cadastrados com sucesso. Agora você já pode acessar o <a href="'.$SITE.'">E-mural</a> , ou o <a href="'.$SITEM.'">MoodleMAT</a>';
-							$dados = null;
-							$pessoa = $pessoasBO->retornaPorCodigo($aluno->codigo);
-							$moodleBO = new MoodleBO();
-							$moodleBO->usuarioAtualizar($pessoa);
-						}
-	                } else {
-	                    $composicao_turmasBO = new ComposicaoTurmasBO();
-						if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
-							if($pessoasBO->mudarEmailPessoa($aluno, $dados->email)) {
-								$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
-								$emailBO = new EmailBO();
-								$emailBO->enviarValidacao($aluno);
-								$mensagem[] = "E-mail e senha cadastrados com sucesso.</br> Verifique a mensagem de confirmação no seu e-mail.";
-								$dados = null;
-								$moodleBO = new MoodleBO();
-								$moodleBO->usuarioAtualizar($pessoa);
-							} elseif (isset($ALERTAS["EJU"])) {
-								$mensagem[] = "E-mail já está sendo usado, cadastre outro ou procure o coordenador.";
-							}
-						}
-	                }
-            	}
-				if (!strlen($aluno->senha) && !strlen($aluno->email)) {
-					$composicao_turmasBO = new ComposicaoTurmasBO();
-					if ($composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
-						if($pessoasBO->mudarEmailPessoa($aluno, $dados->email)) {
-							$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
-							$emailBO = new EmailBO();
-							$emailBO->enviarValidacao($aluno);
-							$mensagem[] = "E-mail e senha cadastrados com sucesso.</br> Verifique a mensagem de confirmação no seu e-mail.";
-							$dados = null;
-						} elseif (isset($ALERTAS["EJU"])) {
-							$mensagem[] = "E-mail já está sendo usado, cadastre outro ou procure o coordenador.";
-						}
-					} else {
-						$mensagem[] = "Turma incorreta.";
-					}
-				}
+	if (strcmp($dados->email, $dados->email_confirmar) != 0) {
+		$mensagem[] = "O e-mail está diferente de confirmar e-mail.";
+	}
+
+	if (strcmp($dados->senha, $dados->confirmar_senha) != 0) {
+		$mensagem[] = "Senha está diferente de confirmar senha.";
+	}
+
+	if (!count($mensagem)) {
+		$pessoasBO = new PessoasBO();
+		$composicao_turmasBO = new ComposicaoTurmasBO();
+		$aluno = $pessoasBO->retornaPorUsuario($dados->matricula);
+
+		if ($aluno === null || strcmp($aluno->tipo, "aluno") != 0) {
+			$mensagem[] = "Matricula ".h($dados->matricula)." não está pre cadastrada.";
+		} elseif (strlen($aluno->senha)) {
+			// Conta já ativada: a senha só pode ser trocada por quem prova ter
+			// acesso ao e-mail cadastrado (fluxo "Esqueci minha senha").
+			$mensagem[] = 'Esta matrícula já possui cadastro. Para trocar a senha use a opção <a href="'.h($SITE).'esqueci_senha">Esqueci minha senha</a>.';
+		} elseif (!$composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
+			$mensagem[] = "Turma incorreta.";
+		} elseif (strlen($aluno->email)) {
+			// E-mail pré-cadastrado e senha ainda não definida: a senha só é definida
+			// pelo link enviado para o e-mail já cadastrado.
+			if (strcmp($dados->email, strtolower(trim($aluno->email))) == 0) {
+				$pessoasBO->esqueciMinhaSenha($aluno);
+				$emailBO = new EmailBO();
+				$emailBO->enviarEsqueciSenha($aluno, "");
+				$mensagem[] = "Enviamos para o seu e-mail um link para você definir sua senha.";
+				$dados = null;
 			} else {
-				$mensagem[] = "Matricula ".$dados->matricula." não está pre cadastrada.";
+				$mensagem[] = "Esta matrícula já possui um e-mail cadastrado. Procure o coordenador.";
 			}
 		} else {
-			$mensagem[] = "Senha está diferente de confirmar senha.";
-		}
-
-		if (!strcmp($dados->email, $dados->email_confirmar) == 0){
-			$mensagem[] = "O e-mail está diferente de confirmar e-mail.";
+			// Primeiro cadastro: define e-mail e senha; o acesso só é liberado
+			// após a confirmação do e-mail.
+			if($pessoasBO->mudarEmailPessoa($aluno, $dados->email)) {
+				$pessoasBO->mudarSenha($aluno->codigo, $dados->senha);
+				$emailBO = new EmailBO();
+				$emailBO->enviarValidacao($aluno);
+				$mensagem[] = "E-mail e senha cadastrados com sucesso.</br> Verifique a mensagem de confirmação no seu e-mail.";
+				$dados = null;
+			} elseif (isset($ALERTAS["EJU"])) {
+				$mensagem[] = "E-mail já está sendo usado, cadastre outro ou procure o coordenador.";
+			}
 		}
 	}
 }
@@ -143,9 +130,9 @@ $disciplinasBO->preencheCombo($tpl, $dados);
 
 if ($dados !== null) {
 	$tpl->setVariable(array(
-		'matricula' => $dados->matricula,
-		'email' => $dados->email,
-		'email_confirmar' => $dados->email_confirmar
+		'matricula' => h($dados->matricula),
+		'email' => h($dados->email),
+		'email_confirmar' => h($dados->email_confirmar)
 	));
 
 	if (strlen($dados->disciplina)) {

@@ -50,7 +50,7 @@ class NotasDAO extends DAONxN
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -84,7 +84,7 @@ class NotasDAO extends DAONxN
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -99,6 +99,8 @@ class NotasDAO extends DAONxN
 	{
 		$this->conectar();
 
+		$turma_codigo = (int) $turma->codigo;
+
 		$sql = "SELECT id_nome AS codigo,
        desc_nome AS nome,
        CASE ct_sr WHEN ct_sr THEN ct_sr ELSE 0 END sr,
@@ -110,24 +112,24 @@ class NotasDAO extends DAONxN
 
 FROM
 
-((((((SELECT DISTINCT ava_cava AS id_nome, ava_nome AS desc_nome, ava_drea AS data_nome FROM notas n_nome Inner JOIN avaliacoes ON ava_cava = not_cava AND ava_stat = 'true' WHERE ava_ctur = $turma->codigo GROUP BY ava_cava, ava_nome, ava_drea ) AS tb_nome
+((((((SELECT DISTINCT ava_cava AS id_nome, ava_nome AS desc_nome, ava_drea AS data_nome FROM notas n_nome Inner JOIN avaliacoes ON ava_cava = not_cava AND ava_stat = 'true' WHERE ava_ctur = $turma_codigo GROUP BY ava_cava, ava_nome, ava_drea ) AS tb_nome
 LEFT JOIN
-(SELECT DISTINCT ava_cava AS id_sr, COUNT(*) ct_sr FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma->codigo AND not_valo = 0 GROUP BY ava_cava) AS tb_sr
+(SELECT DISTINCT ava_cava AS id_sr, COUNT(*) ct_sr FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma_codigo AND not_valo = 0 GROUP BY ava_cava) AS tb_sr
 ON id_nome = id_sr)
 LEFT JOIN
-(SELECT DISTINCT ava_cava AS id_ii, COUNT(*) ct_ii FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma->codigo AND not_valo > 0 AND not_valo < 3 GROUP BY ava_cava) AS tb_ii
+(SELECT DISTINCT ava_cava AS id_ii, COUNT(*) ct_ii FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma_codigo AND not_valo > 0 AND not_valo < 3 GROUP BY ava_cava) AS tb_ii
 ON id_nome = id_ii)
 LEFT JOIN
-(SELECT DISTINCT ava_cava AS id_mi, COUNT(*) ct_mi FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma->codigo AND not_valo >= 3 AND not_valo < 5 GROUP BY ava_cava) AS tb_mi
+(SELECT DISTINCT ava_cava AS id_mi, COUNT(*) ct_mi FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma_codigo AND not_valo >= 3 AND not_valo < 5 GROUP BY ava_cava) AS tb_mi
 ON id_nome = id_mi)
 LEFT JOIN
-(SELECT DISTINCT ava_cava AS id_mm, COUNT(*) ct_mm FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma->codigo AND not_valo >= 5 AND not_valo < 7 GROUP BY ava_cava) AS tb_mm
+(SELECT DISTINCT ava_cava AS id_mm, COUNT(*) ct_mm FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma_codigo AND not_valo >= 5 AND not_valo < 7 GROUP BY ava_cava) AS tb_mm
 ON id_nome = id_mm)
 LEFT JOIN
-(SELECT DISTINCT ava_cava AS id_ms, COUNT(*) ct_ms FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma->codigo AND not_valo >= 7 AND not_valo < 9 GROUP BY ava_cava) AS tb_ms
+(SELECT DISTINCT ava_cava AS id_ms, COUNT(*) ct_ms FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma_codigo AND not_valo >= 7 AND not_valo < 9 GROUP BY ava_cava) AS tb_ms
 ON id_nome = id_ms)
 LEFT JOIN
-(SELECT DISTINCT ava_cava AS id_ss, COUNT(*) ct_ss FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma->codigo AND not_valo >= 9 AND not_valo <= 10 GROUP BY ava_cava) AS tb_ss
+(SELECT DISTINCT ava_cava AS id_ss, COUNT(*) ct_ss FROM notas Inner JOIN avaliacoes ON ava_cava = not_cava WHERE ava_ctur = $turma_codigo AND not_valo >= 9 AND not_valo <= 10 GROUP BY ava_cava) AS tb_ss
 ON id_nome = id_ss
 
 ORDER BY data_nome";
@@ -136,7 +138,7 @@ ORDER BY data_nome";
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -173,7 +175,7 @@ ORDER BY data_nome";
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}

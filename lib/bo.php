@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__).'/seguranca.php';
+
 class BO
 {
 	protected $DAO;
@@ -22,8 +24,9 @@ class BO
 		if($obj !== null) {
 			foreach($obj as $nome => $valor)
 			{
+				// Dados vindos do banco/usuário são sempre escapados antes de ir para o HTML.
 				$tpl->setVariable(array(
-					$prefixo.$nome  => $valor
+					$prefixo.$nome  => (is_scalar($valor) || $valor === null) ? h($valor) : $valor
 				));
 			}
 			if(strlen($parse)) {

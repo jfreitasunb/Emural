@@ -4,6 +4,7 @@ require_once $ROOT_PATH."persistencia/pessoasDAO.php";
 require_once $ROOT_PATH.'lib/bo.php';
 require_once $ROOT_PATH.'lib/alunosBO.php';
 require_once $ROOT_PATH.'lib/moodleBO.php';
+require_once dirname(__FILE__).'/seguranca.php';
 
 require_once 'HTTP.php';
 
@@ -54,13 +55,7 @@ class PessoasBO extends BO
 
 	public function mudarSenha($codigo_pessoa, $senha)
 	{
-		GLOBAL $SENHAS_CODIFICADAS;
-
-		if($SENHAS_CODIFICADAS) {
-			$senha = crypt($senha);
-		}
-
-		$campos['senha'] = $senha;
+		$campos['senha'] = seg_hash_senha($senha);
 
 		$filtro['codigo'] = $codigo_pessoa;
 
@@ -70,13 +65,12 @@ class PessoasBO extends BO
 
 	public function mudarSenhaPessoa($senhas, $pessoa)
 	{
-		GLOBAL $ALERTAS, $SENHAS_CODIFICADAS;
+		GLOBAL $ALERTAS;
 
-		if($SENHAS_CODIFICADAS) {
-			$senhas['senha_atual'] = crypt($senhas['senha_atual'],$pessoa->senha);
-		}
+		// A senha atual é sempre conferida contra o valor do banco (e não o da sessão).
+		$pessoa_banco = $this->retornaPorCodigo($pessoa->codigo);
 
-		if($senhas['senha_atual'] == $pessoa->senha || (strcmp($pessoa->tipo,"aluno") == 0 && strlen($pessoa->senha) == 0)) {
+		if($pessoa_banco !== null && seg_verificar_senha($senhas['senha_atual'], $pessoa_banco->senha)) {
 			if($senhas['nova_senha'] == $senhas['nova_senha_2']) {
 
 				$this->mudarSenha($pessoa->codigo, $senhas['nova_senha']);
@@ -134,7 +128,7 @@ class PessoasBO extends BO
 			$pessoa = $this->retornaPorCodigo($pessoa);
 		}
 
-		GLOBAL $ALERTAS, $CONCATENACAO_VALIDACAO_EMAIL;
+		GLOBAL $ALERTAS;
 
 		$lista_validacao = array();
 
@@ -164,10 +158,9 @@ class PessoasBO extends BO
 		} else {
 			$filtro['codigo'] = $pessoa->codigo;
 
-			$confirmacao = $CONCATENACAO_VALIDACAO_EMAIL.$email.date("d-m-Y H:i:s:u");
 			$update['email_valido'] = 'false';
 			$update['email'] = $email;
-			$update['email_confirmacao'] = md5($confirmacao);
+			$update['email_confirmacao'] = seg_token_aleatorio(16);
 
 			$this->DAO->updateCamposDeFiltro($update, $filtro);
 
@@ -193,13 +186,13 @@ class PessoasBO extends BO
 
 	public function confirmarEmail($codigo_confirmacao)
 	{
-		if ($codigo_confirmacao !== NULL) {
+		if (is_string($codigo_confirmacao) && strlen($codigo_confirmacao) > 32) {
 			$pessoa_codigo = substr($codigo_confirmacao, 32);
 			$codigo_confirmacao = substr($codigo_confirmacao, 0, 32);
 
-			$pessoa = $this->retornaPorCodigo($pessoa_codigo);
+			$pessoa = ctype_digit($pessoa_codigo) ? $this->retornaPorCodigo($pessoa_codigo) : null;
 
-			if (strcmp($pessoa->email_confirmacao, $codigo_confirmacao) == 0) {
+			if ($pessoa !== null && seg_comparar((string) $pessoa->email_confirmacao, $codigo_confirmacao)) {
 				$update['email_valido'] = 'true';
 				$update['email_confirmacao'] = "";
 
@@ -231,10 +224,10 @@ class PessoasBO extends BO
 		$pass = array();
 
 		for ($i = 0; $i < 9; $i++) {
-			$n = rand(0, $alphaLength);
+			$n = seg_inteiro_aleatorio(0, $alphaLength);
 			$pass[] = $alphabet[$n];
 		}
-		$n = rand(0, $symLength);
+		$n = seg_inteiro_aleatorio(0, $symLength);
 
 	    return implode($pass).$symbol[$n];
 	}
@@ -242,13 +235,9 @@ class PessoasBO extends BO
 
 	public function esqueciMinhaSenha(&$pessoa)
 	{
-		GLOBAL $CONCATENACAO_VALIDACAO_EMAIL;
-
 		$filtro['codigo'] = $pessoa->codigo;
 
-		$confirmacao = $CONCATENACAO_VALIDACAO_EMAIL.$pessoa->codigo.date("d-m-Y H:i:s:u");
-
-		$update['senha_mudanca'] = md5($confirmacao);
+		$update['senha_mudanca'] = seg_token_aleatorio(16);
 
 		$this->DAO->updateCamposDeFiltro($update, $filtro);
 
@@ -268,9 +257,9 @@ class PessoasBO extends BO
 			$hast_esqueci = substr($hast_esqueci, 0, 32);
 
 
-			$pessoa = $this->retornaPorCodigo($pessoa_codigo);
+			$pessoa = ctype_digit($pessoa_codigo) ? $this->retornaPorCodigo($pessoa_codigo) : null;
 
-			if (strcmp($pessoa->senha_mudanca, $hast_esqueci) == 0) {
+			if ($pessoa !== null && seg_comparar((string) $pessoa->senha_mudanca, $hast_esqueci)) {
 				$return = $pessoa;
 			}
 		}
@@ -284,6 +273,11 @@ class PessoasBO extends BO
 		$filtro['codigo'] = $pessoa->codigo;
 
 		$update['senha_mudanca'] = null;
+		// Quem usou o link recebido por e-mail comprovou ter acesso a ele.
+		if (strlen($pessoa->email)) {
+			$update['email_valido'] = 'true';
+			$update['email_confirmacao'] = null;
+		}
 
 		$this->DAO->updateCamposDeFiltro($update, $filtro);
 

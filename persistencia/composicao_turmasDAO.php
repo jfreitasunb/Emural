@@ -56,7 +56,7 @@ class ComposicaoTurmasDAO extends DAONxN
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -70,6 +70,19 @@ class ComposicaoTurmasDAO extends DAONxN
 	public function recuperaQuantidadeMencoesPorSemestrePorOpcaoCurso($semestre_inicio, $semestre_fim, $disciplina_codigo, $opcao_curso)
 	{
 		$this->conectar();
+
+		// Valores numéricos são convertidos para inteiro e o texto é escapado
+		// pela conexão para evitar injeção de SQL.
+		$disciplina_codigo = (int) $disciplina_codigo;
+		$opcao_curso = pg_escape_string($opcao_curso);
+		$semestre_inicio_sql = new stdClass();
+		$semestre_inicio_sql->ano = (int) $semestre_inicio->ano;
+		$semestre_inicio_sql->semestre = (int) $semestre_inicio->semestre;
+		$semestre_fim_sql = new stdClass();
+		$semestre_fim_sql->ano = (int) $semestre_fim->ano;
+		$semestre_fim_sql->semestre = (int) $semestre_fim->semestre;
+		$semestre_inicio = $semestre_inicio_sql;
+		$semestre_fim = $semestre_fim_sql;
 
 		$sql = "SELECT ano,
 				       semestre,
@@ -106,7 +119,7 @@ class ComposicaoTurmasDAO extends DAONxN
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}

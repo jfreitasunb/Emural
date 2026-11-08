@@ -57,7 +57,7 @@ class DAO
             );
 
 		$options = array(
-            'debug'       => 2,
+            'debug'       => 0,
             'portability' => DB_PORTABILITY_ALL,
 			//'disable_smart_seqname' => false
 		);
@@ -67,7 +67,6 @@ class DAO
 		$this->_db = $mdb2->connect($dsn, $options);
 
 		if (PEAR::isError($this->_db)) {
-			print_r($this->_db);
 			$this->log("Erro acesso banco",$this->_db->getMessage());
 			//die($this->_db->getMessage());
 			throw new Exception("Erro de acesso ao banco");
@@ -152,7 +151,8 @@ class DAO
 				} else {
 					$campo = $key;
 				}
-				$orderby .= " ".pg_escape_string($campo)." ".pg_escape_string($value).",";
+				$direcao = (strtoupper(trim($value)) === "DESC") ? "DESC" : "ASC";
+				$orderby .= " ".pg_escape_string($campo)." ".$direcao.",";
 			}
 		}
 
@@ -262,10 +262,10 @@ class DAO
 		$ordem = $this->orderBy($ordemarray);
 
 		if(strlen($limit) > 0)
-			$limit = "LIMIT $limit";
+			$limit = "LIMIT ".(int) $limit;
 
 		if(strlen($offset) > 0)
-			$offset = "OFFSET $offset";
+			$offset = "OFFSET ".(int) $offset;
 
 		$sql = "SELECT ".$this->atributosSelect()." FROM $this->tabela $where $ordem $limit $offset";
 
@@ -273,7 +273,7 @@ class DAO
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -293,7 +293,7 @@ class DAO
 		$res = $this->_db->query("SELECT NEXTVAL('".$this->tabela."_".$this->mapaAtributos["codigo"]."_seq"."')");
 
 		if(PEAR::isError($res)) {
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->_db->rollback();
 			throw new Exception("Erro de insersao no banco!");
 		}
@@ -303,7 +303,6 @@ class DAO
 
 		/*$codigo = $this->_db->nextID($this->tabela);
 		if(PEAR::isError($codigo)) {
-			print_r($codigo);
 			throw new Exception("Erro de insersao no banco!");
 		}*/
 
@@ -318,7 +317,7 @@ class DAO
 		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res)) {
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->_db->rollback();
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro de insersao no banco!");
@@ -352,7 +351,7 @@ class DAO
 
 		if(PEAR::isError($res))
 		{
-			echo $sql;
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -371,7 +370,7 @@ class DAO
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro em deleção no banco!");
 		}

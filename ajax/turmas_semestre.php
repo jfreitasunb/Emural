@@ -1,22 +1,28 @@
 <?php
 require_once '../conf/default.php';
+require_once $ROOT_PATH.'lib/seguranca.php';
+require_once $ROOT_PATH.'lib/autenticacaoBO.php';
 
 require_once $ROOT_PATH.'lib/semestresBO.php';
 
 require_once $ROOT_PATH."persistencia/turmasDAO.php";
 
-//$codigo_semestre = $_GET['a'];
+seg_proteger(false);
+
+// Usado apenas nas telas do coordenador.
+$autenticacaoBO = new AutenticacaoBO();
+$autenticacaoBO->verificarCoordenador();
 
 if(isset($_POST['codigoSemestre'])) {
 	$codigo_semestre = $_POST['codigoSemestre'];
 } else {
-	$codigo_semestre == null;
+	$codigo_semestre = null;
 }
 
 if(isset($_POST['codigoDisciplina'])) {
 	$codigo_disciplina = $_POST['codigoDisciplina'];
 } else {
-	$codigo_disciplina == null;
+	$codigo_disciplina = null;
 }
 
 if(strlen($codigo_semestre) > 0) {
@@ -42,7 +48,7 @@ if(strlen($codigo_semestre) > 0) {
 		echo '<option value="0"></option>';
 		foreach($lista_turmas as $turma)
 		{
-         	echo '<option value="'.$turma->codigo.'">'.$turma->disciplina_descricao.' - '.$turma->descricao.'</option>';
+         	echo '<option value="'.h($turma->codigo).'">'.h($turma->disciplina_descricao.' - '.$turma->descricao).'</option>';
 		}
 	} else {
 		echo '';

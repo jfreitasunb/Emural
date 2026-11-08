@@ -280,9 +280,9 @@ class AvaliacoesBO extends BO
 			foreach($lista_alunos as $aluno)
 			{
 				$tpl->setVariable(array(
-					"aluno_matricula"  => $aluno->matricula,
-					"aluno_nome"  => $aluno->nome,
-					"aluno_prova_obs_id"  => "obs_".$aluno->codigo_aluno
+					"aluno_matricula"  => h($aluno->matricula),
+					"aluno_nome"  => h($aluno->nome),
+					"aluno_prova_obs_id"  => "obs_".(int) $aluno->codigo_aluno
 				));
 
 				foreach($lista_avaliacoes as $avaliacao)
@@ -307,14 +307,14 @@ class AvaliacoesBO extends BO
 
 					if(isset($avaliacao_atual->codigo) && $avaliacao_atual->codigo == $id_avaliacao) {
 						$tpl->setVariable(array(
-							"celula_corpo"  => "<input type='text' name='codigo_".$aluno->codigo_aluno."' class='validate[max[10],min[0],custom[number]] nota' id='codigo_".$aluno->codigo_aluno."' value='".$nota."' size='10' autocomplete='off' tabindex=1/>"
+							"celula_corpo"  => "<input type='text' name='codigo_".$aluno->codigo_aluno."' class='validate[max[10],min[0],custom[number]] nota' id='codigo_".$aluno->codigo_aluno."' value='".h($nota)."' size='10' autocomplete='off' tabindex=1/>"
 						));
 					} else {
 						if(!strlen($nota)) {
 							$nota = "N/L";
 						}
 						$tpl->setVariable(array(
-							"celula_corpo"  => $nota
+							"celula_corpo"  => h($nota)
 						));
 					}
 					$tpl->parse("adicionar_celula_corpo");
@@ -331,7 +331,7 @@ class AvaliacoesBO extends BO
 				}
 				if($existe_observacao) {
 					$tpl->setVariable(array(
-						"celula_corpo"  => "<input type='text' name='obs_".$aluno->codigo_aluno."' id='obs_".$aluno->codigo_aluno."' value='".$observacao."' size='30' autocomplete='off' tabindex=2/>"
+						"celula_corpo"  => "<input type='text' name='obs_".$aluno->codigo_aluno."' id='obs_".$aluno->codigo_aluno."' value='".h($observacao)."' size='30' autocomplete='off' tabindex=2/>"
 					));
 					$tpl->parse("adicionar_celula_corpo");
 				}

@@ -4,3 +4,11 @@ log
 log/log.txt
 log/log.txt
 log/log.txt
+
+# Configuração local com credenciais (use conf/default.php.example como modelo)
+conf/default.php
+
+# Arquivos de sistema e backups
+.DS_Store
+*-BKP-*
+*-ORIGINAL*

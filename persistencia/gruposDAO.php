@@ -57,7 +57,7 @@ class GruposDAO extends DAO
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}
@@ -72,6 +72,9 @@ class GruposDAO extends DAO
 	{
 		$this->conectar();
 
+		$semestre_ano = (int) $semestre->ano;
+		$semestre_semestre = (int) $semestre->semestre;
+
 		$mapaAtributos = Array();
 		$mapaAtributos["codigo"] = "dis_cdis";
 		$mapaAtributos["descricao"] = "dis_desc";
@@ -85,13 +88,13 @@ class GruposDAO extends DAO
 					  INNER JOIN turmas ON tur_ctur = gru_ctur)
 					  INNER JOIN disciplinas ON dis_cdis = tur_cdis
 
-				WHERE tur_ano = $semestre->ano AND tur_seme = $semestre->semestre";
+				WHERE tur_ano = $semestre_ano AND tur_seme = $semestre_semestre";
 
 		$res = $this->_db->query($sql);
 
 		if(PEAR::isError($res))
 		{
-			print_r($res);
+			$this->log("Erro SQL", $res->getUserInfo());
 			$this->log("Erro","Erro na consulta ao banco classe ".strtolower(str_replace("_","",$this->tabela))."DAO");
 			throw new Exception("Erro na consulta ao banco!");
 		}

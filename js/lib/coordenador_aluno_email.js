@@ -34,8 +34,8 @@ $(function(){
 					if(data.length > 0 && data != "null") {
 						//window.alert(data);
 						aluno = JSON.parse(data);
-						$('#nome_aluno').html(aluno.nome);
-						$('#matricula_aluno').html(aluno.matricula);
+						$('#nome_aluno').text(aluno.nome);
+						$('#matricula_aluno').text(aluno.matricula);
 
 						$('#codigo').val(aluno.codigo);
 						$('#email').val(aluno.email);
