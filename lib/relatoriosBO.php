@@ -2,39 +2,71 @@
 
 class RelaroriosBO {
 
+	/**
+	 * Neutraliza células que começam com caracteres interpretados como fórmula
+	 * em planilhas (CSV Injection) e garante formato string.
+	 */
+	static private function sanitizarCelulaCSV($valor)
+	{
+		if ($valor === null) {
+			return '';
+		}
+
+		$texto = (string) $valor;
+		if ($texto !== '' && preg_match('/^[=+\-@\t\r]/', $texto)) {
+			return "'".$texto;
+		}
+
+		return $texto;
+	}
+
 	static public function getCSVComTitulo($dados)
 	{
-		if(count($dados)) {
+		if($dados !== null && count($dados)) {
+			$cabecalho = null;
 			foreach($dados as $linha) {
 				$cabecalho = $linha;
 				break;
 			}
 
-			//print_r($cabecalho);
-			$print = "";
-			foreach($cabecalho as $coluna => $value) {
-				$print .= ',"'.$coluna.'"';
-			}
-			$print = substr($print,1)."\r\n";
+			$saida = fopen('php://output', 'w');
 
-			echo $print;
+			$colunas = array();
+			foreach($cabecalho as $coluna => $value) {
+				$colunas[] = self::sanitizarCelulaCSV($coluna);
+			}
+			fputcsv($saida, $colunas);
 
 			foreach($dados as $linha) {
-				echo '"'.implode('","',$linha)."\"\r\n";
+				$campos = array();
+				foreach($linha as $valor) {
+					$campos[] = self::sanitizarCelulaCSV($valor);
+				}
+				fputcsv($saida, $campos);
 			}
+
+			fclose($saida);
 		}
 	}
 
 	static public function getCSV($dados)
 	{
-		if(count($dados)) {
+		if($dados !== null && count($dados)) {
+			$saida = fopen('php://output', 'w');
+
 			foreach($dados as $linha) {
-				if(count($linha)) {
-					echo '"'.implode('","',$linha)."\"\r\n";
+				if(is_array($linha) && count($linha)) {
+					$campos = array();
+					foreach($linha as $valor) {
+						$campos[] = self::sanitizarCelulaCSV($valor);
+					}
+					fputcsv($saida, $campos);
 				} else {
-					echo "\r\n";
+					fwrite($saida, "\r\n");
 				}
 			}
+
+			fclose($saida);
 		}
 	} 
 }

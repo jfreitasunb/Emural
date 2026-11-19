@@ -270,10 +270,14 @@ class MoodleBO
 
 	private function executarRequisicao($servico, $parametro)
 	{
-		$serverurl = $this->url . '/webservice/rest/server.php' . '?wstoken=' . $this->token . '&wsfunction=' . $servico;
+		$serverurl = $this->url . '/webservice/rest/server.php';
 		$curl = new curl;
-		$restFormat = '&moodlewsrestformat='.$this->formato_resposta;
-		$resp = $curl->post($serverurl . $restFormat, $parametro);
+		// Envia wstoken no corpo POST para evitar exposição em URLs e logs de acesso.
+		$dados = is_array($parametro) ? $parametro : array();
+		$dados['wstoken'] = $this->token;
+		$dados['wsfunction'] = $servico;
+		$dados['moodlewsrestformat'] = $this->formato_resposta;
+		$resp = $curl->post($serverurl, $dados);
 
 		$obj = json_decode($resp);
 

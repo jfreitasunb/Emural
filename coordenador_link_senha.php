@@ -33,7 +33,8 @@ if($_POST) {
         die('Erro ao conectar com o banco de dados.');
     }
 
-    $stm = $PDO->prepare("SELECT pes_cpes, pes_nome, pes_smud, pes_eval, pes_econ FROM pessoas WHERE pes_emai = :email");
+    // Somente contas de alunos podem receber link de redefinição de senha por esta tela.
+    $stm = $PDO->prepare("SELECT pes_cpes, pes_nome, pes_smud, pes_eval, pes_econ FROM pessoas WHERE pes_emai = :email AND pes_tipo = 'aluno'");
 
     $stm->bindParam( ':email', $email );
     
@@ -47,9 +48,9 @@ if($_POST) {
         $codigo = $rows[0]['pes_cpes'];
 
         if (!$rows[0]['pes_eval']) {
-            $update_link = $PDO->prepare("UPDATE pessoas SET pes_eval = TRUE, pes_econ = NULL WHERE pes_emai = :email");
+            $update_link = $PDO->prepare("UPDATE pessoas SET pes_eval = TRUE, pes_econ = NULL WHERE pes_cpes = :codigo AND pes_tipo = 'aluno'");
 
-            $update_link->bindParam(':email', $email, PDO::PARAM_STR );
+            $update_link->bindParam(':codigo', $codigo, PDO::PARAM_INT );
 
             $update_link->execute();
         }

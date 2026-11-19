@@ -27,40 +27,37 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 	$pessoa = $pessoasBO->retornaPorHastEsqueciSenha($hast_esqueci);
 
 	$linkBO = new LinkBO();
-	if ($pessoa === null) {
+	if ($pessoa === null || strcmp($pessoa->tipo, "aluno") !== 0) {
 		HTTP::redirect($linkBO->getEsqueciSenha());
 		exit();
 	}
 
 	if ($_POST) {
 		$dados = new stdClass();
-		$dados->senha = $_POST['senha'];
-		$dados->confirmar_senha = $_POST['confirmar_senha'];
+		$dados->senha = isset($_POST['senha']) ? (string) $_POST['senha'] : '';
+		$dados->confirmar_senha = isset($_POST['confirmar_senha']) ? (string) $_POST['confirmar_senha'] : '';
 
 		if (!strlen($dados->senha)) {
 			$ALERTAS['ESSV'] = "";
-		} if (!strlen($dados->confirmar_senha)) {
+		}
+		if (!strlen($dados->confirmar_senha)) {
 			$ALERTAS['ESCSV'] = "";
 		}
 
-		// Validate password strength
-		$uppercase = preg_match('@[A-Z]@', $dados->senha);
-		$lowercase = preg_match('@[a-z]@', $dados->senha);
-		$number    = preg_match('@[0-9]@', $dados->senha);
-		$specialChars = preg_match('@[^\w]@', $dados->senha);
-
-		if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($dados->senha) < 8) {
+		if (!seg_validar_senha_forte($dados->senha)) {
 	    	$ALERTAS['STMCE'] = "";
 		}
 
 		if (!count($ALERTAS)) {
-			if (strcmp($dados->senha, $dados->confirmar_senha) == 0) {
+			if ($dados->senha === $dados->confirmar_senha) {
 				$pessoasBO->mudarSenhaEsqueciSenha($pessoa, $dados->senha);
 
 				if (isset($url->moodle)) {
 					HTTP::redirect($linkBO->getMoodle());
+					exit();
 				} else {
 					HTTP::redirect($linkBO->getIndex());
+					exit();
 				}
 			} else {
 				$ALERTAS['ESSD'] = "";
@@ -112,41 +109,46 @@ if ($_GET && isset($_GET['esqueci']) && strlen($_GET['esqueci'])) {
 } else {
 	if ($_POST) {
 		$dados = new stdClass();
-		$dados->matricula = preg_replace("/[^0-9 ]/", '', $_POST['matricula']);
-		$dados->email = trim($_POST['email']);
+		$dados->matricula = preg_replace("/[^0-9 ]/", '', isset($_POST['matricula']) ? (string) $_POST['matricula'] : '');
+		$dados->email = trim(isset($_POST['email']) ? (string) $_POST['email'] : '');
 
-		if (!strlen($dados->matricula)) {
-			$ALERTAS['ESMV'] = "";
-		} if (!strlen($dados->email)) {
-			$ALERTAS['ESEV'] = "";
-		}
+		$ip = seg_ip_cliente();
+		if (seg_limite_excedido('esqueci_ip', $ip, 10, SEG_LOGIN_JANELA_SEGUNDOS)
+				|| (strlen($dados->matricula) && seg_limite_excedido('esqueci_mat', $ip.'|'.$dados->matricula, 3, SEG_LOGIN_JANELA_SEGUNDOS))) {
+			$ALERTAS['ESBLQ'] = "";
+		} else {
+			seg_limite_registrar('esqueci_ip', $ip, SEG_LOGIN_JANELA_SEGUNDOS);
+			if (strlen($dados->matricula)) {
+				seg_limite_registrar('esqueci_mat', $ip.'|'.$dados->matricula, SEG_LOGIN_JANELA_SEGUNDOS);
+			}
 
-		$pessoasBO = new PessoasBO();
-		$pessoa = $pessoasBO->retornaPorUsuario($dados->matricula);
+			if (!strlen($dados->matricula)) {
+				$ALERTAS['ESMV'] = "";
+			}
+			if (!strlen($dados->email)) {
+				$ALERTAS['ESEV'] = "";
+			}
 
-		if (!count($ALERTAS)) {
-			if ($pessoa !== null) {
-				if (strcmp($pessoa->tipo, "aluno") == 0) {
-					if (strcmp($pessoa->email, $dados->email) == 0) {
-						$pessoasBO->esqueciMinhaSenha($pessoa);
+			$pessoasBO = new PessoasBO();
+			$pessoa = $pessoasBO->retornaPorUsuario($dados->matricula);
 
-						$tipo = "";
-						if (isset($url->moodle)) {
-							$tipo = "moodle";
-						}
+			if (!count($ALERTAS)) {
+				if ($pessoa !== null && strcmp($pessoa->tipo, "aluno") == 0
+						&& strcmp(strtolower(trim((string) $pessoa->email)), strtolower($dados->email)) == 0) {
+					$pessoasBO->esqueciMinhaSenha($pessoa);
 
-						$emailBO = new EmailBO();
-						$emailBO->enviarEsqueciSenha($pessoa, $tipo);
-						$ALERTAS['ESEEMS'] = "";
-						$dados = null;
-					} else {
-						$ALERTAS['ESMENC'] = "";
+					$tipo = "";
+					if (isset($url->moodle)) {
+						$tipo = "moodle";
 					}
+
+					$emailBO = new EmailBO();
+					$emailBO->enviarEsqueciSenha($pessoa, $tipo);
+					$ALERTAS['ESEEMS'] = "";
+					$dados = null;
 				} else {
-					$ALERTAS['ESUNA'] = "";
+					$ALERTAS['ESMENC'] = "";
 				}
-			} else {
-				$ALERTAS['ESMENC'] = "";
 			}
 		}
 	}

@@ -67,13 +67,19 @@ class PessoasBO extends BO
 	{
 		GLOBAL $ALERTAS;
 
+		$senha_atual = isset($senhas['senha_atual']) ? (string) $senhas['senha_atual'] : '';
+		$nova_senha = isset($senhas['nova_senha']) ? (string) $senhas['nova_senha'] : '';
+		$nova_senha_2 = isset($senhas['nova_senha_2']) ? (string) $senhas['nova_senha_2'] : '';
+
 		// A senha atual é sempre conferida contra o valor do banco (e não o da sessão).
 		$pessoa_banco = $this->retornaPorCodigo($pessoa->codigo);
 
-		if($pessoa_banco !== null && seg_verificar_senha($senhas['senha_atual'], $pessoa_banco->senha)) {
-			if($senhas['nova_senha'] == $senhas['nova_senha_2']) {
+		if($pessoa_banco !== null && seg_verificar_senha($senha_atual, $pessoa_banco->senha)) {
+			if (!seg_validar_senha_forte($nova_senha)) {
+				$ALERTAS["STMCE"] = "";
+			} elseif ($nova_senha === $nova_senha_2) {
 
-				$this->mudarSenha($pessoa->codigo, $senhas['nova_senha']);
+				$this->mudarSenha($pessoa->codigo, $nova_senha);
 
 				$ALERTAS["SAS"] = ""; // Senha alterada com sucesso
 			} else {
@@ -95,13 +101,23 @@ class PessoasBO extends BO
 
 	public function alteraSenhaAlunoPorCoordenador($aluno_dados)
 	{
-		GLOBAL $ALERTAS, $SENHAS_CODIFICADAS;
+		GLOBAL $ALERTAS;
 
 		$alunosBO = new AlunosBO();
 		$aluno = $alunosBO->retornaPorMatricula($aluno_dados->matricula);
 
-		if($aluno_dados->nova_senha == $aluno_dados->nova_senha_2) {
-			$this->mudarSenha($aluno->codigo, $aluno_dados->nova_senha);
+		if ($aluno === null || strcmp($aluno->tipo, "aluno") !== 0) {
+			$ALERTAS["SNC"] = "";
+			return;
+		}
+
+		$nova_senha = isset($aluno_dados->nova_senha) ? (string) $aluno_dados->nova_senha : '';
+		$nova_senha_2 = isset($aluno_dados->nova_senha_2) ? (string) $aluno_dados->nova_senha_2 : '';
+
+		if (!seg_validar_senha_forte($nova_senha)) {
+			$ALERTAS["STMCE"] = "";
+		} elseif ($nova_senha === $nova_senha_2) {
+			$this->mudarSenha($aluno->codigo, $nova_senha);
 
 			$ALERTAS["SAS"] = ""; // Senha alterada com sucesso
 		} else {
@@ -129,6 +145,17 @@ class PessoasBO extends BO
 		}
 
 		GLOBAL $ALERTAS;
+
+		if ($pessoa === null) {
+			return false;
+		}
+
+		$email_validado = seg_validar_email($email);
+		if ($email_validado === false) {
+			$ALERTAS["EINV"] = "";
+			return false;
+		}
+		$email = $email_validado;
 
 		$lista_validacao = array();
 
@@ -158,15 +185,18 @@ class PessoasBO extends BO
 		} else {
 			$filtro['codigo'] = $pessoa->codigo;
 
+			$token = seg_token_aleatorio(16);
+
 			$update['email_valido'] = 'false';
 			$update['email'] = $email;
-			$update['email_confirmacao'] = seg_token_aleatorio(16);
+			// Armazena apenas o hash do token de confirmação no banco.
+			$update['email_confirmacao'] = seg_hash_token($token);
 
 			$this->DAO->updateCamposDeFiltro($update, $filtro);
 
 			$pessoa->email = $update['email'];
 			$pessoa->email_valido = $update['email_valido'];
-			$pessoa->email_confirmacao = $update['email_confirmacao'];
+			$pessoa->email_confirmacao = $token;
 
 			$ALERTAS["ECAC"] = "";
 
@@ -192,7 +222,7 @@ class PessoasBO extends BO
 
 			$pessoa = ctype_digit($pessoa_codigo) ? $this->retornaPorCodigo($pessoa_codigo) : null;
 
-			if ($pessoa !== null && seg_comparar((string) $pessoa->email_confirmacao, $codigo_confirmacao)) {
+			if ($pessoa !== null && seg_comparar((string) $pessoa->email_confirmacao, seg_hash_token($codigo_confirmacao))) {
 				$update['email_valido'] = 'true';
 				$update['email_confirmacao'] = "";
 
@@ -237,11 +267,11 @@ class PessoasBO extends BO
 	{
 		$filtro['codigo'] = $pessoa->codigo;
 
-		// O banco guarda "token|validade"; o link enviado leva só o token.
+		// O banco guarda "sha256(token)|validade"; o link enviado leva só o token.
 		$token = seg_token_aleatorio(16);
 		$validade = time() + SEG_VALIDADE_LINK_SENHA;
 
-		$update['senha_mudanca'] = $token."|".$validade;
+		$update['senha_mudanca'] = seg_hash_token($token)."|".$validade;
 
 		$this->DAO->updateCamposDeFiltro($update, $filtro);
 
@@ -253,7 +283,7 @@ class PessoasBO extends BO
 	{
 		$return = null;
 
-		if ($hast_esqueci !== NULL && strlen($hast_esqueci) > 32) {
+		if (is_string($hast_esqueci) && strlen($hast_esqueci) > 32) {
 
 
 			$pessoa_codigo = substr($hast_esqueci, 32);
@@ -268,8 +298,8 @@ class PessoasBO extends BO
 
 				// Tokens antigos (sem validade) ou expirados não são aceitos.
 				if (count($partes) == 2 && ctype_digit($partes[1]) && (int) $partes[1] >= time()
-						&& seg_comparar($partes[0], $hast_esqueci)) {
-					$pessoa->senha_mudanca = $partes[0];
+						&& seg_comparar($partes[0], seg_hash_token($hast_esqueci))) {
+					$pessoa->senha_mudanca = $hast_esqueci;
 					$return = $pessoa;
 				}
 			}

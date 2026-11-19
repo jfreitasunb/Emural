@@ -2,6 +2,7 @@
 
 require_once $ROOT_PATH."lib/linkBO.php";
 require_once $ROOT_PATH."lib/phpmailer.inc.php";
+require_once dirname(__FILE__)."/seguranca.php";
 
 class EmailBO
 {
@@ -9,25 +10,31 @@ class EmailBO
 	{
 		global $SMTP;
 
+		$to_validado = seg_validar_email($to);
+		$from_validado = seg_validar_email($from);
+		if ($to_validado === false || $from_validado === false) {
+			return false;
+		}
+
+		// Evita injeção de cabeçalhos em assunto e nome do remetente.
+		$subject = preg_replace('/[\r\n\0]+/', ' ', (string) $subject);
+		$from_name = preg_replace('/[\r\n\0]+/', ' ', (string) $from_name);
+
 		$mail = new phpmailer();
-		$mail->AddAddress($to);
+		$mail->MailerDebug = false;
+		$mail->AddAddress($to_validado);
 
 		$mail->IsSMTP(); // set mailer to use SMTP
 		$mail->Host = $SMTP["host"];  // specify main and backup server
-		//$mail->Host = "127.0.0.1";  // specify main and backup server
-		//$mail->AddAddress("ellen@site.com");   // name is optional
-		//$mail->AddReplyTo("info@site.com", "Information");
 		$mail->WordWrap = $SMTP["wordWrap"];    // set word wrap
-		//$mail->AddAttachment("c:\\temp\\js-bak.sql");  // add attachments
-		//$mail->AddAttachment("c:/temp/11-10-00.zip");
 
 		$mail->IsHTML(true);    // set email format to HTML
 		$mail->Subject = $subject;
-		$mail->From = $from ;
+		$mail->From = $from_validado;
 		$mail->FromName = $from_name;
 		$mail->Body = $text;
 
-		$mail->Send();
+		return $mail->Send();
 	}
 
 
@@ -41,7 +48,8 @@ class EmailBO
 		$from_name = "E-mural";
 		$to = $pessoa->email;
 		$subject = "Confirmação de email";
-		$text = 'Prezado '.$pessoa->nome.'<br><br>Para confirmar esse email como o email de acesso da matricula: '.$pessoa->usuario.' ao <a href="'.$SITE.'" target="_blank">E-mural</a> e ao <a href="'.$SITEM.'" target="_blank">MoodleMat</a>, entre neste <a href="'.$linkBO->getEmailConfirmacaoExterno($pessoa).'" target="_blank">'.$linkBO->getEmailConfirmacaoExterno($pessoa).'</a>';
+		$link_confirmacao = h($linkBO->getEmailConfirmacaoExterno($pessoa));
+		$text = 'Prezado '.h($pessoa->nome).'<br><br>Para confirmar esse email como o email de acesso da matricula: '.h($pessoa->usuario).' ao <a href="'.h($SITE).'" target="_blank">E-mural</a> e ao <a href="'.h($SITEM).'" target="_blank">MoodleMat</a>, entre neste <a href="'.$link_confirmacao.'" target="_blank">'.$link_confirmacao.'</a>';
 
 		$this->enviar($subject, $text, $from, $from_name, $to);
 	}
@@ -58,8 +66,9 @@ class EmailBO
 		$to = $pessoa->email;
 		$subject = "Esqueci a senha";
 
-		$text  = 'Prezado '.$pessoa->nome.'<br><br>Foi feito um pedido de mudança de senha na sua conta no mat.unb.br.<br>';
-		$text .= 'Para redefinir a senha, entre neste link:  <a href="'.$linkBO->getEsqueciSenhaFormularioMudarSenhaExterno($pessoa, $tipo).'" target="_blank">'.$linkBO->getEsqueciSenhaFormularioMudarSenhaExterno($pessoa, $tipo).'</a><br><br>';
+		$link_esqueci = h($linkBO->getEsqueciSenhaFormularioMudarSenhaExterno($pessoa, $tipo));
+		$text  = 'Prezado '.h($pessoa->nome).'<br><br>Foi feito um pedido de mudança de senha na sua conta no mat.unb.br.<br>';
+		$text .= 'Para redefinir a senha, entre neste link:  <a href="'.$link_esqueci.'" target="_blank">'.$link_esqueci.'</a><br><br>';
 		$text .= 'Caso não tenha pedido a mudança de senha ignore esse email.';
 
 		$this->enviar($subject, $text, $from, $from_name, $to);

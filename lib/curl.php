@@ -93,7 +93,7 @@ class curl {
         // value of curl_exec() instead of outputting it out directly.
         $this->options['CURLOPT_RETURNTRANSFER']    = 1;
         $this->options['CURLOPT_BINARYTRANSFER']    = 0;
-        $this->options['CURLOPT_SSL_VERIFYPEER']    = 0;
+        $this->options['CURLOPT_SSL_VERIFYPEER']    = 1;
         $this->options['CURLOPT_SSL_VERIFYHOST']    = 2;
         $this->options['CURLOPT_CONNECTTIMEOUT']    = 30;
     }
@@ -558,17 +558,15 @@ class curl_cache {
      */
     public function get($param){
         $this->cleanup($this->ttl);
-        $filename = 'u_'.md5(serialize($param));
-        if(file_exists($this->dir.$filename)) {
+        $filename = 'u_'.sha1(json_encode($param));
+        if(file_exists($this->dir.$filename) && !is_link($this->dir.$filename)) {
             $lasttime = filemtime($this->dir.$filename);
             if(time()-$lasttime > $this->ttl)
             {
                 return false;
             } else {
-                $fp = fopen($this->dir.$filename, 'r');
-                $size = filesize($this->dir.$filename);
-                $content = fread($fp, $size);
-                return unserialize($content);
+                $content = @file_get_contents($this->dir.$filename);
+                return $content !== false ? json_decode($content, true) : false;
             }
         }
         return false;
@@ -581,10 +579,8 @@ class curl_cache {
      * @param mixed $val
      */
     public function set($param, $val){
-        $filename = 'u_'.md5(serialize($param));
-        $fp = fopen($this->dir.$filename, 'w');
-        fwrite($fp, serialize($val));
-        fclose($fp);
+        $filename = 'u_'.sha1(json_encode($param));
+        @file_put_contents($this->dir.$filename, json_encode($val), LOCK_EX);
     }
 
     /**

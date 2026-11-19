@@ -56,18 +56,30 @@ if($_POST) {
 
 	if(isset($_FILES["arquivo_sigra"]) && strlen($_FILES["arquivo_sigra"]["tmp_name"])) {
 		$caminho_origem = $_FILES["arquivo_sigra"]["tmp_name"];
+		$tamanho_maximo = 10 * 1024 * 1024; // 10 MB
 
-		// Aceita apenas arquivos texto (.txt/.csv) e gera o nome no servidor,
+		// Aceita apenas arquivos texto (.txt/.csv) até 10 MB e gera o nome no servidor,
 		// impedindo o envio de scripts (.php etc.) para a pasta de upload.
 		$nome_original = basename($_FILES["arquivo_sigra"]["name"]);
 		$extensao = strtolower(pathinfo($nome_original, PATHINFO_EXTENSION));
 		$base = preg_replace('/[^A-Za-z0-9_-]/', '_', pathinfo($nome_original, PATHINFO_FILENAME));
 		$base = substr($base, 0, 80);
 
-		$conteudo_inicio = (string) @file_get_contents($caminho_origem, false, null, 0, 4096);
-		$eh_texto = strpos($conteudo_inicio, "\0") === false && stripos($conteudo_inicio, '<?') === false;
+		$tamanho = isset($_FILES["arquivo_sigra"]["size"]) ? (int) $_FILES["arquivo_sigra"]["size"] : 0;
+		$eh_texto = false;
+		if ($_FILES["arquivo_sigra"]["error"] === UPLOAD_ERR_OK
+				&& $tamanho > 0
+				&& $tamanho <= $tamanho_maximo
+				&& is_uploaded_file($caminho_origem)) {
+			$conteudo_arquivo = @file_get_contents($caminho_origem);
+			$eh_texto = $conteudo_arquivo !== false
+				&& strpos($conteudo_arquivo, "\0") === false
+				&& stripos($conteudo_arquivo, '<?') === false;
+		}
 
 		if ($_FILES["arquivo_sigra"]["error"] !== UPLOAD_ERR_OK
+				|| $tamanho <= 0
+				|| $tamanho > $tamanho_maximo
 				|| !in_array($extensao, array('txt', 'csv'), true)
 				|| !$eh_texto
 				|| !is_uploaded_file($caminho_origem)) {

@@ -17,13 +17,16 @@ $pessoasBO = new PessoasBO();
 $coordenador = $autenticacaoBO->verificarCoordenador();
 
 if($_POST) {
-	$codigo = $_POST['codigo'];
-	$email = trim($_POST['email']);
+	$codigo = isset($_POST['codigo']) ? $_POST['codigo'] : '';
+	$email = isset($_POST['email']) ? trim($_POST['email']) : '';
 
-	if($pessoasBO->mudarEmailPessoa($codigo, $email))
+	$aluno = ctype_digit((string) $codigo) ? $pessoasBO->retornaPorCodigo($codigo) : null;
+
+	// Permite alterar apenas contas do tipo aluno.
+	if($aluno !== null && strcmp($aluno->tipo, 'aluno') === 0 && $pessoasBO->mudarEmailPessoa($aluno, $email))
 	{
 		$emailBO = new EmailBO();
-		$emailBO->enviarValidacao($codigo);
+		$emailBO->enviarValidacao($aluno);
 	}
 }
 

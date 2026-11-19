@@ -32,8 +32,10 @@ $EMAIL_VALIDACAO_ORIGEM = "informatica@mat.unb.br";
 $SENHAS_CODIFICADAS = true;
 
 // IPs autorizados a chamar services/auth.php e services/user.php (ex.: o
-// servidor do Moodle). Lista vazia = sem restrição por IP.
+// servidor do Moodle). Lista vazia bloqueia todas as requisições (fail-closed).
 $SERVICOS_IPS_PERMITIDOS = array(/* "192.168.122.69" */);
+// Segredo compartilhado opcional enviado pelo Moodle no cabeçalho X-Service-Token.
+$SERVICOS_TOKEN = '';
 
 $ALERTAS = null;
 

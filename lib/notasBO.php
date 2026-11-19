@@ -108,22 +108,23 @@ class NotasBO extends BO
 		$lista = $this->DAO->recuperaQuantidadeMencoesDeTurma($turma);
 
 		if(count($lista)) {
+			$preenche = new stdClass();
 			$preenche->quantidade_sr = "";
 			$preenche->quantidade_ii = "";
 			$preenche->quantidade_mi = "";
 			$preenche->quantidade_mm = "";
 			$preenche->quantidade_ms = "";
 			$preenche->quantidade_ss = "";
-			$preenche->nome_avaliacao = "";
+			$nomes_avaliacao = array();
 			foreach($lista as $provas)
 			{
-				$preenche->quantidade_sr .= $provas->sr.", ";
-				$preenche->quantidade_ii .= $provas->ii.", ";
-				$preenche->quantidade_mi .= $provas->mi.", ";
-				$preenche->quantidade_mm .= $provas->mm.", ";
-				$preenche->quantidade_ms .= $provas->ms.", ";
-				$preenche->quantidade_ss .= $provas->ss.", ";
-				$preenche->nome_avaliacao .= "'$provas->nome', ";
+				$preenche->quantidade_sr .= (int) $provas->sr.", ";
+				$preenche->quantidade_ii .= (int) $provas->ii.", ";
+				$preenche->quantidade_mi .= (int) $provas->mi.", ";
+				$preenche->quantidade_mm .= (int) $provas->mm.", ";
+				$preenche->quantidade_ms .= (int) $provas->ms.", ";
+				$preenche->quantidade_ss .= (int) $provas->ss.", ";
+				$nomes_avaliacao[] = (string) $provas->nome;
 			}
 			$preenche->quantidade_sr = substr($preenche->quantidade_sr, 0, strlen($preenche->quantidade_sr) - 2);
 			$preenche->quantidade_ii = substr($preenche->quantidade_ii, 0, strlen($preenche->quantidade_ii) - 2);
@@ -131,9 +132,11 @@ class NotasBO extends BO
 			$preenche->quantidade_mm = substr($preenche->quantidade_mm, 0, strlen($preenche->quantidade_mm) - 2);
 			$preenche->quantidade_ms = substr($preenche->quantidade_ms, 0, strlen($preenche->quantidade_ms) - 2);
 			$preenche->quantidade_ss = substr($preenche->quantidade_ss, 0, strlen($preenche->quantidade_ss) - 2);
-			$preenche->nome_avaliacao = substr($preenche->nome_avaliacao, 0, strlen($preenche->nome_avaliacao) - 2);
 
 			$this->preencherObjeto($tpl,$preenche);
+			$tpl->setVariable(array(
+				'nome_avaliacao_json' => json_encode($nomes_avaliacao, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT)
+			));
 		}
 	}
 

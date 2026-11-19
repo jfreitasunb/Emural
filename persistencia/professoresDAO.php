@@ -34,11 +34,11 @@ class ProfessoresDAO extends DAO1x1
 
 		$ordem = $this->orderBy($ordemarray);
 
-		if(strlen($limit) > 0)
-			$limit = "LIMIT $limit";
+		if(strlen((string) $limit) > 0)
+			$limit = "LIMIT ".(int) $limit;
 
-		if(strlen($offset) > 0)
-			$offset = "OFFSET $offset";
+		if(strlen((string) $offset) > 0)
+			$offset = "OFFSET ".(int) $offset;
 
 		$sql = "SELECT ".$this->atributosSelect($this->mapaAtributosGeral)."
 				FROM ($this->tabela

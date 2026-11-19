@@ -124,25 +124,26 @@ class AutenticacaoBO
 
 		seg_login_limpar_falhas($login->usuario);
 
-		// Evita fixação de sessão.
+		// Evita fixação de sessão e rotaciona o token CSRF.
 		session_regenerate_id(true);
+		seg_csrf_rotacionar();
 
 		switch ($pessoa->tipo) {
 			case "coord":
-				$coordenador = $pessoa;
+				$coordenador = $this->sanitizarParaSessao($pessoa);
 				$_SESSION["coordenador"] = serialize($coordenador);
 				break;
 			case "professor":
-				$professor = $professoresBO->retornaPorCodigo($pessoa->codigo);
+				$professor = $this->sanitizarParaSessao($professoresBO->retornaPorCodigo($pessoa->codigo));
 				$_SESSION["professor"] = serialize($professor);
 				$turmasBO->atualizacaoTurmasProfessor($professor);
 				break;
 			case "monitor":
-				$monitor = $monitoresBO->retornaPorCodigo($pessoa->codigo);
+				$monitor = $this->sanitizarParaSessao($monitoresBO->retornaPorCodigo($pessoa->codigo));
 				$_SESSION["monitor"] = serialize($monitor);
 				break;
 			case "aluno":
-				$aluno = $alunosBO->retornaPorCodigo($pessoa->codigo);
+				$aluno = $this->sanitizarParaSessao($alunosBO->retornaPorCodigo($pessoa->codigo));
 				$_SESSION["aluno"] = serialize($aluno);
 				break;
 		}
@@ -163,7 +164,7 @@ class AutenticacaoBO
 
 		if (!$precisa_email_confirmado) {
 			return $aluno;
-		} elseif ($precisa_email_confirmado & strcmp($aluno->email_valido,'t') == 0) {
+		} elseif ($precisa_email_confirmado && strcmp($aluno->email_valido,'t') == 0) {
 			return $aluno;
 		} else {
 			if (strlen($aluno->email) && strlen($aluno->email_confirmacao)) {
@@ -172,6 +173,7 @@ class AutenticacaoBO
 				$get["NOTY_ENCAD"] = "";
 			}
 			HTTP::redirect($this->linkBO->getAlunoEmail($get));
+			exit;
 		}
 	}
 
@@ -189,9 +191,13 @@ class AutenticacaoBO
 		$result = false;
 
 		if (isset($_SESSION[$tipo])) {
-			$pessoa = unserialize($_SESSION[$tipo]);
+			if (PHP_VERSION_ID >= 70000) {
+				$pessoa = unserialize($_SESSION[$tipo], array('allowed_classes' => array('stdClass')));
+			} else {
+				$pessoa = unserialize($_SESSION[$tipo]);
+			}
 
-			if(strcmp($pessoa->codigo, $codigo) == 0 || $codigo === false) {
+			if(is_object($pessoa) && ($codigo === false || ($codigo !== null && strcmp((string) $pessoa->codigo, (string) $codigo) == 0))) {
 				$result = true;
 			}
 		}
@@ -205,9 +211,29 @@ class AutenticacaoBO
 	}
 
 
+	private function sanitizarParaSessao($pessoa)
+	{
+		if (!is_object($pessoa)) {
+			return $pessoa;
+		}
+
+		$copia = clone $pessoa;
+		unset($copia->senha);
+		unset($copia->senha_mudanca);
+		// Mantém apenas indicador de confirmação pendente, sem expor o token na sessão.
+		if (isset($copia->email_confirmacao) && strlen((string) $copia->email_confirmacao) > 0) {
+			$copia->email_confirmacao = '1';
+		} else {
+			$copia->email_confirmacao = '';
+		}
+
+		return $copia;
+	}
+
+
 	public function recarregaPessoa($pessoa,$tipo)
 	{
-		$_SESSION[$tipo] = serialize($pessoa);
+		$_SESSION[$tipo] = serialize($this->sanitizarParaSessao($pessoa));
 	}
 
 
@@ -299,7 +325,22 @@ class AutenticacaoBO
 	public function logout()
 	{
 		seg_iniciar_sessao();
+		$_SESSION = array();
 		session_unset();
+
+		if (ini_get('session.use_cookies')) {
+			$params = session_get_cookie_params();
+			setcookie(
+				session_name(),
+				'',
+				time() - 42000,
+				$params['path'],
+				$params['domain'],
+				$params['secure'],
+				$params['httponly']
+			);
+		}
+
 		session_destroy();
 	}
 }

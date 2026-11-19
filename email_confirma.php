@@ -22,4 +22,5 @@ $pessoasBO->confirmarEmail($codigo_confirmacao);
 $linkBO = new LinkBO();
 
 HTTP::redirect($linkBO->getMoodle());
+exit;
 ?>

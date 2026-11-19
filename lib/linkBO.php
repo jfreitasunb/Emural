@@ -60,7 +60,7 @@ class LinkBO
 	{
 		$final = "";
 		if($observacao !== null) {
-			$final = "/".$observacao->codigo."?d&".SEG_CSRF_CAMPO."=".urlencode(seg_csrf_token());
+			$final = "/".$observacao->codigo;
 		}
 
 		return $this->root."avisos/".$turma->codigo.$final;
@@ -88,7 +88,7 @@ class LinkBO
 	{
 		$final = "";
 		if($responsavel !== null) {
-			$final = "/".$responsavel->codigo."?d&".SEG_CSRF_CAMPO."=".urlencode(seg_csrf_token());
+			$final = "/".$responsavel->codigo;
 		}
 
 		return $this->root."monitores/".$turma->codigo.$final;

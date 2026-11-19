@@ -20,8 +20,9 @@ if($_POST) {
 
 	$lista = $composicarTurmasBO->retornaArrayPorcentagemAprovados($dados);
 
-	header("Content-type: application/csv"); 
-	header("Content-Disposition: \"inline; filename=relatorio.csv\"");
+	header("Content-Type: text/csv; charset=utf-8"); 
+	header('Content-Disposition: attachment; filename="relatorio.csv"');
+	header("X-Content-Type-Options: nosniff");
 
 	RelaroriosBO::getCSVComTitulo($lista);
 }

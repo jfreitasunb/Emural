@@ -74,7 +74,7 @@ class ComposicaoTurmasDAO extends DAONxN
 		// Valores numéricos são convertidos para inteiro e o texto é escapado
 		// pela conexão para evitar injeção de SQL.
 		$disciplina_codigo = (int) $disciplina_codigo;
-		$opcao_curso = pg_escape_string($opcao_curso);
+		$opcao_curso = $this->citarValor($opcao_curso);
 		$semestre_inicio_sql = new stdClass();
 		$semestre_inicio_sql->ano = (int) $semestre_inicio->ano;
 		$semestre_inicio_sql->semestre = (int) $semestre_inicio->semestre;
@@ -97,22 +97,22 @@ class ComposicaoTurmasDAO extends DAONxN
 
 				(((((((SELECT distinct tur_ano AS ano, tur_seme AS semestre FROM turmas WHERE tur_cdis = ".$disciplina_codigo." AND ((tur_ano = ".$semestre_inicio->ano." AND tur_seme >= ".$semestre_inicio->semestre.") OR tur_ano > ".$semestre_inicio->ano.") AND ((tur_ano = ".$semestre_fim->ano." AND ".$semestre_fim->semestre." <= 2) OR tur_ano < ".$semestre_fim->ano.") GROUP BY tur_ano, tur_seme) AS tb_semestres
 				LEFT JOIN
-				(SELECT tur_ano AS ano_sr, tur_seme AS semestre_sr, count(*) AS ct_sr FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = '".$opcao_curso."' AND ctu_mens = 'SR' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_sr
+				(SELECT tur_ano AS ano_sr, tur_seme AS semestre_sr, count(*) AS ct_sr FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = ".$opcao_curso." AND ctu_mens = 'SR' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_sr
 				ON ano_sr = ano AND semestre_sr = semestre)
 				LEFT JOIN
-				(SELECT tur_ano AS ano_ii, tur_seme AS semestre_ii, count(*) AS ct_ii FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = '".$opcao_curso."' AND ctu_mens = 'II' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_ii
+				(SELECT tur_ano AS ano_ii, tur_seme AS semestre_ii, count(*) AS ct_ii FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = ".$opcao_curso." AND ctu_mens = 'II' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_ii
 				ON ano_ii = ano AND semestre_ii = semestre)
 				LEFT JOIN
-				(SELECT tur_ano AS ano_mi, tur_seme AS semestre_mi, count(*) AS ct_mi FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = '".$opcao_curso."' AND ctu_mens = 'MI' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_mi
+				(SELECT tur_ano AS ano_mi, tur_seme AS semestre_mi, count(*) AS ct_mi FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = ".$opcao_curso." AND ctu_mens = 'MI' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_mi
 				ON ano_mi = ano AND semestre_mi = semestre)
 				LEFT JOIN
-				(SELECT tur_ano AS ano_mm, tur_seme AS semestre_mm, count(*) AS ct_mm FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = '".$opcao_curso."' AND ctu_mens = 'MM' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_mm
+				(SELECT tur_ano AS ano_mm, tur_seme AS semestre_mm, count(*) AS ct_mm FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = ".$opcao_curso." AND ctu_mens = 'MM' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_mm
 				ON ano_mm = ano AND semestre_mm = semestre)
 				LEFT JOIN
-				(SELECT tur_ano AS ano_ms, tur_seme AS semestre_ms, count(*) AS ct_ms FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = '".$opcao_curso."' AND ctu_mens = 'MS' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_ms
+				(SELECT tur_ano AS ano_ms, tur_seme AS semestre_ms, count(*) AS ct_ms FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = ".$opcao_curso." AND ctu_mens = 'MS' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_ms
 				ON ano_ms = ano AND semestre_ms = semestre)
 				LEFT JOIN
-				(SELECT tur_ano AS ano_ss, tur_seme AS semestre_ss, count(*) AS ct_ss FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = '".$opcao_curso."' AND ctu_mens = 'SS' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_ss
+				(SELECT tur_ano AS ano_ss, tur_seme AS semestre_ss, count(*) AS ct_ss FROM (composicao_turmas INNER JOIN turmas ON tur_ctur = ctu_ctur) INNER JOIN alunos ON alu_calu = ctu_calu WHERE alu_ocur = ".$opcao_curso." AND ctu_mens = 'SS' AND tur_cdis = ".$disciplina_codigo." GROUP BY tur_ano,tur_seme) AS tb_ss
 				ON ano_ss = ano AND semestre_ss = semestre)";
 
 		$res = $this->_db->query($sql);

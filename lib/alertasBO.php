@@ -194,6 +194,16 @@ class AlertasBO
 		$alerta['mensagem'] = "O Senha e o Confirmar Senha devem ser iguais.";
 		$this->lista['ESSD'] = $alerta;
 		unset($alerta);
+
+		$alerta['tipo'] = "error";
+		$alerta['mensagem'] = "E-mail inválido.";
+		$this->lista['EINV'] = $alerta;
+		unset($alerta);
+
+		$alerta['tipo'] = "error";
+		$alerta['mensagem'] = "Muitas solicitações em pouco tempo. Aguarde alguns minutos e tente novamente.";
+		$this->lista['ESBLQ'] = $alerta;
+		unset($alerta);
 	}
 
 

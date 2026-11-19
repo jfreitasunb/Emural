@@ -26,8 +26,11 @@
 	</div>
 	<div class="div_action">
 		<a href="{link_avisos}"><input type="button" value="Novo"></a>
-		<a href="{link_deletar}"><input type="button" value="Excluir"></a>
 		<input type="submit" value="Salvar"></div>
+	</form>
+	<form id="form_avisos_excluir" method="post" action="{link_deletar}" class="div_action">
+		<input type="hidden" name="excluir" value="1">
+		<input type="submit" value="Excluir">
 	</form>
 </div>
 <div class="clear"></div>

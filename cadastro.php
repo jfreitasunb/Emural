@@ -22,17 +22,23 @@ $mensagem = array();
 $dados = null;
 
 if($_POST) {
+	$ip = seg_ip_cliente();
+	if (seg_limite_excedido('cadastro_ip', $ip, 15, SEG_LOGIN_JANELA_SEGUNDOS)) {
+		$mensagem[] = "Muitas tentativas em pouco tempo. Aguarde alguns minutos e tente novamente.";
+	} else {
+	seg_limite_registrar('cadastro_ip', $ip, SEG_LOGIN_JANELA_SEGUNDOS);
+
 	$dados = new stdClass();
 	//$dados->matricula = $_POST['matricula'];
-	$email_temp = str_replace(' ', '', $_POST['email']);
+	$email_temp = str_replace(' ', '', isset($_POST['email']) ? (string) $_POST['email'] : '');
 	$email_temp = strtolower($email_temp);
-	$email_confirmar_temp = str_replace(' ', '', $_POST['email_confirmar']);
+	$email_confirmar_temp = str_replace(' ', '', isset($_POST['email_confirmar']) ? (string) $_POST['email_confirmar'] : '');
 	$email_confirmar_temp = strtolower($email_confirmar_temp);
-	$dados->matricula = preg_replace("/[^0-9 ]/", '', $_POST['matricula']);
+	$dados->matricula = preg_replace("/[^0-9 ]/", '', isset($_POST['matricula']) ? (string) $_POST['matricula'] : '');
 	$dados->email = trim($email_temp);
 	$dados->email_confirmar = trim($email_confirmar_temp);
-	$dados->senha = $_POST['senha'];
-	$dados->confirmar_senha = $_POST['confirmar_senha'];
+	$dados->senha = isset($_POST['senha']) ? (string) $_POST['senha'] : '';
+	$dados->confirmar_senha = isset($_POST['confirmar_senha']) ? (string) $_POST['confirmar_senha'] : '';
 
 	foreach($dados as $id => $dado) {
 		if (!strlen($dado)) {
@@ -40,39 +46,33 @@ if($_POST) {
 		}
 	}
 
-	$dados->disciplina = $_POST['disciplina'];
+	$dados->disciplina = isset($_POST['disciplina']) ? $_POST['disciplina'] : 0;
 	if ($dados->disciplina == 0) {
 		$mensagem[] = "disciplina não pode ficar vazio.";
 	}
 
-	$dados->turma = $_POST['turma'];
+	$dados->turma = isset($_POST['turma']) ? $_POST['turma'] : 0;
 	if ($dados->turma == 0) {
 		$mensagem[] = "turma não pode ficar vazio.";
 	}
 
-	if (!filter_var($dados->email, FILTER_VALIDATE_EMAIL)) {
+	if (seg_validar_email($dados->email) === false) {
 		$mensagem[] = "e-mail inválido.";
 	}
 
-	if (!filter_var($dados->email_confirmar, FILTER_VALIDATE_EMAIL)) {
+	if (seg_validar_email($dados->email_confirmar) === false) {
 		$mensagem[] = "e-mail inválido.";
 	}
 
-	// Validate password strength
-	$uppercase = preg_match('@[A-Z]@', $dados->senha);
-	$lowercase = preg_match('@[a-z]@', $dados->senha);
-	$number    = preg_match('@[0-9]@', $dados->senha);
-	$specialChars = preg_match('@[^\w]@', $dados->senha);
-
-	if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($dados->senha) < 8) {
+	if (!seg_validar_senha_forte($dados->senha)) {
     	$mensagem[] = "Sua tenha deve conter pelo menos 8 caracteres, sendo pelo menos 1 lestra maiúscula, 1 letra minúscula, 1 número e 1 caracter especial.";
 	}
 
-	if (strcmp($dados->email, $dados->email_confirmar) != 0) {
+	if ($dados->email !== $dados->email_confirmar) {
 		$mensagem[] = "O e-mail está diferente de confirmar e-mail.";
 	}
 
-	if (strcmp($dados->senha, $dados->confirmar_senha) != 0) {
+	if ($dados->senha !== $dados->confirmar_senha) {
 		$mensagem[] = "Senha está diferente de confirmar senha.";
 	}
 
@@ -82,13 +82,13 @@ if($_POST) {
 		$aluno = $pessoasBO->retornaPorUsuario($dados->matricula);
 
 		if ($aluno === null || strcmp($aluno->tipo, "aluno") != 0) {
-			$mensagem[] = "Matricula ".h($dados->matricula)." não está pre cadastrada.";
+			$mensagem[] = "Dados de cadastro inválidos. Verifique a matrícula e a turma informadas.";
 		} elseif (strlen($aluno->senha)) {
 			// Conta já ativada: a senha só pode ser trocada por quem prova ter
 			// acesso ao e-mail cadastrado (fluxo "Esqueci minha senha").
 			$mensagem[] = 'Esta matrícula já possui cadastro. Para trocar a senha use a opção <a href="'.h($SITE).'esqueci_senha">Esqueci minha senha</a>.';
 		} elseif (!$composicao_turmasBO->estaMatriculado($aluno, $dados->turma)) {
-			$mensagem[] = "Turma incorreta.";
+			$mensagem[] = "Dados de cadastro inválidos. Verifique a matrícula e a turma informadas.";
 		} elseif (strlen($aluno->email)) {
 			// E-mail pré-cadastrado e senha ainda não definida: a senha só é definida
 			// pelo link enviado para o e-mail já cadastrado.
@@ -114,6 +114,7 @@ if($_POST) {
 				$mensagem[] = "E-mail já está sendo usado, cadastre outro ou procure o coordenador.";
 			}
 		}
+	}
 	}
 }
 $templateBO = new TemplateBO();

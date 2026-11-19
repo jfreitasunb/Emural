@@ -12,4 +12,5 @@ $autenticacaoBO->logout();
 
 $linkBO = new LinkBO();
 HTTP::redirect($linkBO->getIndex());
+exit;
 ?>

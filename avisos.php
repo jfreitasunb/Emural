@@ -33,22 +33,26 @@ $observacao = $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
 if($_POST) {
-	$valores->titulo = $_POST['titulo'];
-	$valores->descricao = $_POST['descricao'];
-	$valores->data_divulgacao = $_POST['data_divulgacao'];
-	$valores->turma = $turma->codigo;
-	$valores->valido = "true";
+	if (isset($_POST['excluir'])) {
+		if ($observacao !== null) {
+			$observacoesBO->desativar($observacao);
 
-	$observacoesBO->inserirAtualizar($valores,$observacao);
+			$aviso['NOTY_AVIES'] = "";
+			HTTP::redirect($linkBO->getAvisos($turma,null,$aviso));
+			exit;
+		}
+	} else {
+		$valores = new stdClass();
+		$valores->titulo = isset($_POST['titulo']) ? $_POST['titulo'] : '';
+		$valores->descricao = isset($_POST['descricao']) ? $_POST['descricao'] : '';
+		$valores->data_divulgacao = isset($_POST['data_divulgacao']) ? $_POST['data_divulgacao'] : '';
+		$valores->turma = $turma->codigo;
+		$valores->valido = "true";
 
-	$observacao = $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
-} else if (isset($_GET["d"])) {
-	seg_csrf_validar_get();
+		$observacoesBO->inserirAtualizar($valores,$observacao);
 
-	$observacoesBO->desativar($observacao);
-
-	$aviso['NOTY_AVIES'] = "";
-	HTTP::redirect($linkBO->getAvisos($turma,null,$aviso));
+		$observacao = $observacoesBO->retornaPorCodigoETurma($url->codigo2,$turma);
+	}
 }
 
 $tpl_main = $templateBO->carregarPaginaAvisos($professor,$semestre,$turma);

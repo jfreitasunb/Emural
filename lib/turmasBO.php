@@ -128,7 +128,7 @@ class TurmasBO extends BO
 					if(strcmp($turma->exibe_media,"t") == 0) {
 						$tpl->setVariable(array(
 							'celula_titulo'  => "Média",
-							'celula_corpo' => $turma->media
+							'celula_corpo' => h($turma->media)
 						));
 						$tpl->parse("adicionar_celula_titulo");
 						$tpl->parse("adicionar_celula_corpo");
@@ -137,7 +137,7 @@ class TurmasBO extends BO
 					if(strcmp($turma->exibe_mencao,"t") == 0) {
 						$tpl->setVariable(array(
 							'celula_titulo'  => "Menção",
-							'celula_corpo' => $turma->mencao
+							'celula_corpo' => h($turma->mencao)
 						));
 						$tpl->parse("adicionar_celula_titulo");
 						$tpl->parse("adicionar_celula_corpo");

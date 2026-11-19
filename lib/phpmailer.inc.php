@@ -41,7 +41,7 @@ class phpmailer
 	var $sendmail    = "/usr/sbin/sendmail";
 	var $attachment  = array();
 	var $boundary    = false;
-	var $MailerDebug = true;
+	var $MailerDebug = false;
 
 	// SMTP-specific variables
 	var $Host        = "localhost";
@@ -88,32 +88,61 @@ class phpmailer
 	// RECIPIENT METHODS
 	/////////////////////////////////////////////////	
 
+	// Remove quebras de linha/caracteres de controle de valores de cabeçalho/SMTP.
+	function sanitize_header_value($value) {
+		return trim(preg_replace('/[\r\n\0]+/', '', (string) $value));
+	}
+
 	// Add a "to" address
 	function AddAddress($address, $name = "") {
+		$address = $this->sanitize_header_value($address);
+		$name = $this->sanitize_header_value($name);
+		if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
+			return false;
+		}
 		$cur = count($this->to);
-		$this->to[$cur][0] = trim($address);
+		$this->to[$cur][0] = $address;
 		$this->to[$cur][1] = $name;
+		return true;
 	}
 	
 	// Add a "cc" address
 	function AddCC($address, $name = "") {
+		$address = $this->sanitize_header_value($address);
+		$name = $this->sanitize_header_value($name);
+		if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
+			return false;
+		}
 		$cur = count($this->cc);
-		$this->cc[$cur][0] = trim($address);
+		$this->cc[$cur][0] = $address;
 		$this->cc[$cur][1] = $name;
+		return true;
 	}
 	
 	// Add a "bcc" address
 	function AddBCC($address, $name = "") {
+		$address = $this->sanitize_header_value($address);
+		$name = $this->sanitize_header_value($name);
+		if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
+			return false;
+		}
 		$cur = count($this->bcc);
-		$this->bcc[$cur][0] = trim($address);
+		$this->bcc[$cur][0] = $address;
 		$this->bcc[$cur][1] = $name;
+		return true;
 	}
 	
 	// Add a "Reply-to" address
 	function AddReplyTo($address, $name = "") {
+		$address = $this->sanitize_header_value($address);
+		$name = $this->sanitize_header_value($name);
+		if (!filter_var($address, FILTER_VALIDATE_EMAIL)) {
+			return false;
+		}
 		$cur = count($this->ReplyTo);
-		$this->ReplyTo[$cur][0] = trim($address);
+		$this->ReplyTo[$cur][0] = $address;
 		$this->ReplyTo[$cur][1] = $name;
+		return true;
 	}
 
 
@@ -142,7 +171,12 @@ class phpmailer
 	
 	// Send using the $sendmail program
 	function sendmail_send($header, $body) {
-		$sendmail = sprintf("%s -f %s -t", $this->sendmail, $this->From);
+		$from = $this->sanitize_header_value($this->From);
+		if (!filter_var($from, FILTER_VALIDATE_EMAIL)) {
+			$this->error_handler("Invalid sender address");
+			return;
+		}
+		$sendmail = sprintf("%s -f %s -t", $this->sendmail, escapeshellarg($from));
 
 		if(!$mail = popen($sendmail, "w"))
 			$this->error_handler(sprintf("Could not open %s", $this->sendmail));
@@ -258,8 +292,11 @@ class phpmailer
 	// Assembles and returns the message header
 	function create_header() {
 		$header = array();
-		$header[] = sprintf("From: %s <%s>\n", $this->FromName, trim($this->From));
-		$header[] = "temp";
+		$fromName = $this->sanitize_header_value($this->FromName);
+		$fromAddr = $this->sanitize_header_value($this->From);
+		$subject = $this->sanitize_header_value($this->Subject);
+
+		$header[] = sprintf("From: %s <%s>\n", $fromName, $fromAddr);
 		$header[] = $this->addr_append("To", $this->to);
 		if(count($this->cc) > 0)
 			$header[] = $this->addr_append("cc", $this->cc);
@@ -267,8 +304,8 @@ class phpmailer
 			$header[] = $this->addr_append("bcc", $this->bcc);
 		if(count($this->ReplyTo) > 0)
 			$header[] = $this->addr_append("Reply-to", $this->ReplyTo);
-		$header[] = sprintf("Subject: %s\n", trim($this->Subject));
-		$header[] = sprintf("Return-Path: %s\n", trim($this->From));
+		$header[] = sprintf("Subject: %s\n", $subject);
+		$header[] = sprintf("Return-Path: %s\n", $fromAddr);
 		$header[] = sprintf("X-Priority: %d\n", $this->Priority);
 		$header[] = sprintf("X-Mailer: phpmailer [version .9]\n");
 		$header[] = sprintf("Content-Transfer-Encoding: %s\n", $this->Encoding);

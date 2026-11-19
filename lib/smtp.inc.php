@@ -480,6 +480,11 @@
                 return false;
             }
 
+            if(preg_match('/[\r\n\0]/', (string) $from)) {
+                $this->error = array("error" => "Invalid characters in MAIL FROM");
+                return false;
+            }
+
             fputs($this->smtp_conn,"MAIL FROM:" . $from . $this->CRLF);
 
             $rply = $this->get_lines();
@@ -616,6 +621,11 @@
             if(!$this->connected()) {
                 $this->error = array(
                         "error" => "Called Recipient() without being connected");
+                return false;
+            }
+
+            if(preg_match('/[\r\n\0]/', (string) $to)) {
+                $this->error = array("error" => "Invalid characters in RCPT TO");
                 return false;
             }
 

@@ -85,6 +85,30 @@ class DAO
 	}
 
 
+	protected function validarIdentificador($campo)
+	{
+		if (!is_string($campo) || !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)?$/', $campo)) {
+			throw new Exception("Identificador SQL inválido!");
+		}
+
+		return $campo;
+	}
+
+
+	protected function citarValor($valor)
+	{
+		if (is_array($valor) || is_object($valor)) {
+			throw new Exception("Valor SQL inválido!");
+		}
+
+		if ($this->_db !== null && method_exists($this->_db, 'quote')) {
+			return $this->_db->quote((string) $valor, 'text');
+		}
+
+		return "'".pg_escape_string((string) $valor)."'";
+	}
+
+
 	protected function whereDeFiltro($filtro, $atributos = null)
 	{
 		if($atributos === null) {
@@ -92,15 +116,15 @@ class DAO
 		}
 		$where="";
 
-		if(count($filtro)) {
+		if(is_array($filtro) && count($filtro)) {
 			foreach($filtro as $key => $value)
 			{
 				if (array_key_exists($key, $atributos)) {
 					$campo = $atributos[$key];
 				} else {
-					$campo = $key;
+					$campo = $this->validarIdentificador($key);
 				}
-				$where .= " ".pg_escape_string($campo)." = '".pg_escape_string($value)."' AND";
+				$where .= " ".$campo." = ".$this->citarValor($value)." AND";
 			}
 		}
 
@@ -117,14 +141,17 @@ class DAO
 	{
 		$where = "";
 
-		foreach($filtro as $key => $value)
-		{
-			$where .= " ".pg_escape_string($key)." = ";
+		if (is_array($filtro)) {
+			foreach($filtro as $key => $value)
+			{
+				$campo = $this->validarIdentificador($key);
+				$where .= " ".$campo." = ";
 
-			if(is_int($value))
-				$where .= pg_escape_string($value)." AND";
-			else
-				$where .= "'".pg_escape_string($value)."' AND";
+				if(is_int($value))
+					$where .= (int) $value." AND";
+				else
+					$where .= $this->citarValor($value)." AND";
+			}
 		}
 
 		if(strlen($where)>0)
@@ -143,16 +170,16 @@ class DAO
 		}
 
 		$orderby = "";
-		if($ordem != null) {
+		if(is_array($ordem) && count($ordem)) {
 			foreach($ordem as $key => $value)
 			{
 				if (array_key_exists($key, $atributos)) {
 					$campo = $atributos[$key];
 				} else {
-					$campo = $key;
+					$campo = $this->validarIdentificador($key);
 				}
-				$direcao = (strtoupper(trim($value)) === "DESC") ? "DESC" : "ASC";
-				$orderby .= " ".pg_escape_string($campo)." ".$direcao.",";
+				$direcao = (strtoupper(trim((string) $value)) === "DESC") ? "DESC" : "ASC";
+				$orderby .= " ".$campo." ".$direcao.",";
 			}
 		}
 
@@ -171,10 +198,14 @@ class DAO
 
 		foreach($campos as $key => $value)
 		{
+			if (!array_key_exists($key, $this->mapaAtributos)) {
+				throw new Exception("Coluna inválida para atualização!");
+			}
+
 			if($value === null) {
 				$retorno .= " ".$this->mapaAtributos[$key]." = null,";
 			} else {
-				$retorno .= " ".$this->mapaAtributos[$key]." = '".pg_escape_string($value)."',";
+				$retorno .= " ".$this->mapaAtributos[$key]." = ".$this->citarValor($value).",";
 			}
 		}
 
@@ -193,7 +224,8 @@ class DAO
 
 		foreach($atributos as $key => $value)
 		{
-			$select .= " ".$value." as ".pg_escape_string($key).",";
+			$alias = $this->validarIdentificador($key);
+			$select .= " ".$value." as ".$alias.",";
 		}
 
 		return substr($select,0,strlen($select)-1);
@@ -206,6 +238,10 @@ class DAO
 
 		foreach($campos as $key => $value)
 		{
+			if (!array_key_exists($key, $this->mapaAtributos)) {
+				throw new Exception("Coluna inválida para inserção!");
+			}
+
 			$retorno .= $this->mapaAtributos[$key].", ";
 			$campos2[$this->mapaAtributos[$key]] = $value;
 		}
@@ -223,8 +259,8 @@ class DAO
 
 		foreach($campos as $key => $value)
 		{
-			if(strlen($value) != 0)
-				$retorno .= "'".pg_escape_string($value)."',";
+			if($value !== null && strlen((string) $value) != 0)
+				$retorno .= $this->citarValor($value).",";
 			else
 				$retorno .= "null,";
 		}

@@ -36,26 +36,40 @@ $responsavel = $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
 $professor = $autenticacaoBO->verificarProfessor($turma->professor);
 
 if($_POST) {
-	$valores->avaliacao = $_POST['avaliacao'];
-	$valores->monitor = $_POST['monitor'];
-	if(isset($_POST['lancar']))
-		$valores->lancar = $_POST['lancar'];
-	if(isset($_POST['editar']))
-		$valores->editar = $_POST['editar'];
-	if(isset($_POST['confiar']))
-		$valores->confiar = $_POST['confiar'];
+	if (isset($_POST['excluir'])) {
+		if ($responsavel !== null) {
+			$responsaveisBO->desativar($responsavel);
 
-	$responsaveisBO->inserirAtualizar($valores,$responsavel);
+			$aviso['NOTY_MONES'] = "";
 
-	$responsavel = $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
-} if ($url->deletar) {
-	seg_csrf_validar_get();
+			HTTP::redirect($linkBO->getMonitores($turma,null,$aviso));
+			exit;
+		}
+	} else {
+		$avaliacao_id = isset($_POST['avaliacao']) ? $_POST['avaliacao'] : '';
+		$monitor_id = isset($_POST['monitor']) ? $_POST['monitor'] : '';
 
-	$responsaveisBO->desativar($responsavel);
+		$avaliacao_obj = ctype_digit((string) $avaliacao_id) ? $avaliacoesBO->retornaPorCodigo($avaliacao_id) : null;
+		$monitor_obj = ctype_digit((string) $monitor_id) ? $monitoresBO->retornaPorCodigo($monitor_id) : null;
 
-	$aviso['NOTY_MONES'] = "";
+		// Garante que a avaliação pertence a esta turma e que o monitor existe e está ativo.
+		if ($avaliacao_obj !== null
+				&& (int) $avaliacao_obj->turma === (int) $turma->codigo
+				&& strcmp((string) $avaliacao_obj->status, 't') === 0
+				&& $monitor_obj !== null
+				&& strcmp((string) $monitor_obj->status, 't') === 0) {
+			$valores = new stdClass();
+			$valores->avaliacao = (int) $avaliacao_obj->codigo;
+			$valores->monitor = (int) $monitor_obj->codigo;
+			$valores->lancar = isset($_POST['lancar']) ? 'true' : 'false';
+			$valores->editar = isset($_POST['editar']) ? 'true' : 'false';
+			$valores->confiar = isset($_POST['confiar']) ? 'true' : 'false';
 
-	HTTP::redirect($linkBO->getMonitores($turma,null,$aviso));
+			$responsaveisBO->inserirAtualizar($valores,$responsavel);
+
+			$responsavel = $responsaveisBO->retornaPorCodigoETurma($url->codigo2,$turma);
+		}
+	}
 }
 
 $tpl_main = $templateBO->carregarPaginaMonitores($professor,$semestre,$turma);

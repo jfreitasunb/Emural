@@ -53,6 +53,8 @@ class AvaliacoesBO extends BO
 
 		foreach($avaliacoes_novas as $descricao => $quantidade)
 		{
+			// Limita a quantidade de avaliações por tipo para evitar consumo excessivo de recursos.
+			$quantidade = max(1, min(50, (int) $quantidade));
 			//print_r($avaliacoes);
 			$inserir["tipo"] = substr(mb_strtolower($descricao,mb_detect_encoding($descricao)),0,20);
 			if($quantidade > 1) {
@@ -370,18 +372,18 @@ class AvaliacoesBO extends BO
 
 					if($medias_mencoes_editavel) {
 						$tpl->setVariable(array(
-							"celula_corpo"  => "<input type='text' name='media_".$aluno->codigo_aluno."' id='media_".$aluno->codigo_aluno."' value='".$nota_final["media"]."' class='validate[required,max[10],min[0],custom[number]] media' size='5' autocomplete='off' tabindex=1/>"
+							"celula_corpo"  => "<input type='text' name='media_".(int) $aluno->codigo_aluno."' id='media_".(int) $aluno->codigo_aluno."' value='".h($nota_final["media"])."' class='validate[required,max[10],min[0],custom[number]] media' size='5' autocomplete='off' tabindex=1/>"
 						));
 						$tpl->parse("adicionar_celula_corpo");
 
-						$celula_corpo = "<select size='1' name='mencao_".$aluno->codigo_aluno."' id='mencao_".$aluno->codigo_aluno."' tabindex=2>";
+						$celula_corpo = "<select size='1' name='mencao_".(int) $aluno->codigo_aluno."' id='mencao_".(int) $aluno->codigo_aluno."' tabindex=2>";
 						foreach($tipo_mencao as $mencao)
 						{
-							$celula_corpo .= "<option value='$mencao'";
+							$celula_corpo .= "<option value='".h($mencao)."'";
 							if($mencao == $nota_final["mencao"]) {
 								$celula_corpo .= " selected='selected'";
 							}
-							$celula_corpo .= ">$mencao</option>";
+							$celula_corpo .= ">".h($mencao)."</option>";
 						}
 						$celula_corpo .= "</select>";
 
@@ -391,38 +393,38 @@ class AvaliacoesBO extends BO
 						$tpl->parse("adicionar_celula_corpo");
 
 						$tpl->setVariable(array(
-							"celula_corpo"  => "<input type='text' name='faltas_".$aluno->codigo_aluno."' class='custom[integer] faltas' id='faltas_".$aluno->codigo_aluno."' value='".$nota_final["faltas"]."' size='5' autocomplete='off' tabindex=3/>"
+							"celula_corpo"  => "<input type='text' name='faltas_".(int) $aluno->codigo_aluno."' class='custom[integer] faltas' id='faltas_".(int) $aluno->codigo_aluno."' value='".h($nota_final["faltas"])."' size='5' autocomplete='off' tabindex=3/>"
 						));
 						$tpl->parse("adicionar_celula_corpo");
 
 						$tpl->setVariable(array(
-							"celula_corpo"  => $nota_final["porcentagem_faltas"]."%",
-							"celula_id" => "porcentagem_faltas_".$aluno->codigo_aluno
+							"celula_corpo"  => h($nota_final["porcentagem_faltas"])."%",
+							"celula_id" => "porcentagem_faltas_".(int) $aluno->codigo_aluno
 						));
 						$tpl->parse("adicionar_celula_corpo");
 
 						$tpl->setVariable(array(
-							"celula_corpo"  => "<button type='button' class='atualizar_mencao' id='".$aluno->codigo_aluno."'>Atualizar Média</button>"
+							"celula_corpo"  => "<button type='button' class='atualizar_mencao' id='".(int) $aluno->codigo_aluno."'>Atualizar Média</button>"
 						));
 						$tpl->parse("adicionar_celula_corpo");
 					} else {
 						$tpl->setVariable(array(
-							"celula_corpo"  => $nota_final["media"]
+							"celula_corpo"  => h($nota_final["media"])
 						));
 						$tpl->parse("adicionar_celula_corpo");
 
 						$tpl->setVariable(array(
-							"celula_corpo"  => $nota_final["mencao"]
+							"celula_corpo"  => h($nota_final["mencao"])
 						));
 						$tpl->parse("adicionar_celula_corpo");
 
 						$tpl->setVariable(array(
-							"celula_corpo"  => $nota_final["faltas"]
+							"celula_corpo"  => h($nota_final["faltas"])
 						));
 						$tpl->parse("adicionar_celula_corpo");
 
 						$tpl->setVariable(array(
-							"celula_corpo"  => $nota_final["porcentagem_faltas"]."%"
+							"celula_corpo"  => h($nota_final["porcentagem_faltas"])."%"
 						));
 						$tpl->parse("adicionar_celula_corpo");
 					}

@@ -32,16 +32,41 @@ class ComposicaoTurmasBO extends BO
 
 	public function atualizaMediaMencaoFaltas($atualizar, $turma)
 	{
+		if (!is_array($atualizar) || $turma === null) {
+			return;
+		}
+
+		$mencoes_validas = array('SR', 'II', 'MI', 'MM', 'MS', 'SS');
 		$filtro["turma"] = $turma->codigo;
 
 		foreach($atualizar as $key => $value)
 		{
-			$filtro["aluno"] = $key;
+			if (!ctype_digit((string) $key)) {
+				continue;
+			}
 
-			$campos["mencao"] = $value->mencao;
-			$campos["media"] = str_replace(',','.',$value->media);
-			$campos["faltas"] = $value->faltas;
-			$campos["porcentagem_faltas"] = round(($value->faltas*100)/($turma->creditos*15),2);
+			$mencao = strtoupper(trim((string) $value->mencao));
+			if (!in_array($mencao, $mencoes_validas, true)) {
+				continue;
+			}
+
+			$media = str_replace(',', '.', trim((string) $value->media));
+			$media = is_numeric($media) ? (float) $media : 0.0;
+			if ($media < 0) {
+				$media = 0.0;
+			} elseif ($media > 10) {
+				$media = 10.0;
+			}
+
+			$faltas = max(0, (int) $value->faltas);
+			$divisor = ((int) $turma->creditos > 0) ? ((int) $turma->creditos * 15) : 1;
+
+			$filtro["aluno"] = (int) $key;
+
+			$campos["mencao"] = $mencao;
+			$campos["media"] = $media;
+			$campos["faltas"] = $faltas;
+			$campos["porcentagem_faltas"] = round(($faltas * 100) / $divisor, 2);
 
 			$this->DAO->updateCamposDeFiltro($campos,$filtro);
 		}

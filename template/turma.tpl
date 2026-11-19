@@ -48,7 +48,7 @@
 				var s6 = [{quantidade_ss}];
 				// Can specify a custom tick Array.
 				// Ticks should match up one for each y value (category) in the series.
-				var ticks = [{nome_avaliacao}];
+				var ticks = {nome_avaliacao_json};
 	
 				var plot1 = $.jqplot('grafico_desempenho', [s1, s2, s3, s4, s5, s6], {
 					animate: !$.jqplot.use_excanvas,

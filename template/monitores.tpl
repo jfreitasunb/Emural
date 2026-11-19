@@ -54,8 +54,11 @@
 	</table>
 	<div class="div_action">
 		<a href="{link_monitores}"><input type="button" value="Novo"></a>
-		<a href="{link_deletar}"><input type="button" value="Excluir"></a>
 		<input type="submit" value="Salvar"></div>
+	</form>
+	<form id="form_monitores_excluir" method="post" action="{link_deletar}" class="div_action">
+		<input type="hidden" name="excluir" value="1">
+		<input type="submit" value="Excluir">
 	</form>
 </div>
 <div class="clear"></div>

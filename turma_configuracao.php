@@ -23,9 +23,12 @@ $linkBO = new LinkBO();
 
 $url = $urlBO->codigoSegundoNivel();
 
-$turma = $turmasBO->retornaPorCodigo($url->codigo);
+$semestre = $semestresBO->retornaUltimoSemestre();
 
-$professor = $autenticacaoBO->verificarProfessor($turma->professor);
+// Permite configurar apenas turmas do semestre atual.
+$turma = $turmasBO->retornaPorCodigoSemestreAtual($url->codigo, $semestre);
+
+$professor = $autenticacaoBO->verificarProfessor($turma !== null ? $turma->professor : null);
 
 if($_POST) {
 	if(isset($_POST["avaliacoes_anteriores"]) && strlen($_POST["avaliacoes_anteriores"])) {

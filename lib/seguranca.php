@@ -7,34 +7,114 @@
 if (!defined('SEG_CSRF_CAMPO')) {
 	define('SEG_CSRF_CAMPO', 'csrf_token');
 	define('SEG_LOGIN_MAX_TENTATIVAS', 5);
+	define('SEG_LOGIN_IP_MAX_TENTATIVAS', 30);
 	define('SEG_LOGIN_JANELA_SEGUNDOS', 900);
 	// Validade do link de redefinição de senha (24 horas).
 	define('SEG_VALIDADE_LINK_SENHA', 86400);
+	// Tempo máximo de inatividade da sessão (2 horas).
+	define('SEG_SESSAO_TIMEOUT', 7200);
 }
 
 
 /**
- * Inicia a sessão (uma única vez) com cookies endurecidos.
+ * Envia cabeçalhos HTTP básicos de segurança.
  */
-function seg_iniciar_sessao()
+function seg_enviar_cabecalhos()
 {
-	if (session_status() === PHP_SESSION_ACTIVE) {
+	if (headers_sent()) {
 		return;
 	}
 
-	ini_set('session.use_strict_mode', '1');
-	ini_set('session.use_only_cookies', '1');
-	ini_set('session.cookie_httponly', '1');
+	header('X-Frame-Options: DENY');
+	header('X-Content-Type-Options: nosniff');
+	header('Referrer-Policy: strict-origin-when-cross-origin');
 
 	if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
-		ini_set('session.cookie_secure', '1');
+		header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+	}
+}
+
+
+/**
+ * Inicia a sessão (uma única vez) com cookies endurecidos e controle de inatividade.
+ */
+function seg_iniciar_sessao()
+{
+	if (session_status() !== PHP_SESSION_ACTIVE) {
+		ini_set('session.use_strict_mode', '1');
+		ini_set('session.use_only_cookies', '1');
+		ini_set('session.cookie_httponly', '1');
+
+		if (!empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off') {
+			ini_set('session.cookie_secure', '1');
+		}
+
+		if (PHP_VERSION_ID >= 70300) {
+			ini_set('session.cookie_samesite', 'Lax');
+		}
+
+		session_start();
 	}
 
-	if (PHP_VERSION_ID >= 70300) {
-		ini_set('session.cookie_samesite', 'Lax');
+	if (isset($_SESSION['seg_ultima_atividade']) && (time() - (int) $_SESSION['seg_ultima_atividade']) > SEG_SESSAO_TIMEOUT) {
+		session_unset();
+		session_regenerate_id(true);
 	}
 
-	session_start();
+	$_SESSION['seg_ultima_atividade'] = time();
+}
+
+
+/**
+ * Valida e normaliza um endereço de e-mail, rejeitando caracteres de controle/CRLF.
+ * Retorna o e-mail normalizado em minúsculas ou false se inválido.
+ */
+function seg_validar_email($email)
+{
+	if (!is_string($email)) {
+		return false;
+	}
+
+	if (preg_match('/[\x00-\x1F\x7F]/', $email)) {
+		return false;
+	}
+
+	$email = strtolower(trim($email));
+
+	if ($email === '' || strlen($email) > 80) {
+		return false;
+	}
+
+	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		return false;
+	}
+
+	return $email;
+}
+
+
+/**
+ * Valida a força mínima de uma senha (8+ caracteres, maiúscula, minúscula, número e especial).
+ */
+function seg_validar_senha_forte($senha)
+{
+	if (!is_string($senha) || strlen($senha) < 8) {
+		return false;
+	}
+
+	return preg_match('@[A-Z]@', $senha)
+		&& preg_match('@[a-z]@', $senha)
+		&& preg_match('@[0-9]@', $senha)
+		&& preg_match('@[^\w]@', $senha);
+}
+
+
+/**
+ * Calcula hash SHA-256 de um token para armazenamento seguro no banco.
+ */
+function seg_hash_token($token)
+{
+	return hash('sha256', (string) $token);
 }
 
 
@@ -180,6 +260,16 @@ function seg_csrf_token()
 }
 
 
+function seg_csrf_rotacionar()
+{
+	seg_iniciar_sessao();
+	$_SESSION[SEG_CSRF_CAMPO] = seg_token_aleatorio(32);
+	$GLOBALS['seg_csrf_atual'] = $_SESSION[SEG_CSRF_CAMPO];
+
+	return $_SESSION[SEG_CSRF_CAMPO];
+}
+
+
 function seg_csrf_valido($informado)
 {
 	return seg_comparar(seg_csrf_token(), (string) $informado);
@@ -267,6 +357,7 @@ function seg_csrf_injetar($html)
  */
 function seg_proteger($injetar_saida = true)
 {
+	seg_enviar_cabecalhos();
 	seg_iniciar_sessao();
 	$GLOBALS['seg_csrf_atual'] = seg_csrf_token();
 	seg_csrf_validar_post();
@@ -278,30 +369,52 @@ function seg_proteger($injetar_saida = true)
 
 
 /* ------------------------------------------------------------------ */
-/* Limite de tentativas de login                                       */
+/* Limite de tentativas (login, recuperação de senha, cadastro)        */
 /* ------------------------------------------------------------------ */
 
-function seg_arquivo_tentativas($usuario)
+function seg_ip_cliente()
 {
-	$diretorio = sys_get_temp_dir().DIRECTORY_SEPARATOR.'emural_login';
+	return isset($_SERVER['REMOTE_ADDR']) ? (string) $_SERVER['REMOTE_ADDR'] : 'cli';
+}
+
+
+function seg_diretorio_limites()
+{
+	GLOBAL $ROOT_PATH;
+
+	if (isset($ROOT_PATH) && is_string($ROOT_PATH) && is_dir($ROOT_PATH.'log') && is_writable($ROOT_PATH.'log')) {
+		$diretorio = $ROOT_PATH.'log'.DIRECTORY_SEPARATOR.'.ratelimit';
+	} else {
+		$sufixo = isset($ROOT_PATH) ? substr(sha1((string) $ROOT_PATH), 0, 12) : 'default';
+		$diretorio = sys_get_temp_dir().DIRECTORY_SEPARATOR.'emural_rl_'.$sufixo;
+	}
+
 	if (!is_dir($diretorio)) {
 		@mkdir($diretorio, 0700, true);
 	}
 
-	return $diretorio.DIRECTORY_SEPARATOR.sha1(strtolower(trim((string) $usuario)));
+	return $diretorio;
 }
 
 
-function seg_ler_tentativas($usuario)
+function seg_arquivo_limite($acao, $chave)
 {
-	$arquivo = seg_arquivo_tentativas($usuario);
+	$diretorio = seg_diretorio_limites();
+
+	return $diretorio.DIRECTORY_SEPARATOR.sha1($acao.'|'.strtolower(trim((string) $chave)));
+}
+
+
+function seg_ler_limite($acao, $chave, $janela)
+{
+	$arquivo = seg_arquivo_limite($acao, $chave);
 	$tentativas = array();
 
-	if (is_file($arquivo)) {
+	if (is_file($arquivo) && !is_link($arquivo)) {
 		$conteudo = @file_get_contents($arquivo);
 		$lista = $conteudo ? json_decode($conteudo, true) : null;
 		if (is_array($lista)) {
-			$limite = time() - SEG_LOGIN_JANELA_SEGUNDOS;
+			$limite = time() - (int) $janela;
 			foreach ($lista as $instante) {
 				if ((int) $instante > $limite) {
 					$tentativas[] = (int) $instante;
@@ -314,26 +427,55 @@ function seg_ler_tentativas($usuario)
 }
 
 
+function seg_limite_excedido($acao, $chave, $max, $janela)
+{
+	return count(seg_ler_limite($acao, $chave, $janela)) >= (int) $max;
+}
+
+
+function seg_limite_registrar($acao, $chave, $janela)
+{
+	$tentativas = seg_ler_limite($acao, $chave, $janela);
+	$tentativas[] = time();
+
+	@file_put_contents(seg_arquivo_limite($acao, $chave), json_encode($tentativas), LOCK_EX);
+}
+
+
+function seg_limite_limpar($acao, $chave)
+{
+	$arquivo = seg_arquivo_limite($acao, $chave);
+	if (is_file($arquivo) && !is_link($arquivo)) {
+		@unlink($arquivo);
+	}
+}
+
+
 function seg_login_bloqueado($usuario)
 {
-	return count(seg_ler_tentativas($usuario)) >= SEG_LOGIN_MAX_TENTATIVAS;
+	$ip = seg_ip_cliente();
+	$chave_par = $ip.'|'.strtolower(trim((string) $usuario));
+
+	return seg_limite_excedido('login_par', $chave_par, SEG_LOGIN_MAX_TENTATIVAS, SEG_LOGIN_JANELA_SEGUNDOS)
+		|| seg_limite_excedido('login_ip', $ip, SEG_LOGIN_IP_MAX_TENTATIVAS, SEG_LOGIN_JANELA_SEGUNDOS);
 }
 
 
 function seg_login_registrar_falha($usuario)
 {
-	$tentativas = seg_ler_tentativas($usuario);
-	$tentativas[] = time();
+	$ip = seg_ip_cliente();
+	$chave_par = $ip.'|'.strtolower(trim((string) $usuario));
 
-	@file_put_contents(seg_arquivo_tentativas($usuario), json_encode($tentativas), LOCK_EX);
+	seg_limite_registrar('login_par', $chave_par, SEG_LOGIN_JANELA_SEGUNDOS);
+	seg_limite_registrar('login_ip', $ip, SEG_LOGIN_JANELA_SEGUNDOS);
 }
 
 
 function seg_login_limpar_falhas($usuario)
 {
-	$arquivo = seg_arquivo_tentativas($usuario);
-	if (is_file($arquivo)) {
-		@unlink($arquivo);
-	}
+	$ip = seg_ip_cliente();
+	$chave_par = $ip.'|'.strtolower(trim((string) $usuario));
+
+	seg_limite_limpar('login_par', $chave_par);
 }
 ?>

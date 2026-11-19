@@ -23,6 +23,7 @@ if($_POST) {
 	{
 		$emailBO = new EmailBO();
 		$emailBO->enviarValidacao($aluno);
+		$autenticacaoBO->recarregaPessoa($aluno, "aluno");
 	}
 }
 
